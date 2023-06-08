@@ -6,9 +6,9 @@ Next.js
 ### Backend
 - Spring boot
 - MySQL
-- Redis (for storing refresh tokens)
-- Kafka
-- ELK stack (Elasticearch, Logstash, Kibana for searching and logging)
+- Test Driven Development(JUnit)
 - Docker, Kubernetes
 - github, Jenkins, AWS EC2
-- Test Driven Development(JUnit)
+- Kafka
+- ELK stack (Elasticearch, Logstash, Kibana for searching and logging)
+- Redis (for storing refresh tokens)
