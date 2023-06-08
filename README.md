@@ -8,7 +8,7 @@ Next.js
 - MySQL
 - Redis (for storing refresh tokens)
 - Kafka
-- ELK stack (for logging)
+- ELK stack (Elasticearch, Logstash, Kibana for logging)
 - Docker, Kubernetes
 - github, Jenkins, AWS EC2
-- Test Driven Development
+- Test Driven Development(JUnit)
