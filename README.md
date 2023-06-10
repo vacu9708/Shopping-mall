@@ -9,20 +9,22 @@
 - **Payment**: Handles payment processing, integrating with payment gateways to securely manage transactions.
 - **Notifications**: Sends notifications to users regarding order updates, promotions, and other relevant information.
 
-### Services I want to implement in the future:
+### Services to be implemented in the future not now:
+- Frontend(Next.js)
 - Cart Service: Manages the shopping carts for users, allowing them to add and remove items, calculate totals, and process orders.
 - Reviews and Ratings Service: Manages customer reviews and ratings for products, allowing users to provide feedback and make informed decisions.
 - Recommendations Service: Provides personalized product recommendations to users based on their browsing and purchase history.
 - Analytics Service: Collects and analyzes data on user behavior, sales trends, and other metrics to gain insights and make data-driven decisions.
 
 # Tech stack
-## Frontend
-Next.js
 ## Backend
 Spring boot
 
 ## Database
 MySQL, (graphQL)
+
+## Redis cache
+To cache 
 
 ## Test Driven Development
 JUnit
@@ -33,10 +35,6 @@ For generating API documentation automatically
 ## Kafka
 Kafka can handle high volumes of real-time data streams.<br>
 Kafka enables communication between microservices for scenarios such as order notifications, inventory updates, etc.
-
-## Redis
-Redis is used to store frequently accessed data such as product information, user profiles, refresh tokens, or search results.<br>
-This helps reduce the load on the DB and speeds up response times.
 
 ## Monitoring and Logging
 ### Logback with Logstash encoder:
