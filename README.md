@@ -34,16 +34,9 @@ For generating API documentation automatically
 Kafka can handle high volumes of real-time data streams.<br>
 Kafka enables communication between microservices for scenarios such as order notifications, inventory updates, etc.
 
-## Docker, Kubernetes
-For containerizing individual microservices and orchestrating them using Kubernetes
-
 ## Redis
 Redis is used to store frequently accessed data such as product information, user profiles, refresh tokens, or search results.<br>
 This helps reduce the load on the DB and speeds up response times.
-
-## Netflix Ribbon, Netflix Hystrix
-For Load Balancing and Resilience<br>
-Employ load balancing mechanisms for distributing requests across multiple instances of microservices. Use Hystrix for fault tolerance and implementing circuit breaker patterns to handle failures gracefully.
 
 ## Monitoring and Logging
 ### Logback with Logstash encoder:
@@ -61,6 +54,13 @@ Logstash can parse, filter, and transform log data before sending it to Elastics
 
 #### Kibana:
 Visualization and Dashboards
+
+## Netflix Ribbon, Netflix Hystrix
+For Load Balancing and Resilience<br>
+Employ load balancing mechanisms for distributing requests across multiple instances of microservices. Use Hystrix for fault tolerance and implementing circuit breaker patterns to handle failures gracefully.
+
+## Docker, Kubernetes
+For containerizing individual microservices and orchestrating them using Kubernetes
 
 ## CI/CD
 Github, Jenkins, AWS EC2<br>
