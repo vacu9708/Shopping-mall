@@ -8,7 +8,7 @@ Handles user authentication, registration, and profile management.
 ### Inventory
 Manages the inventory of products in the shopping mall, tracking stock levels, and triggering alerts for low inventory.
 ### Catalog
-Manages the catalog of products available in the shopping mall, including product information, availability, and search functionality.
+Manages the catalog of products available in the shopping mall, including wishlist, product information, availability, and search functionality.
 ### Order Management
 Handles order processing, including order placement and fulfillment.
 ### Payment
