@@ -1,12 +1,18 @@
 # (Microservices architecture) shopping-mall
 
 # What microservices the shopping mall consists of
-- **API Gateway**: Acts as a single entry point for clients, routing requests to the appropriate microservices, and enforcing security and access controls.
-- **User Management**: Handles user authentication, registration, and profile management.
-- **Inventory**: Manages the inventory of products in the shopping mall, tracking stock levels, and triggering alerts for low inventory.
-- **Catalog**: Manages the catalog of products available in the shopping mall, including product information, pricing, availability, and search functionality.
-- **Order Management**: Handles order processing, including order placement, tracking, and fulfillment.
-- **Payment**: Handles payment processing, integrating with payment gateways to securely manage transactions.
+### API Gateway
+Acts as a single entry point for clients, routing requests to the appropriate microservices, and enforcing security and access controls.
+### User Management
+Handles user authentication, registration, and profile management.
+### Inventory
+Manages the inventory of products in the shopping mall, tracking stock levels, and triggering alerts for low inventory.
+### Catalog
+Manages the catalog of products available in the shopping mall, including product information, availability, and search functionality.
+### Order Management
+Handles order processing, including order placement and fulfillment.
+### Payment
+Handles payment processing, integrating with payment gateways to securely manage transactions.
 
 ### To be implemented in the future:
 - **Notifications**: Sends notifications to users regarding order updates, promotions, and other relevant information.
