@@ -9,14 +9,14 @@
 - **Payment**: Handles payment processing, integrating with payment gateways to securely manage transactions.
 - **Notifications**: Sends notifications to users regarding order updates, promotions, and other relevant information.
 
-### To be implemented in the future not now:
+### To be implemented in the future:
 - Cart Service: Manages the shopping carts for users, allowing them to add and remove items, calculate totals, and process orders.
 - Reviews and Ratings Service: Manages customer reviews and ratings for products, allowing users to provide feedback and make informed decisions.
 - Recommendations Service: Provides personalized product recommendations to users based on their browsing and purchase history.
 - Analytics Service: Collects and analyzes data on user behavior, sales trends, and other metrics to gain insights and make data-driven decisions.
 
 # Tech stack
-## Frontend (to be implemented in the future)
+## Frontend (To be implemented in the future)
 Next.js
 ## Backend
 Spring boot
@@ -25,7 +25,7 @@ Spring boot
 MySQL, (graphQL)
 
 ## Redis cache
-To cache 
+For caching temporary data(refresh tokens, shopping cart), data that requires a fast response speed(wishlist), result of complex queries
 
 ## Test Driven Development
 JUnit
@@ -33,10 +33,21 @@ JUnit
 ## Springfox Swagger
 For generating API documentation automatically
 
+## Spring cloud gateway
+Spring cloud gateway acts as a router and forwards incoming requests to the appropriate downstream microservices based on the defined routes.
+
 ## Kafka
 Kafka can handle high volumes of real-time data streams.<br>
 Kafka enables communication between microservices for scenarios such as order notifications, inventory updates, etc.
 
+## Docker, Kubernetes
+For containerizing individual microservices and orchestrating them using Kubernetes
+
+## CI/CD
+Github(using pull requests), Jenkins, AWS EC2<br>
+CI/CD pipelines are used to automate build, testing and deployment process.
+
+# Features below are to be implemented in the future
 ## Monitoring and Logging
 ### Logback with Logstash encoder:
 Logback as the logging framework and a Logstash encoder to format log messages in a way that can be easily consumed by Logstash.
@@ -54,13 +65,13 @@ Logstash can parse, filter, and transform log data before sending it to Elastics
 #### Kibana:
 Visualization and Dashboards
 
-## Netflix Ribbon, Netflix Hystrix
-For Load Balancing and Resilience<br>
-Employ load balancing mechanisms for distributing requests across multiple instances of microservices. Use Hystrix for fault tolerance and implementing circuit breaker patterns to handle failures gracefully.
+## Netflix Eureka
+Eureka enables ***service registration and discovery*** within a distributed system, making it easier for microservices to discover and communicate with them. By integrating Eureka with Spring Cloud Gateway, the gateway can dynamically discover and route requests to available services without hardcoding their addresses.
 
-## Docker, Kubernetes
-For containerizing individual microservices and orchestrating them using Kubernetes
+## Netflix Ribbon
+***Load balancing***<br>
+Ribbon helps manage the load balancing of requests across multiple instances of a particular service. It dynamically distributes the requests to available instances, considering factors like server health, latency, and other configurable rules. Ribbon integrates with service discovery mechanisms (such as Netflix Eureka) to obtain an up-to-date list of available service instances.
 
-## CI/CD
-Github, Jenkins, AWS EC2<br>
-CI/CD pipelines are used to automate build, testing and deployment process.
+## Netflix Hystrix
+***Resilience***
+Hystrix introduces the concept of a circuit breaker pattern, where it monitors the calls to external services. If a particular service or endpoint starts failing or responding slowly, Hystrix can trip the circuit breaker, preventing further calls to that service
