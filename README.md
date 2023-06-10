@@ -10,10 +10,10 @@
 - **Notifications**: Sends notifications to users regarding order updates, promotions, and other relevant information.
 
 ### Services I want to implement in the future:
-Cart Service: Manages the shopping carts for users, allowing them to add and remove items, calculate totals, and process orders.
-Reviews and Ratings Service: Manages customer reviews and ratings for products, allowing users to provide feedback and make informed decisions.
-Recommendations Service: Provides personalized product recommendations to users based on their browsing and purchase history.
-Analytics Service: Collects and analyzes data on user behavior, sales trends, and other metrics to gain insights and make data-driven decisions.
+- Cart Service: Manages the shopping carts for users, allowing them to add and remove items, calculate totals, and process orders.
+- Reviews and Ratings Service: Manages customer reviews and ratings for products, allowing users to provide feedback and make informed decisions.
+- Recommendations Service: Provides personalized product recommendations to users based on their browsing and purchase history.
+- Analytics Service: Collects and analyzes data on user behavior, sales trends, and other metrics to gain insights and make data-driven decisions.
 
 # Tech stack
 ## Frontend
