@@ -81,3 +81,10 @@ Ribbon helps manage the load balancing of requests across multiple instances of 
 ## Netflix Hystrix
 ***Resilience***<br>
 Hystrix introduces the concept of a circuit breaker pattern, where it monitors the calls to external services. If a particular service or endpoint starts failing or responding slowly, Hystrix can trip the circuit breaker, preventing further calls to that service
+
+---
+# Architecture
+
+## Relational schema
+
+## UML diagram
