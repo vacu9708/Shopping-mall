@@ -17,7 +17,7 @@
 
 # Tech stack
 ## Frontend (To be implemented in the future)
-Next.js
+Next.js, Redux
 ## Backend
 Spring boot
 
