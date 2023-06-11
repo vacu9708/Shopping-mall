@@ -85,7 +85,7 @@ CI/CD pipelines are used to automate build, testing and deployment process.
 ---
 
 # Architecture
-
-## Relational schema
+Saga pattern for distributed transactions
+## DB schema
 
 ## UML diagram
