@@ -24,17 +24,18 @@ Handles payment processing, integrating with payment gateways to securely manage
 # Tech stack
 ## Frontend (To be implemented in the future)
 Next.js, Redux
+
 ## Backend
 Spring boot
+
+## Test Driven Development
+JUnit
 
 ## Database
 MySQL, (graphQL)
 
 ## Redis cache
 For caching temporary data(refresh tokens, shopping cart), data that requires a fast response speed(wishlist), result of complex queries
-
-## Test Driven Development
-JUnit
 
 ## Springfox Swagger
 For generating API documentation automatically
