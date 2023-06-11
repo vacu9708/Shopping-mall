@@ -47,14 +47,6 @@ Spring cloud gateway acts as a router and forwards incoming requests to the appr
 Kafka can handle high volumes of real-time data streams.<br>
 Kafka enables communication between microservices for scenarios such as order notifications, inventory updates, etc.
 
-## Docker, Kubernetes
-For containerizing individual microservices and orchestrating them using Kubernetes
-
-## CI/CD
-Github(using pull requests), Jenkins, AWS EC2<br>
-CI/CD pipelines are used to automate build, testing and deployment process.
-
-# Features below are to be implemented in the future
 ## Monitoring and Logging
 ### Logback with Logstash encoder:
 Logback as the logging framework and a Logstash encoder to format log messages in a way that can be easily consumed by Logstash.
@@ -83,7 +75,15 @@ Ribbon helps manage the load balancing of requests across multiple instances of 
 ***Resilience***<br>
 Hystrix introduces the concept of a circuit breaker pattern, where it monitors the calls to external services. If a particular service or endpoint starts failing or responding slowly, Hystrix can trip the circuit breaker, preventing further calls to that service
 
+## Docker, Kubernetes
+For containerizing individual microservices and orchestrating them using Kubernetes
+
+## CI/CD
+Github(using pull requests), Jenkins, AWS EC2<br>
+CI/CD pipelines are used to automate build, testing and deployment process.
+
 ---
+
 # Architecture
 
 ## Relational schema
