@@ -37,7 +37,7 @@ MySQL, (graphQL)
 ## Redis cache
 For caching temporary data(refresh tokens, shopping cart), data that requires a fast response speed(wishlist), result of complex queries
 
-## Swagger
+## Rest Docs
 For generating API documentation automatically
 
 ## Spring cloud gateway
