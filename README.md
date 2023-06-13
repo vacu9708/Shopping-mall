@@ -25,7 +25,7 @@ Handles payment processing, integrating with payment gateways to securely manage
 - MVC pattern
 - Architecture design with DB schema, UML diagram
 - Test Driven Development using JUnit
-- Domain Driven Development
+- Domain Driven Development for high cohesion
 - Collaboration with github pull requests
 - CI/CD
 
