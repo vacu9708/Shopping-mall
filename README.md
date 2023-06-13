@@ -33,8 +33,8 @@ Handles payment processing, integrating with payment gateways to securely manage
 ## Frontend
 Next.js, Redux
 
-## Backend
-Spring boot
+## Backend, etc
+Spring boot, JWT
 
 ## Database
 MySQL, (graphQL)
