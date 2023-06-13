@@ -52,16 +52,16 @@ Kafka enables communication between microservices for scenarios such as order no
 Logback as the logging framework and a Logstash encoder to format log messages in a way that can be easily consumed by Logstash.
 
 ### ELK stack
-#### Elasticsearch:
+#### `Elasticsearch`
 For log Aggregation, Analysis, and Alerting<br>
 Log data from microservices is sent to Elasticsearch which is a distributed search and analytics.<br>
 Elasticsearch can also track the health and performance of the microservices for alerting.
 
-#### Logstash:
+#### `Logstash`
 Centralized log collection pipeline<br>
 Logstash can parse, filter, and transform log data before sending it to Elasticsearch for storage and analysis.
 
-#### Kibana:
+#### `Kibana`
 Visualization and Dashboards
 
 ## Netflix Eureka
