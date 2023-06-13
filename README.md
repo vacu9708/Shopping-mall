@@ -4,7 +4,7 @@
 ### API Gateway
 Acts as a single entry point for clients, routing requests to the appropriate microservices, and enforcing security and access controls.
 ### User Management
-Handles user authentication, registration, and profile management.
+Handles user auth, registration, and profile management.
 ### Inventory
 Manages the inventory of products in the shopping mall, tracking stock levels, and triggering alerts for low inventory.
 ### Catalog
