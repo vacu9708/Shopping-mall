@@ -24,7 +24,7 @@ Handles payment processing, integrating with payment gateways to securely manage
 # Development methdologies
 - MVC pattern
 - Domain Driven Development for high cohesion
-- Architecture design with DB schema, UML diagram
+- Architecture design with ER diagram, UML diagram
 - Collaboration with github pull requests
 - CI/CD
 - Test Driven Development using JUnit
@@ -40,7 +40,7 @@ Spring boot
 MySQL, (graphQL)
 
 ## Redis cache
-For caching temporary data(refresh tokens, shopping cart), data that requires a fast response speed(wishlist), result of complex queries
+For caching temporary data(shopping cart), data that requires a fast response speed(wishlist), result of complex queries
 
 ## Swagger(springdoc 2.1)
 For generating API documentation automatically
@@ -91,6 +91,6 @@ CI/CD pipelines are used to automate build, testing and deployment process.
 
 # Architecture
 Saga pattern for distributed transactions
-## DB schema
+## ER diagram
 
 ## UML diagram
