@@ -30,7 +30,7 @@ Handles payment processing, integrating with payment gateways to securely manage
 - Test Driven Development using JUnit
 
 # Tech stack
-## Frontend (To be implemented in the future)
+## Frontend
 Next.js, Redux
 
 ## Backend
