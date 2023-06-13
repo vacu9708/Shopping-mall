@@ -21,15 +21,20 @@ Handles payment processing, integrating with payment gateways to securely manage
 - **Recommendations Service**: Provides personalized product recommendations to users based on their browsing and purchase history.
 - **Analytics Service**: Collects and analyzes data on user behavior, sales trends, and other metrics to gain insights and make data-driven decisions.
 
+# Development methdologies
+- MVC pattern
+- Architecture design with DB schema, UML diagram
+- Test Driven Development using JUnit
+- Domain Driven Development
+- Collaboration with github pull requests
+- CI/CD
+
 # Tech stack
 ## Frontend (To be implemented in the future)
 Next.js, Redux
 
 ## Backend
 Spring boot
-
-## Test Driven Development
-JUnit
 
 ## Database
 MySQL, (graphQL)
@@ -79,7 +84,7 @@ Hystrix introduces the concept of a circuit breaker pattern, where it monitors t
 For containerizing individual microservices and orchestrating them using Kubernetes
 
 ## CI/CD
-Github(using pull requests), Jenkins, AWS EC2<br>
+Jenkins, AWS EC2<br>
 CI/CD pipelines are used to automate build, testing and deployment process.
 
 ---
