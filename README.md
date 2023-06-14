@@ -31,7 +31,7 @@ Handles payment processing, integrating with payment gateways to securely manage
 
 # Tech stack
 ## Frontend
-Next.js, Redux
+Next.js
 
 ## Backend
 Spring boot, JWT
