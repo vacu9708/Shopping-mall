@@ -26,8 +26,15 @@ Handles payment processing, integrating with payment gateways to securely manage
 - MVC pattern
 - Domain Driven Development for high cohesion
 - Test Driven Development using JUnit including stress test to be confident after code modifications
-- Collaboration with github pull requests
+- Version control with github
 - CI/CD to automate deployment
+
+# Branch strategy
+- Feature
+- Bugfix
+- Develop
+- Master
+- Hotfix
 
 # Tech stack
 ## Basic frontend
