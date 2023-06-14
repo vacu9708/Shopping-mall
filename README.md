@@ -25,12 +25,12 @@ Handles payment processing, integrating with payment gateways to securely manage
 - Architecture design with ER diagram, UML diagram
 - MVC pattern
 - Domain Driven Development for high cohesion
-- Test Driven Development using JUnit including stress test
+- Test Driven Development using JUnit including stress test to be confident after code modifications
 - Collaboration with github pull requests
-- CI/CD
+- CI/CD to automate deployment
 
 # Tech stack
-## Frontend
+## Basic frontend
 Next.js
 
 ## Backend
@@ -73,7 +73,8 @@ Logstash can parse, filter, and transform log data before sending it to Elastics
 Visualization and Dashboards
 
 ## Netflix Eureka
-Eureka enables ***service registration and discovery*** within a distributed system, making it easier for microservices to discover and communicate with them. By integrating Eureka with Spring Cloud Gateway, the gateway can dynamically discover and route requests to available services without hardcoding their addresses.
+***service registration and discovery within a distributed system***<br>
+Eureka makes it easier for microservices to discover and communicate with them. By integrating Eureka with Spring Cloud Gateway, the gateway can dynamically discover and route requests to available services without hardcoding their addresses.
 
 ## Netflix Ribbon
 ***Load balancing***<br>
@@ -87,7 +88,7 @@ Hystrix introduces the concept of a circuit breaker pattern, where it monitors t
 For containerizing individual microservices and orchestrating them using Kubernetes
 
 ## CI/CD
-Jenkins<br>
+Jenkins (in combination with github webhook, AWS EC2)<br>
 CI/CD pipelines are used to automate build, testing and deployment process.
 
 ---
