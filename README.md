@@ -22,12 +22,12 @@ Handles payment processing, integrating with payment gateways to securely manage
 - **Analytics Service**: Collects and analyzes data on user behavior, sales trends, and other metrics to gain insights and make data-driven decisions.
 
 # Development methdologies
+- Architecture design with ER diagram, UML diagram
 - MVC pattern
 - Domain Driven Development for high cohesion
-- Architecture design with ER diagram, UML diagram
+- Test Driven Development using JUnit including stress test
 - Collaboration with github pull requests
 - CI/CD
-- Test Driven Development using JUnit
 
 # Tech stack
 ## Frontend
@@ -39,8 +39,8 @@ Spring boot, JWT
 ## Database
 MySQL, (graphQL)
 
-## Redis cache
-For caching temporary data(shopping cart), data that requires a fast response speed(wishlist), result of complex queries
+## Redis
+For storing data good to cache such as wishlist, shopping cart
 
 ## Swagger(springdoc 2.1)
 For generating API documentation automatically
