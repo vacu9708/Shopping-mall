@@ -1,40 +1,47 @@
 # (Microservices architecture) shopping-mall
 
-# What microservices the shopping mall consists of
+# The shopping mall consists of these microservices (Only essential services for the moment)
 ### API Gateway
 Acts as a single entry point for clients, routing requests to the appropriate microservices, and enforcing security and access controls.
 ### User Management
 Handles user registration, auth, etc.
 ### Inventory
 Manages the inventory of products in the shopping mall, tracking stock levels, and triggering alerts for low inventory.
-### Catalog
-Manages the catalog of products available in the shopping mall, including wishlist, product information, availability, and search functionality.
+### Product display
+Manages the catalog of products available in the shopping mall, including product information, availability, and search functionality.
 ### Order Management
 Handles order processing, including order placement and fulfillment.
 ### Payment
 Handles payment processing, integrating with payment gateways to securely manage transactions.
 
 ### To be implemented in the future:
-- **Notifications**: Sends notifications to users regarding order updates, promotions, and other relevant information.
-- **Cart Service**: Manages the shopping carts for users, allowing them to add and remove items, calculate totals, and process orders.
+- **Notifications**: Sends notifications to users regarding order updates, promotions, etc.
+- **Shopping cart and wishlist**
 - **Reviews and Ratings Service**: Manages customer reviews and ratings for products, allowing users to provide feedback and make informed decisions.
 - **Recommendations Service**: Provides personalized product recommendations to users based on their browsing and purchase history.
 - **Analytics Service**: Collects and analyzes data on user behavior, sales trends, and other metrics to gain insights and make data-driven decisions.
 
 # Development methdologies
 - Architecture design with ER diagram, UML diagram
-- MVC pattern
-- Domain Driven Development for high cohesion
+- MVC pattern and Domain Driven Development for high cohesion
 - Test Driven Development using JUnit including stress test to be confident after code modifications
 - Version control with github
 - CI/CD to automate deployment
 
 # Branch strategy
 - Feature
-- Bugfix
 - Develop
+- Bugfix (for develop branch)
 - Master
-- Hotfix
+- Hotfix (for master branch)
+ 
+# Architecture
+Saga pattern for distributed transactions
+
+## ER diagram
+
+## UML diagram
+
 
 # Tech stack
 ## Basic frontend
@@ -46,11 +53,8 @@ Spring boot, JWT
 ## Database
 MySQL, (graphQL)
 
-## Cloud
-AWS EC2 for deployment, AWS S3(for storing images)
-
 ## Redis
-For storing data good to cache such as wishlist, shopping cart
+For storing data good to cache such as refresh tokens, wishlist, shopping cart
 
 ## Swagger(springdoc 2.1)
 For generating API documentation automatically
@@ -61,6 +65,16 @@ Spring cloud gateway acts as a router and forwards incoming requests to the appr
 ## Kafka
 Kafka can handle high volumes of real-time data streams.<br>
 Kafka enables communication between microservices for scenarios such as order notifications, inventory updates, etc.
+
+## Docker, Kubernetes
+For containerizing individual microservices and orchestrating them using Kubernetes
+
+## Cloud
+AWS EC2 for deployment, AWS S3(for storing images)
+
+## CI/CD
+Jenkins (in combination with github webhook, AWS EC2)<br>
+CI/CD pipelines are used to automate build, testing and deployment process.
 
 ## Monitoring and Logging
 ### Logback with Logstash encoder:
@@ -91,17 +105,4 @@ Ribbon helps manage the load balancing of requests across multiple instances of 
 ***Resilience***<br>
 Hystrix introduces the concept of a circuit breaker pattern, where it monitors the calls to external services. If a particular service or endpoint starts failing or responding slowly, Hystrix can trip the circuit breaker, preventing further calls to that service
 
-## Docker, Kubernetes
-For containerizing individual microservices and orchestrating them using Kubernetes
-
-## CI/CD
-Jenkins (in combination with github webhook, AWS EC2)<br>
-CI/CD pipelines are used to automate build, testing and deployment process.
-
 ---
-
-# Architecture
-Saga pattern for distributed transactions
-## ER diagram
-
-## UML diagram
