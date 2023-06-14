@@ -39,6 +39,9 @@ Spring boot, JWT
 ## Database
 MySQL, (graphQL)
 
+## Cloud
+AWS EC2 for deployment, AWS S3(for storing images)
+
 ## Redis
 For storing data good to cache such as wishlist, shopping cart
 
@@ -84,7 +87,7 @@ Hystrix introduces the concept of a circuit breaker pattern, where it monitors t
 For containerizing individual microservices and orchestrating them using Kubernetes
 
 ## CI/CD
-Jenkins, AWS EC2<br>
+Jenkins<br>
 CI/CD pipelines are used to automate build, testing and deployment process.
 
 ---
