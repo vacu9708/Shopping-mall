@@ -24,16 +24,14 @@ Handles payment processing, integrating with payment gateways to securely manage
 # Development methdologies
 - Architecture design with ER diagram, UML diagram
 - MVC pattern and Domain Driven Development for high cohesion
-- Test Driven Development using JUnit including stress test to be confident after code modifications
+- Test Driven Development using JUnit including e2e tests and stress tests to be confident after code modifications
+- CI/CD to automate building, testing, deployment
 - Version control with github
-- CI/CD to automate deployment
 
-# Branch strategy
-- Feature
-- Develop
-- Bugfix (for develop branch)
-- Master
-- Hotfix (for master branch)
+# Branching strategy
+- Topic (Commits to this branch trigger the CI process)
+- Main (Commits to this branch trigger the CD process)
+- Development (For automatic deployment to the development server but not used in this project)
  
 # Architecture
 Saga pattern for distributed transactions
