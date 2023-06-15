@@ -1,4 +1,5 @@
 # (Microservices architecture) shopping-mall
+#### [개발 일기](https://github.com/vacu9708/Shopping-mall/tree/main/%EA%B0%9C%EB%B0%9C%20%EC%9D%BC%EA%B8%B0)
 
 # The shopping mall consists of these microservices (Only essential services for the moment)
 ### API Gateway
