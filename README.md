@@ -29,7 +29,7 @@ Handles payment processing, integrating with payment gateways to securely manage
 - Version control with github
 
 # Branching strategy
-- Topic (Commits to this branch trigger the CI process)
+- Topic/branches (Commits to this branch trigger the CI process)
 - Main (Commits to this branch trigger the CD process)
 - Development (For automatic deployment to the development server but not used in this project)
  
