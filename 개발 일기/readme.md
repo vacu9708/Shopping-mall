@@ -16,7 +16,7 @@
 - API documentation 자동화를 위해 swagger를 쓰려고 했는데 기존에 인기 많았던 library가 더 이상 작동이 언됐다. 그래서 spring restDocs로 시도해봤는데 하루종일 해봐도 html문서가 안만들어져서 포기했고, swagger springdoc가 많이 쓰인다는 걸 알게 된 후 드디어 이걸로 API 문서가 생성된 걸 확인했다.
 
 # 5
-Redis에 관한 지식, Spring에서 Redis 사용법를 공부했고 어떤 데이터를 Redis에 저장하면 좋을지 고민했다. 쇼핑카트와 wishlist는 일시적인 데이터니까 caching하기 좋을 것이다.<br>
+Redis에 관한 지식, Spring에서 Redis 사용법을 공부했고 어떤 데이터를 Redis에 저장하면 좋을지 고민했다. 쇼핑카트와 wishlist는 일시적인 데이터니까 caching하기 좋을 것이다.<br>
 이 프로젝트에서 처음 copilot을 써봤는데, 정말 편리하고 생산성 향상이 크다.
 
 # 6
