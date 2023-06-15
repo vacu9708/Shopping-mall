@@ -50,7 +50,7 @@ Next.js
 Spring boot, JWT
 
 ## Database
-MySQL, (graphQL)
+MySQL
 
 ## Redis
 For storing data good to cache such as refresh tokens, wishlist, shopping cart
