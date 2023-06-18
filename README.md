@@ -1,7 +1,7 @@
 # (Microservices architecture) shopping-mall
 #### [개발 일기](https://github.com/vacu9708/Shopping-mall/tree/main/%EA%B0%9C%EB%B0%9C%20%EC%9D%BC%EA%B8%B0)
 
-# The shopping mall consists of these microservices (Only essential services for the moment)
+# The shopping mall consists of these microservices
 ### API Gateway
 Acts as a single entry point for clients, routing requests to the appropriate microservices, and enforcing security and access controls.
 ### User Management
@@ -69,7 +69,7 @@ Kafka enables communication between microservices for scenarios such as order no
 For containerizing individual microservices and orchestrating them using Kubernetes
 
 ## Cloud
-AWS EC2 for deployment, AWS S3(for storing images)
+AWS EC2(for deployment), AWS S3(for storing images)
 
 ## CI/CD
 Jenkins (in combination with github webhook, AWS EC2)<br>
