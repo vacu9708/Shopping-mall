@@ -1,5 +1,5 @@
 # 1
-개발를 공부하면서 많은 것들을 해봤지만, 다양한 기술이 쓰이고 설계가 복잡하고 좋은 개발 방법론이 쓰인 "backend" 프로젝트는 해본 적이 없다. 즉, 해본 것들의 양만 많고 질이 낮다. 이게 현재 나의 최대 약점인 것 같다.<br>
+개발을 공부하면서 많은 것들을 해봤지만, 다양한 기술이 쓰이고 설계가 복잡하고 좋은 개발 방법론이 쓰인 "backend" 프로젝트는 해본 적이 없다. 즉, 해본 것들의 양만 많고 질이 낮다. 이게 현재 나의 최대 약점인 것 같다.<br>
 이 약점을 극복하기 위해 실제로 쓸 수 있는 복잡한 제품을 출시해보면 좋겠지만 이건 창업의 수준이므로 현실적으로 힘들 것 같다. 다양한 기술이 쓰이고 설계가 복잡한 대표적인 backend 프로젝트는 쇼핑몰이다. Microservices architecture로 구성된 쇼핑몰을 실제 기업에서 개발하는 것처럼 만들어봐야겠다.<br>
 
 # 2
@@ -29,4 +29,5 @@ Branching strategy는, 개인 프로젝트이기 때문에 복잡한 git-flow보
 CI/CD는 예전에 했던 방식대로 github webhook, jenkins, AWS EC2를 조합하고, Topic branch에 CI trigger, Main branch에 CD trigger를 설정해야겠다.<br>
 
 # 8
-graphQL에 대해 알아보면서 graphQL을 쓸지 말지 고민해봤는데 REST API를 써도 개발엔 지장이 없고 아직 필요성을 못 느끼겠어서 안 쓰기로 했다.
+graphQL에 대해 알아보면서 graphQL을 쓸지 말지 고민해봤는데 REST API를 써도 개발엔 지장이 없고 아직 필요성을 못 느끼겠어서 안 쓰기로 했다.<br>
+Kafka를 docker에 설치했고 kafka의 기본적인 내용을 공부했다. 그리고 Spring cloud gateway에 들어온 요청을 마이크로서비스1에 보낸 후, kafka broker의 topic에 publish해서 마이크로서비스2로 전송하였다.
