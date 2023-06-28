@@ -65,8 +65,8 @@ Spring cloud gateway acts as a router and forwards incoming requests to the appr
 Kafka can handle high volumes of real-time data streams.<br>
 Kafka enables communication between microservices for scenarios such as order notifications, inventory updates, etc.
 
-## Docker, Kubernetes
-For containerizing individual microservices and orchestrating them using Kubernetes
+## Docker
+For containerizing individual microservices
 
 ## Cloud
 AWS EC2(for deployment), AWS S3(for storing images)
@@ -92,13 +92,10 @@ Logstash can parse, filter, and transform log data before sending it to Elastics
 #### `Kibana`
 Visualization and Dashboards
 
-## Netflix Eureka
-***service registration and discovery within a distributed system***<br>
-Eureka makes it easier for microservices to discover and communicate with them. By integrating Eureka with Spring Cloud Gateway, the gateway can dynamically discover and route requests to available services without hardcoding their addresses.
-
-## Netflix Ribbon
-***Load balancing***<br>
-Ribbon helps manage the load balancing of requests across multiple instances of a particular service. It dynamically distributes the requests to available instances, considering factors like server health, latency, and other configurable rules. Ribbon integrates with service discovery mechanisms (such as Netflix Eureka) to obtain an up-to-date list of available service instances.
+## Kubernetes
+- `Scalibility`: Kubernetes allows services to be easily scaled horizontally across a cluster of machines by adding or removing instances based on demand.
+- `Service discovery`: Kubernetes provides a service discovery mechanism, allowing services to find and communicate with each other using DNS or environment variables.
+- `load balancing`: Kubernetes also includes a load balancer that distributes traffic across multiple instances of a service.
 
 ## Netflix Hystrix
 ***Resilience***<br>
