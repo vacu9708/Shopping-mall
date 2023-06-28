@@ -69,7 +69,7 @@ Kafka enables communication between microservices for scenarios such as order no
 For containerizing individual microservices
 
 ## Cloud
-AWS EC2(for deployment), AWS S3(for storing images)
+AWS EC2(for deployment), AWS RDS(MySQL), AWS S3(for storing images)
 
 ## CI/CD
 Jenkins (in combination with github webhook, AWS EC2)<br>
