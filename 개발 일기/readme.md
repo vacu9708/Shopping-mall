@@ -31,3 +31,6 @@ CI/CD는 예전에 했던 방식대로 github webhook, jenkins, AWS EC2를 조�
 # 8
 graphQL에 대해 알아보면서 graphQL을 쓸지 말지 고민해봤는데 REST API를 써도 개발엔 지장이 없고 아직 필요성을 못 느끼겠어서 안 쓰기로 했다.<br>
 Kafka를 docker에 설치했고 kafka의 기본적인 내용을 공부했다. 그리고 Spring cloud gateway에 들어온 요청을 마이크로서비스1에 보낸 후, kafka broker의 topic에 publish해서 마이크로서비스2로 전송하였다.
+
+# 9
+Kubernetes가 Netflix eureka와 ribbon을 대체할 수 있다는 걸 알게돼서 kubernetes를 쓰기로 했다.
