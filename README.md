@@ -55,9 +55,6 @@ MySQL
 ## Redis
 For storing data good to cache such as refresh tokens, wishlist, shopping cart
 
-## Swagger(springdoc 2.1)
-For generating API documentation automatically
-
 ## Spring cloud gateway
 Spring cloud gateway acts as a router and forwards incoming requests to the appropriate downstream microservices based on the defined routes.
 
