@@ -9,7 +9,7 @@
 
 # 3
 - Spring과 MySQL를 연동해 query 테스트를 해봤다. 이유는 모르겠는데 save()가 작동하지 않아서 해결 방법을 찾아다니다가 포기하고 raw SQL과 transaction commit을 했다. (나중에 원인을 알았는데 JPA만 있고 hibernate 설치가 안돼있었다)
-- request - response가 잘 되는지 확인하기 위한 e2e test 연습을 해다.
+- request - response가 잘 되는지 확인하기 위한 e2e test 연습을 했다.
 
 # 4
 - JWT 발급 방법이 node.js에선 쉬웠지만 spring에선 좀 이해가 안됐다. 계속 방법을 찾아봤고 성공했는데 node.js의 JWT보단 코드가 길지만 별로 복잡하진 않았다.
@@ -34,3 +34,5 @@ Kafka를 docker에 설치했고 kafka의 기본적인 내용을 공부했다. �
 
 # 9
 Kubernetes가 Netflix eureka와 ribbon을 대체할 수 있다는 걸 알게돼서 kubernetes를 쓰기로 했다.
+AWS S3 테스트를 했고, AWS RDS를 쓸 지 고민했는데 없어도 일단 개발할 수 있으니까 나중에 필요할 때 도입해야겠다.
+이제 ER, UML diagram으로 아키텍처 설계를 해야겠다.
