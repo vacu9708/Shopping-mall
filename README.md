@@ -53,7 +53,8 @@ Spring boot, JWT
 MySQL
 
 ## Redis
-For storing data good to cache such as refresh tokens, wishlist, shopping cart
+- For storing data good to cache such as refresh tokens, wishlist, shopping cart
+- Rate limit
 
 ## Spring cloud gateway
 Spring cloud gateway acts as a router and forwards incoming requests to the appropriate downstream microservices based on the defined routes.
@@ -66,7 +67,7 @@ Kafka enables communication between microservices for scenarios such as order no
 For containerizing individual microservices
 
 ## Cloud
-AWS EC2(for deployment), AWS RDS(MySQL), AWS S3(for storing images)
+AWS EC2(for deployment), AWS S3(for storing images)
 
 ## CI/CD
 Jenkins (in combination with github webhook, AWS EC2)<br>
