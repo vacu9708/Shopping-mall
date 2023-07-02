@@ -13,7 +13,7 @@ Manages the catalog of products available in the shopping mall, including produc
 ### Order Management
 Handles order processing, including order placement and fulfillment.
 ### Payment
-Handles payment processing, integrating with payment gateways to securely manage transactions.
+Handles payment processing (The refund feature will be added later)
 
 ### To be implemented in the future:
 - **Notifications**: Sends notifications to users regarding order updates, promotions, etc.
@@ -38,12 +38,44 @@ Handles payment processing, integrating with payment gateways to securely manage
 Saga pattern for distributed transactions
 
 ## ER diagram
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/413f145a-d3f4-460b-9126-63f2ee62c6bf)
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/14b3373a-61b3-4296-88e3-5f08463945c3)<br>
+### MySQL query
+~~~sql
+CREATE DATABASE user_management;
+USE user_management;
+CREATE TABLE users (
+	`user_id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	`username` VARCHAR(20) NOT NULL,
+	`password` VARCHAR(100) NOT NULL,
+	`email` VARCHAR(40) NOT NULL,
+    INDEX username(username)
+);
+
+CREATE DATABASE inventory;
+USE inventory;
+CREATE TABLE inventory (
+	`product_id` BINARY(16) DEFAULT(UUID_TO_BIN(UUID())) PRIMARY KEY,
+	`name` VARCHAR(20),
+	`description` VARCHAR(100),
+	`price` INT UNSIGNED,
+	`stock` INT UNSIGNED DEFAULT(0)
+);
+
+CREATE DATABASE order_management;
+USE order_management;
+CREATE TABLE orders ( -- many to many 
+	`order_id` BINARY(16) DEFAULT(UUID_TO_BIN(UUID())) PRIMARY KEY,
+	`order_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	`user_id` BIGINT UNSIGNED NOT NULL, -- REFERENCES users(user_id)
+	`product_id` BINARY(16) NOT NULL, -- REFERENCES products(product_id)
+	`quantity` INT NOT NULL
+);
+~~~
 
 ## UML diagram
 
 
-# Tech stack
+# Tech
 ## Basic frontend
 Next.js
 
