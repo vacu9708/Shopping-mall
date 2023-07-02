@@ -23,7 +23,7 @@ Handles payment processing (The refund feature will be added later)
 - **Analytics Service**: Collects and analyzes data on user behavior, sales trends, and other metrics to gain insights and make data-driven decisions.
 
 # Development methdologies
-- Architecture design with ER diagram, UML diagram
+- Architecture design with ER diagram, class diagram
 - MVC pattern and Domain Driven Development for high cohesion
 - Test Driven Development using JUnit including e2e tests and stress tests to be confident after code modifications
 - CI/CD to automate building, testing, deployment
