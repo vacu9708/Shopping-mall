@@ -38,7 +38,7 @@ Handles payment processing (The refund feature will be added later)
 Saga pattern for distributed transactions
 
 ## ER diagram
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/14b3373a-61b3-4296-88e3-5f08463945c3)<br>
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/4f7fd177-24be-4c70-bcd7-3ea7e8390c3d)<br>
 ### MySQL query
 ~~~sql
 CREATE DATABASE user_management;
