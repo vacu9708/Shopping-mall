@@ -37,7 +37,8 @@ Handles payment processing (The refund feature will be added later)
 Saga pattern for distributed transactions
 
 ## ER diagram
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/4f7fd177-24be-4c70-bcd7-3ea7e8390c3d)<br>
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/cc0f132f-0d8d-4b97-b0e9-17d19a2ccf8f)
+
 ### MySQL query
 ~~~sql
 CREATE DATABASE user_management;
@@ -50,12 +51,13 @@ CREATE TABLE users (
     INDEX username(username)
 );
 
-CREATE DATABASE inventory;
-USE inventory;
-CREATE TABLE inventory (
+CREATE DATABASE product_management;
+USE product_management;
+CREATE TABLE products (
 	`product_id` BINARY(16) DEFAULT(UUID_TO_BIN(UUID())) PRIMARY KEY,
 	`name` VARCHAR(20),
 	`description` VARCHAR(100),
+    `category` VARCHAR(15),
 	`price` INT UNSIGNED,
 	`stock` INT UNSIGNED DEFAULT(0)
 );
