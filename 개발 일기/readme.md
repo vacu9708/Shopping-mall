@@ -34,5 +34,8 @@ Kafka를 docker에 설치했고 kafka의 기본적인 내용을 공부했다. �
 
 # 9
 Kubernetes가 Netflix eureka와 ribbon을 대체할 수 있다는 걸 알게돼서 kubernetes를 쓰기로 했다.
-AWS S3 테스트를 했고, AWS RDS를 쓸 지 고민했는데 없어도 일단 개발할 수 있으니까 나중에 필요할 때 도입해야겠다.
+AWS S3 테스트를 했고, AWS RDS를 써야할지 고민했는데, 지금은 필요없으니까 나중에 필요할 때 도입해야겠다.
 이제 ER, UML diagram으로 아키텍처 설계를 해야겠다.
+
+# 10
+ER diagram 프로토타입을 완성했고, 분산시스템에서 transaction을 어떻게 할 지 고민했다.
