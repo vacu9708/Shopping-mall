@@ -72,6 +72,7 @@ CREATE TABLE orders ( -- many to many
 ~~~
 
 ## Class diagram
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/23026f2a-1db4-47a2-a9d5-991768fdfb74)
 
 
 # Tech
