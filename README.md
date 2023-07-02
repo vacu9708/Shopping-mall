@@ -68,7 +68,7 @@ CREATE TABLE orders ( -- many to many
 	`order_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	`user_id` BIGINT UNSIGNED NOT NULL, -- REFERENCES users(user_id)
 	`product_id` BINARY(16) NOT NULL, -- REFERENCES products(product_id)
-	`quantity` INT NOT NULL
+	`quantity` INT UNSIGNED NOT NULL
 );
 ~~~
 
