@@ -6,10 +6,9 @@
 Acts as a single entry point for clients, routing requests to the appropriate microservices, and enforcing security and access controls.
 ### User Management
 Handles user registration, auth, etc.
-### Inventory
-Manages the inventory of products in the shopping mall, tracking stock levels, and triggering alerts for low inventory.
-### Product display
-Manages the catalog of products available in the shopping mall, including product information, availability, and search functionality.
+### Product management
+1. Manages the inventory, including tracking stock levels, and triggering alerts for low stock.
+2. Manages the catalog of products available in the shopping mall, including product information, availability, and search functionality.
 ### Order Management
 Handles order processing, including order placement and fulfillment.
 ### Payment
