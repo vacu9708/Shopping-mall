@@ -72,7 +72,7 @@ CREATE TABLE orders ( -- many to many
 );
 ~~~
 
-## UML diagram
+## Class diagram
 
 
 # Tech
