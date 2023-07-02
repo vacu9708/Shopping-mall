@@ -38,6 +38,7 @@ Handles payment processing, integrating with payment gateways to securely manage
 Saga pattern for distributed transactions
 
 ## ER diagram
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/413f145a-d3f4-460b-9126-63f2ee62c6bf)
 
 ## UML diagram
 
