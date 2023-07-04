@@ -10,12 +10,11 @@ Handles user registration, auth, etc.
 1. Manages the inventory, including tracking stock levels, and triggering alerts for low stock.
 2. Manages the catalog of products available in the shopping mall, including product information, availability, and search functionality.
 ### Order Management
-Handles order processing, including order placement and fulfillment.
-### Payment
-Handles payment processing (The refund feature will be added later)
+Handles order processing, payment processing (The refund feature will be added later)
+### Notification
+Sends notifications to users regarding order updates, promotions, etc.
 
 ### To be implemented in the future:
-- **Notifications**: Sends notifications to users regarding order updates, promotions, etc.
 - **Shopping cart and wishlist**
 - **Reviews and Ratings Service**: Manages customer reviews and ratings for products, allowing users to provide feedback and make informed decisions.
 - **Recommendations Service**: Provides personalized product recommendations to users based on their browsing and purchase history.
@@ -34,48 +33,12 @@ Handles payment processing (The refund feature will be added later)
 - Development (For automatic deployment to the development server but not used in this project)
  
 # Architecture
-Saga pattern for distributed transactions
 
 ## ER diagram
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/cc0f132f-0d8d-4b97-b0e9-17d19a2ccf8f)
-
-### MySQL query
-~~~sql
-CREATE DATABASE user_management;
-USE user_management;
-CREATE TABLE users (
-	`user_id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	`username` VARCHAR(20) NOT NULL,
-	`password` VARCHAR(100) NOT NULL,
-	`email` VARCHAR(40) NOT NULL,
-    INDEX username(username)
-);
-
-CREATE DATABASE product_management;
-USE product_management;
-CREATE TABLE products (
-	`product_id` BINARY(16) DEFAULT(UUID_TO_BIN(UUID())) PRIMARY KEY,
-	`name` VARCHAR(20),
-	`description` VARCHAR(100),
-    `category` VARCHAR(15),
-	`price` INT UNSIGNED,
-	`stock` INT UNSIGNED DEFAULT(0)
-);
-
-CREATE DATABASE order_management;
-USE order_management;
-CREATE TABLE orders ( -- many to many 
-	`order_id` BINARY(16) DEFAULT(UUID_TO_BIN(UUID())) PRIMARY KEY,
-	`order_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	`user_id` BIGINT UNSIGNED NOT NULL, -- REFERENCES users(user_id)
-	`product_id` BINARY(16) NOT NULL, -- REFERENCES products(product_id)
-	`quantity` INT UNSIGNED NOT NULL
-);
-~~~
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/e00dee9c-2633-43cf-ae0d-923c709be6a8)
 
 ## Class diagram
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/23026f2a-1db4-47a2-a9d5-991768fdfb74)
-
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/9b5b479f-2247-4d31-88e2-e40b4fcfd235)
 
 # Tech
 ## Basic frontend
@@ -95,8 +58,7 @@ MySQL
 Spring cloud gateway acts as a router and forwards incoming requests to the appropriate downstream microservices based on the defined routes.
 
 ## Kafka
-Kafka can handle high volumes of real-time data streams.<br>
-Kafka enables communication between microservices for scenarios such as order notifications, inventory updates, etc.
+For asynchronous communication between microservices for scenarios such as order notifications.
 
 ## Docker
 For containerizing individual microservices
