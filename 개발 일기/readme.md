@@ -30,12 +30,13 @@ CI/CD는 예전에 했던 방식대로 github webhook, jenkins, AWS EC2를 조�
 
 # 8
 graphQL에 대해 알아보면서 graphQL을 쓸지 말지 고민해봤는데 REST API를 써도 개발엔 지장이 없고 아직 필요성을 못 느끼겠어서 안 쓰기로 했다.<br>
-Kafka를 docker에 설치했고 kafka의 기본적인 내용을 공부했다. 그리고 Spring cloud gateway에 들어온 요청을 마이크로서비스1에 보낸 후, kafka broker의 topic에 publish해서 마이크로서비스2로 전송하였다.
+Kafka를 docker에 설치했고 kafka의 기본적인 내용을 공부했다. 그리고 Spring cloud gateway에 들어온 요청을 마이크로서비스1에 보낸 후, kafka broker의 topic에 publish해서 마이크로서비스2로 전송해보는 테스트를 해보았다.
 
 # 9
 Kubernetes가 Netflix eureka와 ribbon을 대체할 수 있다는 걸 알게돼서 kubernetes를 쓰기로 했다.
 AWS S3 테스트를 했고, AWS RDS를 써야할지 고민했는데, 지금은 필요없으니까 나중에 필요할 때 도입해야겠다.
-이제 ER, UML diagram으로 아키텍처 설계를 해야겠다.
 
 # 10
-ER diagram 프로토타입을 완성했고, 분산시스템에서 transaction을 어떻게 할 지 고민했다.
+ER diagram과 class diagram의 기초를 완성했고, 분산 시스템에서 transaction을 어떻게 할 지 고민했다.
+주문 받기 -> 결제 처리 -> 재고 감소 -> 주문 추가 -> email 알림(kafka) -> http response로 주문 처리가 이루어질 것인데, transaction에서 실패가 발생하면 failed를 http response로 보내야되기 때문에 kafka의 decoupling은 맞지 않다고 생각해 http로 transaction을 하기로 했다.
+email 알림을 마이크로서비스로 분리할지 고민했는데, 1초에 수천 개의 email을 보내야될 수 있으니까 email 마이크로서비스와 kafka로 통신하는게 효율적일 것이라고 생각했다.
