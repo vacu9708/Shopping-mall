@@ -45,7 +45,7 @@ Sends notifications to users regarding order updates, promotions, etc.
 Next.js
 
 ## Backend
-Spring boot, JWT
+Spring boot
 
 ## Database
 MySQL
@@ -58,10 +58,15 @@ MySQL
 Spring cloud gateway acts as a router and forwards incoming requests to the appropriate downstream microservices based on the defined routes.
 
 ## Kafka
-For asynchronous communication between microservices for scenarios such as order notifications.
+For decoupled communication between microservices for scenarios such as order notifications.
 
 ## Docker
 For containerizing individual microservices
+
+## Kubernetes (to be implemented later)
+- `Scalibility`: Kubernetes allows services to be easily scaled horizontally across a cluster of machines by adding or removing instances based on demand.
+- `Service discovery`: Kubernetes provides a service discovery mechanism, allowing services to find and communicate with each other using DNS or environment variables.
+- `Load balancing`: Kubernetes also includes a load balancer that distributes traffic across multiple instances of a service.
 
 ## Cloud
 AWS EC2(for deployment), AWS S3(for storing images)
@@ -70,29 +75,21 @@ AWS EC2(for deployment), AWS S3(for storing images)
 Jenkins (in combination with github webhook, AWS EC2)<br>
 CI/CD pipelines are used to automate build, testing and deployment process.
 
-## Monitoring and Logging
+## Monitoring and Logging (to be implemented later)
 ### Logback with Logstash encoder:
 Logback as the logging framework and a Logstash encoder to format log messages in a way that can be easily consumed by Logstash.
 
 ### ELK stack
-#### `Elasticsearch`
-For log Aggregation, Analysis, and Alerting<br>
+- `Elasticsearch`: For log Aggregation, Analysis, and Alerting<br>
 Log data from microservices is sent to Elasticsearch which is a distributed search and analytics.<br>
 Elasticsearch can also track the health and performance of the microservices for alerting.
 
-#### `Logstash`
-Centralized log collection pipeline<br>
+- `Logstash`: Centralized log collection pipeline<br>
 Logstash can parse, filter, and transform log data before sending it to Elasticsearch for storage and analysis.
 
-#### `Kibana`
-Visualization and Dashboards
+- `Kibana`: Visualization and Dashboards
 
-## Kubernetes
-- `Scalibility`: Kubernetes allows services to be easily scaled horizontally across a cluster of machines by adding or removing instances based on demand.
-- `Service discovery`: Kubernetes provides a service discovery mechanism, allowing services to find and communicate with each other using DNS or environment variables.
-- `load balancing`: Kubernetes also includes a load balancer that distributes traffic across multiple instances of a service.
-
-## Netflix Hystrix
+## Netflix Hystrix (to be implemented later)
 ***Resilience***<br>
 Hystrix introduces the concept of a circuit breaker pattern, where it monitors the calls to external services. If a particular service or endpoint starts failing or responding slowly, Hystrix can trip the circuit breaker, preventing further calls to that service
 
