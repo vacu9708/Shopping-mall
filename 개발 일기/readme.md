@@ -38,5 +38,5 @@ AWS S3 테스트를 했고, AWS RDS를 써야할지 고민했는데, 지금은 �
 
 # 10
 ER diagram과 class diagram의 기초를 완성했고, 분산 시스템에서 transaction을 어떻게 할 지 고민했다.
-주문 받기 -> 결제 처리 -> 재고 감소 -> 주문 추가 -> email 알림(kafka) -> http response로 주문 처리가 이루어질 것인데, transaction에서 실패가 발생하면 failed를 http response로 보내야되기 때문에 kafka의 decoupling은 맞지 않다고 생각해 http로 transaction을 하기로 했다.
+주문 받기 -> authorization -> 결제 처리 -> 재고 감소 -> 주문 추가 -> email 알림(kafka) -> http response로 주문 처리가 이루어질 것인데, transaction에서 실패가 발생하면 failed를 http response로 보내야되기 때문에 kafka의 decoupling은 맞지 않다고 생각해 http로 transaction을 하기로 했다.
 email 알림을 마이크로서비스로 분리할지 고민했는데, 1초에 수천 개의 email을 보내야될 수 있으니까 email 마이크로서비스와 kafka로 통신하는게 효율적일 것이라고 생각했다.
