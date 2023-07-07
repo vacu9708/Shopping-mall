@@ -38,7 +38,7 @@ Sends notifications to users regarding order updates, promotions, etc.
 
 ## Class diagram
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/9b5b479f-2247-4d31-88e2-e40b4fcfd235)<br>
-OrderService.makeOrder() calls: UserService.verifyToken(), ProductService.setStock(), NotificationService.notification()
+OrderService.makeOrder() calls: UserService.verifyToken(), ProductService.setStock(), NotificationService.sendEmail()
 
 # Tech
 ## Basic frontend
