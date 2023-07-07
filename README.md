@@ -26,9 +26,9 @@ Sends notifications to users regarding order updates, promotions, etc.
 - CI/CD to automate building, testing, deployment
 
 # Branching strategy
-- Topic/branches (Commits to this branch trigger the CI process)
-- Main (Commits to this branch trigger the CD process)
-- Development (For automatic deployment to the development server but not used in this project)
+- Topics: Merged into the development branch
+- Development: Merged into the main branch
+- Main: Pushes to this branch trigger the CI/CD process
  
 # Architecture
 ## ER diagram
