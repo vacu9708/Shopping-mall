@@ -21,7 +21,7 @@ Sends notifications to users regarding order updates, promotions, etc.
 - **Analytics Service**: Collects and analyzes data on user behavior, sales trends, and other metrics to gain insights and make data-driven decisions.
 
 # Development methdologies
-- MVC pattern and Domain Driven Development for high cohesion
+- Domain Driven Development for high cohesion
 - Test Driven Development using JUnit including e2e tests and stress tests to be confident after code modifications
 - CI/CD to automate building, testing, deployment
 
