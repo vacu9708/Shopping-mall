@@ -53,7 +53,8 @@ MySQL
 - Rate limit
 
 ## Spring cloud gateway
-Spring cloud gateway acts as a router and forwards incoming requests to the appropriate downstream microservices based on the defined routes.
+Spring cloud gateway acts as a router and forwards incoming requests to the appropriate downstream microservices based on the defined routes.<br>
+It is combined with resilience4j, which monitors the calls to external services. If a particular service fails or responds slowly, it trips the circuit breaker, preventing further calls to that service.
 
 ## Kafka
 For decoupled communication between microservices for scenarios such as order notifications.
@@ -86,9 +87,4 @@ Elasticsearch can also track the health and performance of the microservices for
 Logstash can parse, filter, and transform log data before sending it to Elasticsearch for storage and analysis.
 
 - `Kibana`: Visualization and Dashboards
-
-## Netflix Hystrix (to be implemented later)
-***Resilience***<br>
-Hystrix introduces the concept of a circuit breaker pattern, where it monitors the calls to external services. If a particular service or endpoint starts failing or responding slowly, Hystrix can trip the circuit breaker, preventing further calls to that service
-
 ---
