@@ -26,9 +26,9 @@ Sends notifications to users regarding order updates, promotions, etc.
 - CI/CD to automate building, testing, deployment
 
 # Branching strategy
-- Topics: Merged into the development branch
-- Development: Merged into the main branch
 - Main: Pushes to this branch trigger the CI/CD process
+- Development: Merged into the main branch
+- Topics: Merged into the development branch
  
 # Architecture
 ## ER diagram
@@ -38,7 +38,12 @@ Sends notifications to users regarding order updates, promotions, etc.
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/9b5b479f-2247-4d31-88e2-e40b4fcfd235)<br>
 OrderService.makeOrder() calls: UserService.verifyToken(), ProductService.setStock(), NotificationService.sendEmail()
 
-# Tech
+# API documentation
+https://documenter.getpostman.com/view/26215585/2s93zGzxoL
+
+---
+
+# Used techs
 ## Basic frontend
 Next.js
 
