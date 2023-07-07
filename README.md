@@ -2,20 +2,20 @@
 #### [개발 일기](https://github.com/vacu9708/Shopping-mall/tree/main/%EA%B0%9C%EB%B0%9C%20%EC%9D%BC%EA%B8%B0)
 
 # The shopping mall consists of these microservices
-### API Gateway
+### API gateway
 Acts as a single entry point for clients, routing requests to the appropriate microservices, and enforcing security and access controls.
-### User Management
+### User management
 Handles user registration, auth, etc.
 ### Product management
 1. Manages the inventory, including tracking stock levels, and triggering alerts for low stock.
 2. Manages the catalog of products available in the shopping mall, including product information, availability, and search functionality.
-### Order Management
+### Order management
 Handles order processing, payment processing (The refund feature will be added later)
 ### Notification
 Sends notifications to users regarding order updates, promotions, etc.
 
 ### To be implemented in the future:
-- **Shopping cart and wishlist**
+- **Shopping cart and wishlist in the Product management service**
 - **Reviews and Ratings Service**: Manages customer reviews and ratings for products, allowing users to provide feedback and make informed decisions.
 - **Recommendations Service**: Provides personalized product recommendations to users based on their browsing and purchase history.
 - **Analytics Service**: Collects and analyzes data on user behavior, sales trends, and other metrics to gain insights and make data-driven decisions.
@@ -33,12 +33,12 @@ Sends notifications to users regarding order updates, promotions, etc.
 - Development (For automatic deployment to the development server but not used in this project)
  
 # Architecture
-
 ## ER diagram
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/e00dee9c-2633-43cf-ae0d-923c709be6a8)
 
 ## Class diagram
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/9b5b479f-2247-4d31-88e2-e40b4fcfd235)
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/9b5b479f-2247-4d31-88e2-e40b4fcfd235)<br>
+OrderService.makeOrder() calls: UserService.verifyToken(), ProductService.setStock(), NotificationService.notification()
 
 # Tech
 ## Basic frontend
