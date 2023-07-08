@@ -2,16 +2,16 @@
 #### [개발 일기](https://github.com/vacu9708/Shopping-mall/tree/main/%EA%B0%9C%EB%B0%9C%20%EC%9D%BC%EA%B8%B0)
 
 # The shopping mall consists of these microservices
-### API gateway
+### API gateway (port: 8080)
 Acts as a single entry point for clients, routing requests to the appropriate microservices, and enforcing security and access controls.
-### User management
+### User management (port: 8081)
 Handles user registration, auth, etc.
-### Product management
+### Product management (port: 8082)
 1. Manages the inventory, including tracking stock levels, and triggering alerts for low stock.
 2. Manages the catalog of products available in the shopping mall, including product information, availability, and search functionality.
-### Order management
+### Order management (port: 8083)
 Handles order processing, payment processing (The refund feature will be added later)
-### Notification
+### Notification (port: 8084)
 Sends notifications to users regarding order updates, promotions, etc.
 
 ### To be implemented in the future:
