@@ -36,7 +36,8 @@ Sends notifications to users regarding order updates, promotions, etc.
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/f423c72a-6429-41a9-9a2f-3abfdc68d7ca)
 
 ## Class diagram
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/9b5b479f-2247-4d31-88e2-e40b4fcfd235)<br>
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/c3251111-2b36-4ef3-8ae2-15191f7f043d)
+
 OrderService.makeOrder() calls: UserService.verifyToken(), ProductService.setStock(), NotificationService.sendEmail()
 
 ## CI/CD
