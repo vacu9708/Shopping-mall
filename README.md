@@ -32,7 +32,7 @@ Sends notifications to users regarding order updates, promotions, etc.
  
 # Architecture
 ## ER diagram
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/e00dee9c-2633-43cf-ae0d-923c709be6a8)
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/f423c72a-6429-41a9-9a2f-3abfdc68d7ca)
 
 ## Class diagram
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/9b5b479f-2247-4d31-88e2-e40b4fcfd235)<br>
