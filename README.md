@@ -26,7 +26,8 @@ Sends notifications to users regarding order updates, promotions, etc.
 - CI/CD to automate building, testing, deployment
 
 # Branching strategy
-- Main: Pushes to this branch trigger the CI/CD process
+- Main: Documentation
+- Release: Pushes to this branch trigger the CI/CD process
 - Development: Merged into the main branch
 - Topics: Merged into the development branch
  
