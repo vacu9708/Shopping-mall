@@ -43,6 +43,14 @@ OrderService.makeOrder() calls: UserService.verifyToken(), ProductService.setSto
 ## AWS S3
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/e7cb8201-b7ce-413e-a84d-6723a0bb6097)
 
+## Distributed transactions
+The term "saga" in saga pattern refers to a sequence of distributed transactions or steps.<br>
+
+1. `Start`: OrderService.makeOrder() triggers the saga
+2. `Local transactions`: The saga includes payment, setting the stock, placing the order 
+3. `Compensation`: If a local transaction fails, the saga pattern invokes a compensation action that undoes the previously executed steps, ensuring data consistency.
+4. `Completion`: The saga concludes when all the steps are either successfully completed or compensated.
+
 ---
 
 # Used things
