@@ -88,7 +88,7 @@ For API testing and documentation
 For decoupled auth service facilitating easier load balanacing
 
 ## Webflux, CompletableFuture
-For non-blocking communication between microservices and file upload/download
+For non-blocking communication across microservices
 
 ## Kafka
 For decoupled communication between microservices for scenarios such as order notifications.
