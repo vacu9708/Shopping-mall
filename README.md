@@ -48,7 +48,7 @@ The term "saga" in saga pattern refers to a sequence of distributed transactions
 
 1. `Start`: OrderService.makeOrder() triggers the saga
 2. `Local transactions`: The saga includes payment, setting the stock, placing the order 
-3. `Compensation`: If a local transaction fails, the saga pattern invokes a compensation action that undoes the previously executed steps, ensuring data consistency.
+3. `Compensation`: If a transaction failed, the saga pattern invokes a compensation action that undoes the completed steps, ensuring data consistency.
 4. `Completion`: The saga concludes when all the steps are either successfully completed or compensated.
 
 ---
