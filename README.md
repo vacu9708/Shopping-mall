@@ -1,6 +1,3 @@
-# (Microservices architecture) shopping-mall
-#### [개발 일기](https://github.com/vacu9708/Shopping-mall/tree/main/%EA%B0%9C%EB%B0%9C%20%EC%9D%BC%EA%B8%B0)
-
 # The shopping mall consists of these microservices
 ### API gateway (port: 8080)
 Acts as a single entry point for clients, routing requests to the appropriate microservices, and enforcing security and access controls.
@@ -43,8 +40,8 @@ OrderService.makeOrder() calls: UserService.verifyToken(), ProductService.setSto
 ## CI/CD
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/43640b1a-1fe6-4931-84ca-b921e0d085f0)
 
-# API documentation
-https://documenter.getpostman.com/view/26215585/2s93zGzxoL
+## AWS S3
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/e7cb8201-b7ce-413e-a84d-6723a0bb6097)
 
 ---
 
@@ -98,3 +95,6 @@ Logstash can parse, filter, and transform log data before sending it to Elastics
 
 - `Kibana`: Visualization and Dashboards
 ---
+
+# API documentation
+https://documenter.getpostman.com/view/26215585/2s93zGzxoL
