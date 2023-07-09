@@ -1,6 +1,6 @@
 # The shopping mall consists of these microservices
 ### API gateway (port: 8080)
-Acts as a single entry point for clients, routing requests to the appropriate microservices, and enforcing security and access controls.
+Acts as a single entry point for clients, routing requests to the appropriate microservices, including rate limiter and circuit breaker 
 ### User management (port: 8081)
 Handles user registration, auth, etc.
 ### Product management (port: 8082)
