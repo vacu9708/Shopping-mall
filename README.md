@@ -76,6 +76,12 @@ CI/CD pipelines are used to automate build, testing and deployment process.
 ## Postman
 For API testing and documentation
 
+## JWT
+For decoupled auth service facilitating easier load balanacing
+
+## Webflux, CompletableFuture
+For non-blocking communication between microservices and file upload/download
+
 ## Kafka
 For decoupled communication between microservices for scenarios such as order notifications.
 
