@@ -63,9 +63,6 @@ MySQL
 Spring cloud gateway acts as a router and forwards incoming requests to the appropriate downstream microservices based on the defined routes.<br>
 It is combined with resilience4j, which monitors the calls to external services. If a particular service fails or responds slowly, it trips the circuit breaker, preventing further calls to that service.
 
-## Kafka
-For decoupled communication between microservices for scenarios such as order notifications.
-
 ## Docker
 For containerizing individual microservices
 
@@ -78,6 +75,9 @@ CI/CD pipelines are used to automate build, testing and deployment process.
 
 ## Postman
 For API testing and documentation
+
+## Kafka
+For decoupled communication between microservices for scenarios such as order notifications.
 
 ## Kubernetes (to be implemented later)
 - `Scalibility`: Kubernetes allows services to be easily scaled horizontally across a cluster of machines by adding or removing instances based on demand.
