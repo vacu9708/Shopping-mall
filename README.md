@@ -41,7 +41,14 @@ OrderService.makeOrder() calls: UserService.verifyToken(), ProductService.setSto
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/43640b1a-1fe6-4931-84ca-b921e0d085f0)
 
 ## AWS S3
+<<<<<<< HEAD
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/7b5620d1-a5ac-4e39-ae01-8f9cb532c2fb)
+
+# API documentation
+https://documenter.getpostman.com/view/26215585/2s93zGzxoL
+=======
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/e7cb8201-b7ce-413e-a84d-6723a0bb6097)
+>>>>>>> f0c139c303edeb8ea3dbfe30494baa40b8c82741
 
 ---
 
