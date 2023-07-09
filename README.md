@@ -45,9 +45,9 @@ OrderService.makeOrder() calls: UserService.verifyToken(), ProductService.setSto
 
 ---
 
-# Used techs
+# Used things
 ## Basic frontend
-Next.js
+Next.js, (redux?)
 
 ## Backend
 Spring boot
@@ -69,17 +69,20 @@ For decoupled communication between microservices for scenarios such as order no
 ## Docker
 For containerizing individual microservices
 
-## Kubernetes (to be implemented later)
-- `Scalibility`: Kubernetes allows services to be easily scaled horizontally across a cluster of machines by adding or removing instances based on demand.
-- `Service discovery`: Kubernetes provides a service discovery mechanism, allowing services to find and communicate with each other using DNS or environment variables.
-- `Load balancing`: Kubernetes also includes a load balancer that distributes traffic across multiple instances of a service.
-
 ## Cloud
 AWS EC2(for deployment), AWS S3(for storing images)
 
 ## CI/CD
 Jenkins (in combination with github webhook, AWS EC2)<br>
 CI/CD pipelines are used to automate build, testing and deployment process.
+
+## Postman
+For API testing and documentation
+
+## Kubernetes (to be implemented later)
+- `Scalibility`: Kubernetes allows services to be easily scaled horizontally across a cluster of machines by adding or removing instances based on demand.
+- `Service discovery`: Kubernetes provides a service discovery mechanism, allowing services to find and communicate with each other using DNS or environment variables.
+- `Load balancing`: Kubernetes also includes a load balancer that distributes traffic across multiple instances of a service.
 
 ## Monitoring and Logging (to be implemented later)
 ### Logback with Logstash encoder:
