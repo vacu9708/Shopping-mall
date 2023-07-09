@@ -24,19 +24,23 @@ Refresh token은 일시적이면서 빠른 토큰 재발급 속도가 필요하�
 Refresh token에 관한 지식과 access token 재발급 과정 등을 다시 공부했다.<br>
 
 # 7
-Branching strategy와 CI/CD에 관해 고민했는데, 예전에 이해했다고 생각했던 CI/CD의 기본 지식이 헷갈려서 다시 공부했다.<br>
-Branching strategy는, 개인 프로젝트이기 때문에 복잡한 git-flow보다는 단순한 branch 전략이 더 좋아 보이기 때문에 Main - Topic 전략으로 해야겠다.<br>
-CI/CD는 예전에 했던 방식대로 github webhook, jenkins, AWS EC2를 조합하고, Topic branch에 CI trigger, Main branch에 CD trigger를 설정해야겠다.<br>
+브랜칭 전략과 CI/CD에 관해 고민했다. 개인 프로젝트이기 때문에 복잡한 git-flow보다는 단순한 branch 전략이 더 좋아 보이기 때문에 Main - Topic 전략으로 했다.<br>
+CI/CD는 예전에 했던 방식대로 github webhook, jenkins, AWS EC2를 조합했다.
 
 # 8
 graphQL에 대해 알아보면서 graphQL을 쓸지 말지 고민해봤는데 REST API를 써도 개발엔 지장이 없고 아직 필요성을 못 느끼겠어서 안 쓰기로 했다.<br>
-Kafka를 docker에 설치했고 kafka의 기본적인 내용을 공부했다. 그리고 Spring cloud gateway에 들어온 요청을 마이크로서비스1에 보낸 후, kafka broker의 topic에 publish해서 마이크로서비스2로 전송해보는 테스트를 해보았다.
+Kafka를 docker에 설치했고 kafka의 기본적인 내용을 공부했다. 그리고 Spring cloud gateway에 들어온 요청을 kafka를 이용해 마이크로서비스1에 보낸 후, kafka broker의 topic에 publish해서 마이크로서비스2로 전송해보는 테스트를 해보았다.
 
 # 9
-Kubernetes가 Netflix eureka와 ribbon을 대체할 수 있다는 걸 알게돼서 kubernetes를 쓰기로 했다.
-AWS S3 테스트를 했고, AWS RDS를 써야할지 고민했는데, 지금은 필요없으니까 나중에 필요할 때 도입해야겠다.
+Kubernetes가 Netflix eureka와 ribbon을 대체할 수 있다는 걸 알게돼서 나중에 load balancing을 위해 kubernetes를 쓰기로 했다.
+AWS S3 테스트를 했고 잘됐다. 그리고 AWS RDS를 써야할지 고민했는데, 일단은 필요없으니까 나중에 필요할 때 도입해도 될 것 같다.
 
 # 10
-ER diagram과 class diagram의 기초를 완성했고, 분산 시스템에서 transaction을 어떻게 할 지 고민했다.
+ER diagram과 class diagram의 초기 버전을 완성했고, 분산 시스템에서 transaction을 어떻게 할 지 고민했다.
 주문 받기 -> authorization -> 결제 처리 -> 재고 감소 -> 주문 추가 -> email 알림(kafka) -> http response로 주문 처리가 이루어질 것인데, transaction에서 실패가 발생하면 failed를 http response로 보내야되기 때문에 kafka의 decoupling은 맞지 않다고 생각해 http로 transaction을 하기로 했다.
-email 알림을 마이크로서비스로 분리할지 고민했는데, 1초에 수천 개의 email을 보내야될 수 있으니까 email 마이크로서비스와 kafka로 통신하는게 효율적일 것이라고 생각했다.
+email 알림을 order management에 포함하지 않고 별도의 마이크로서비스로 분리했다. 대규모 트래픽에선 수많은 email을 보내야될 수도 있으니까 마이크로서비스로 만들고 kafka로 통신하는게 효율적일 것이라고 생각했기 때문이다.
+
+# 11
+마이크로서비스들이 서로 통신할 때 non-blocking이어야 대규모 트래픽에서도 버틸 수 있다고 생각해서 webflux를 사용했다.
+AWS S3와의 통신은 CompletableFuture를 사용해서 non-blocking하게 만들었다.
+CI/CD와 AWS S3의 diagram을 만들었고 아키텍처를 다듬었다. 그리고 postman을 이용해 API 테스트와 documentation을 했다.
