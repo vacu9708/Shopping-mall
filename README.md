@@ -41,7 +41,7 @@ Sends notifications to users regarding order updates, promotions, etc.
 OrderService.makeOrder() calls: UserService.verifyToken(), ProductService.setStock(), NotificationService.sendEmail()
 
 ## CI/CD
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/f24434fb-b729-49dc-92d6-8addf75069ea)
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/43640b1a-1fe6-4931-84ca-b921e0d085f0)
 
 # API documentation
 https://documenter.getpostman.com/view/26215585/2s93zGzxoL
