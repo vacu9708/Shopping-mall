@@ -23,8 +23,8 @@ Sends notifications to users regarding order updates, promotions, etc.
 - CI/CD to automate building, testing, deployment
 
 # Branching strategy
-- Main: Documentation
-- Release: Pushes to this branch trigger the CI/CD process
+- Main: Documentation, other files
+- Release: Pushes to this sbranch trigger the CI/CD process
 - Development: Merged into the main branch
 - Topics: Merged into the development branch
  
@@ -33,14 +33,14 @@ Sends notifications to users regarding order updates, promotions, etc.
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/f423c72a-6429-41a9-9a2f-3abfdc68d7ca)
 
 ## Class diagram
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/c3251111-2b36-4ef3-8ae2-15191f7f043d)
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/17ee4733-4248-4c57-be9a-9322ac0ce91b)
 
 OrderService.makeOrder() calls: UserService.verifyToken(), ProductService.setStock(), NotificationService.sendEmail()
 
-## CI/CD
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/43640b1a-1fe6-4931-84ca-b921e0d085f0)
+## CI/CD diagram
+![Uploading image.png…]()
 
-## AWS S3
+## AWS S3 diagram
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/e7cb8201-b7ce-413e-a84d-6723a0bb6097)
 
 ## Distributed transactions
