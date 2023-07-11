@@ -33,10 +33,10 @@ Sends notifications to users regarding order updates, promotions, etc.
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/f423c72a-6429-41a9-9a2f-3abfdc68d7ca)
 
 ## Class relationship diagram
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/be81e8f8-5fff-46d8-b6fa-341787ee1b44)
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/bdc4265c-cee2-416e-817e-95689660f2a0)
 
 ## CI/CD diagram
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/4eddfd4f-4234-400f-99ba-1f7b1d6a942b)
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/86c8824c-7680-458f-8e43-0ab68f6d4651)
 
 ## AWS S3 diagram
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/e7cb8201-b7ce-413e-a84d-6723a0bb6097)
