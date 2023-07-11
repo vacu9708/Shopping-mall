@@ -38,7 +38,11 @@ Sends notifications to users regarding order updates, promotions, etc.
 OrderService.makeOrder() calls: UserService.verifyToken(), ProductService.setStock(), NotificationService.sendEmail()
 
 ## CI/CD diagram
+<<<<<<< HEAD
 ![Uploading image.png…]()
+=======
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/4eddfd4f-4234-400f-99ba-1f7b1d6a942b)
+>>>>>>> d425e00956c77b12456ba80509fd8cce476cadd9
 
 ## AWS S3 diagram
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/e7cb8201-b7ce-413e-a84d-6723a0bb6097)
