@@ -3,7 +3,7 @@ USE user_management;
 CREATE TABLE users (
 	`user_id` BINARY(16) DEFAULT(UUID_TO_BIN(UUID())) PRIMARY KEY,
 	`username` VARCHAR(20) NOT NULL UNIQUE,
-	`password` VARCHAR(20) NOT NULL,
+	`password` VARCHAR(65) NOT NULL,
 	`email` VARCHAR(40) NOT NULL
 );
 
