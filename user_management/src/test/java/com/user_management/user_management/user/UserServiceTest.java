@@ -4,9 +4,11 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -14,6 +16,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.user_management.user_management.user.Dto.*;
+
+import io.jsonwebtoken.Jwts;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,7 +34,7 @@ public class UserServiceTest {
     void registerUser_successful() {
         // Given
         UserRegisterDto userRegisterDto = new UserRegisterDto("username", "password", "email");
-        // Mock the userRepository.addUser method to return without throwing an exception
+        //#Mock userRepository.addUser() to return without throwing an exception
         doNothing().when(userRepository).addUser(any(), any(), any());
 
         // When
@@ -44,7 +48,7 @@ public class UserServiceTest {
     void registerUser_failed() {
         // Given
         UserRegisterDto userRegisterDto = new UserRegisterDto("username", "password", "email");
-        // Mock the userRepository.addUser method to throw an exception
+        //#Mock userRepository.addUser() method to throw an exception
         doThrow(RuntimeException.class).when(userRepository).addUser(any(), any(), any());
 
         // When
@@ -57,7 +61,7 @@ public class UserServiceTest {
     void login_successful(){
         // Given
         UserCredentialsDto userCredentialsDto = new UserCredentialsDto("username", "password");
-        // Mock the userRepository.findByUsername method to return a user entity
+        //#Mock userRepository.findByUsername() to return a user entity
         String hashedPassword = new BCryptPasswordEncoder().encode("password");
         UserEntity userEntity = new UserEntity(UUID.randomUUID(), "username", hashedPassword, "email");
         when(userRepository.findByUsername(any())).thenReturn(userEntity);
@@ -73,7 +77,7 @@ public class UserServiceTest {
     void login_wrongPassword(){
         // Given
         UserCredentialsDto userCredentialsDto = new UserCredentialsDto("username", "wrong_password");
-        // Mock the userRepository.findByUsername method to return a user entity
+        //#Mock userRepository.findByUsername() to return a user entity
         String hashedPassword = new BCryptPasswordEncoder().encode("password");
         UserEntity userEntity = new UserEntity(UUID.randomUUID(), "username", hashedPassword, "email");
         when(userRepository.findByUsername(any())).thenReturn(userEntity);
@@ -86,7 +90,7 @@ public class UserServiceTest {
     void login_userNotExisting(){
         // Given
         UserCredentialsDto userCredentialsDto = new UserCredentialsDto("username", "password");
-        // Mock the userRepository.findByUsername method to return null
+        //#Mock userRepository.findByUsername() to return null
         when(userRepository.findByUsername(any())).thenReturn(null);
 
         // When, Then
@@ -96,9 +100,9 @@ public class UserServiceTest {
     @Test
     void verifyToken_successful(){
         // Given
-        // Login to get a token
+        //#Login to get a token
         UserCredentialsDto userCredentialsDto = new UserCredentialsDto("username", "password");
-        // Mock the userRepository.findByUsername method to return a user entity
+        //##Mock userRepository.findByUsername() to return a user entity
         String hashedPassword = new BCryptPasswordEncoder().encode("password");
         UserEntity userEntity = new UserEntity(UUID.randomUUID(), "username", hashedPassword, "email");
         when(userRepository.findByUsername(any())).thenReturn(userEntity);
@@ -112,11 +116,51 @@ public class UserServiceTest {
     }
 
     @Test
+    void verifyToken_invalidToken(){
+        // Given
+        //#Login to get a token
+        UserCredentialsDto userCredentialsDto = new UserCredentialsDto("username", "password");
+        //##Mock userRepository.findByUsername() to return a user entity
+        String hashedPassword = new BCryptPasswordEncoder().encode("password");
+        UserEntity userEntity = new UserEntity(UUID.randomUUID(), "username", hashedPassword, "email");
+        when(userRepository.findByUsername(any())).thenReturn(userEntity);
+
+        Map<String, String> tokens = userService.login(userCredentialsDto);
+
+        // When, Then
+        assertThrows(IllegalArgumentException.class, () -> userService.verifyToken(tokens.get("accessToken") + "invalid"));
+    }
+
+    @Test
+    void verifyToken_expiredToken(){
+        // Given
+        //#JWT contents
+        //##Header
+        Map<String, Object> headers = new HashMap<>();
+        headers.put("typ", "JWT");
+        headers.put("alg", "HS256");
+        //##Acess token expiration time
+        Date tokenExp = new Date();
+        tokenExp.setTime(tokenExp.getTime() - 10);
+
+        //#Generate JWT
+        //##Generate an access token
+        String token = Jwts.builder()
+            .setHeader(headers)
+            .setExpiration(tokenExp)
+            .signWith(userService.jwtKey)
+            .compact();
+
+        // When, Then
+        assertThrows(IllegalArgumentException.class, () -> userService.verifyToken(token));
+    }
+
+    @Test
     void reissueToken_successful(){
         // Given
-        // Login to get a token
+        //#Login to get a token
         UserCredentialsDto userCredentialsDto = new UserCredentialsDto("username", "password");
-        // Mock the userRepository.findByUsername method to return a user entity
+        //##Mock userRepository.findByUsername() to return a user entity
         String hashedPassword = new BCryptPasswordEncoder().encode("password");
         UserEntity userEntity = new UserEntity(UUID.randomUUID(), "username", hashedPassword, "email");
         when(userRepository.findByUsername(any())).thenReturn(userEntity);
@@ -133,9 +177,9 @@ public class UserServiceTest {
     @Test
     void deleteUser_successful(){
         // Given
-        // Login to get a token
+        //##Login to get a token
         UserCredentialsDto userCredentialsDto = new UserCredentialsDto("username", "password");
-        // Mock the userRepository.findByUsername method to return a user entity
+        //###Mock userRepository.findByUsername() to return a user entity
         String hashedPassword = new BCryptPasswordEncoder().encode("password");
         UserEntity userEntity = new UserEntity(UUID.randomUUID(), "username", hashedPassword, "email");
         when(userRepository.findByUsername(any())).thenReturn(userEntity);
