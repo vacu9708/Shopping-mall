@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Axios POST Request Example</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <button onclick="registerUser()">registerUser</button>
+    <button onclick="deleteUser()">deleteUser</button>
+    <button onclick="login()">login</button>
+    <button onclick="verifyToken()">verifyToken</button>
+    <button onclick="testRedis()">testRedis</button>
+    <button onclick="downloadImage()">downloadImage</button>
+    <input type="file" id="imageInput" onChange="onImageChange()">
+    <img alt="image" id="downloadedImage">
+    <script>
+        const userData = {
+            username: "qwe",
+            password: "123",
+            email: "qwe123@naver.com"
+        };
+
+        function registerUser() {
+            axios.post('registerUser', userData)
+            .then(response => {
+                console.log(response.data);
+            })
+        }
+
+        function login() {
+            axios.post('login', userData)
+            .then(response => {
+                console.log(response.data);
+                sessionStorage.setItem("accessToken", response.data.accessToken)
+                sessionStorage.setItem("refreshToken", response.data.refreshToken)
+            })
+        }
+
+        function verifyToken() {
+            axios.get('verifyToken', {
+                headers: {'accessToken': sessionStorage.getItem('accessToken')}
+            })
+            .then(response => {
+                console.log(response.data);
+            })
+        }
+
+        function deleteUser() {
+            axios.delete('user/qwe')
+            .then(response => {
+                console.log(response.data);
+            })
+        }
+
+        function testRedis(){
+            axios.get('testRedis/myKey/myValue')
+            .then(response => {
+                console.log(response.data);
+            })
+        }
+    </script>
+</body>
+</html>
