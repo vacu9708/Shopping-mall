@@ -4,6 +4,8 @@ import java.util.Map;
 
 import org.springframework.web.bind.annotation.*;
 
+import com.user_management.user_management.user.Dto.*;
+
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -12,7 +14,7 @@ public class UserController {
     final UserService userService;
 
     @PostMapping("/registerUser")
-    boolean registerUser(@RequestBody UserCredentialsDto userCredentialsDto) {
+    boolean registerUser(@RequestBody UserRegisterDto userCredentialsDto) {
         return userService.registerUser(userCredentialsDto);
     }
 
@@ -22,7 +24,7 @@ public class UserController {
     }
 
     @GetMapping("/verifyToken")
-    String verifyToken(@RequestHeader("accessToken") UserCredentialsDto accessToken) {
+    String verifyToken(@RequestHeader("accessToken") String accessToken) {
         return userService.verifyToken(accessToken);
     }
 
