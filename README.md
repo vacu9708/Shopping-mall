@@ -17,11 +17,6 @@ Sends notifications to users regarding order updates, promotions, etc.
 - **Recommendations Service**: Provides personalized product recommendations to users based on their browsing and purchase history.
 - **Analytics Service**: Collects and analyzes data on user behavior, sales trends, and other metrics to gain insights and make data-driven decisions.
 
-# Development methdologies
-- Domain Driven Development for high cohesion
-- Test Driven Development using JUnit including e2e tests and stress tests to be confident after code modifications
-- CI/CD to automate building, testing, deployment
-
 # Branching strategy
 - Main: Documentation, other files
 - Release: Pushes to this sbranch trigger the CI/CD process
@@ -33,7 +28,7 @@ Sends notifications to users regarding order updates, promotions, etc.
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/f423c72a-6429-41a9-9a2f-3abfdc68d7ca)
 
 ## Class relationship diagram
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/bdc4265c-cee2-416e-817e-95689660f2a0)
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/3cf73012-c2f3-4d80-a52c-97f4de67bd4f)
 
 ## CI/CD diagram
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/86c8824c-7680-458f-8e43-0ab68f6d4651)
@@ -58,6 +53,10 @@ Next.js, (redux?)
 ## Backend
 Spring boot
 
+## Spring cloud gateway
+Spring cloud gateway acts as a router and forwards incoming requests to the appropriate downstream microservices based on the defined routes.<br>
+It is combined with resilience4j, which monitors the calls to external services. If a particular service fails or responds slowly, it trips the circuit breaker, preventing further calls to that service.
+
 ## Database
 MySQL
 
@@ -65,9 +64,17 @@ MySQL
 - For storing data good to cache such as refresh tokens, wishlist, shopping cart
 - Rate limit
 
-## Spring cloud gateway
-Spring cloud gateway acts as a router and forwards incoming requests to the appropriate downstream microservices based on the defined routes.<br>
-It is combined with resilience4j, which monitors the calls to external services. If a particular service fails or responds slowly, it trips the circuit breaker, preventing further calls to that service.
+## JWT
+For decoupled auth service facilitating easier load balanacing
+
+## Webflux, CompletableFuture
+For non-blocking communication across microservices
+
+## Kafka
+For decoupled communication between microservices for scenarios such as order notifications.
+
+## Testing
+Junit
 
 ## Docker
 For containerizing individual microservices
@@ -81,15 +88,6 @@ CI/CD pipelines are used to automate build, testing and deployment process.
 
 ## Postman
 For API testing and documentation
-
-## JWT
-For decoupled auth service facilitating easier load balanacing
-
-## Webflux, CompletableFuture
-For non-blocking communication across microservices
-
-## Kafka
-For decoupled communication between microservices for scenarios such as order notifications.
 
 ## Kubernetes (to be implemented later)
 - `Scalibility`: Kubernetes allows services to be easily scaled horizontally across a cluster of machines by adding or removing instances based on demand.
