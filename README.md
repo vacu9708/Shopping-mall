@@ -1,13 +1,13 @@
 # The shopping mall consists of these microservices
 ### API gateway (port: 8080)
 Acts as a single entry point for clients, routing requests to the appropriate microservices, including rate limiter and circuit breaker 
-### User management (port: 8081)
+### Order management (port: 8081)
+Handles order processing, payment processing (The refund feature will be added later)
+### User management (port: 8082)
 Handles user registration, auth, etc.
-### Product management (port: 8082)
+### Product management (port: 8083)
 1. Manages the inventory, including tracking stock levels, and triggering alerts for low stock.
 2. Manages the catalog of products available in the shopping mall, including product information, availability, and search functionality.
-### Order management (port: 8083)
-Handles order processing, payment processing (The refund feature will be added later)
 ### Notification (port: 8084)
 Sends notifications to users regarding order updates, promotions, etc.
 
