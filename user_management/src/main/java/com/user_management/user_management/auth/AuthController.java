@@ -29,8 +29,8 @@ public class AuthController {
     }
 
     @GetMapping("/addInBlacklist")
-    boolean addInBlacklist(String userId) {
-        return authService.addInBlacklist(userId);
+    boolean addInBlacklist(@RequestHeader("accessToken") String accessToken, String username) {
+        return authService.addInBlacklist(accessToken, username);
     }
 
     @GetMapping("/reissueToken")
