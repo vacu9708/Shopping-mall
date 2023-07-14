@@ -1,40 +1,45 @@
-package com.user_management.user_management.user;
+package com.user_management.user_management.auth;
 
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.*;
 
-import com.user_management.user_management.user.Dto.*;
+import com.user_management.user_management.auth.Dto.*;
 
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-public class UserController {
-    final UserService userService;
+public class AuthController {
+    final AuthService authService;
 
     @PostMapping("/registerUser")
     boolean registerUser(@RequestBody UserRegisterDto userCredentialsDto) {
-        return userService.registerUser(userCredentialsDto);
+        return authService.registerUser(userCredentialsDto);
     }
 
     @PostMapping("/login")
     Map<String, String> login(@RequestBody UserCredentialsDto userCredentialsDto) {
-        return userService.login(userCredentialsDto);
+        return authService.login(userCredentialsDto);
     }
 
     @GetMapping("/verifyToken")
     String verifyToken(@RequestHeader("accessToken") String accessToken) {
-        return userService.verifyToken(accessToken);
+        return authService.verifyToken(accessToken);
+    }
+
+    @GetMapping("/addInBlacklist")
+    boolean addInBlacklist(String userId) {
+        return authService.addInBlacklist(userId);
     }
 
     @GetMapping("/reissueToken")
     Map<String, String> reissueToken(@RequestHeader("refreshToken") String refreshToken) {
-        return userService.reissueToken(refreshToken);
+        return authService.reissueToken(refreshToken);
     }
 
     @DeleteMapping("/user")
     boolean deleteUser(@RequestHeader("accessToken") String accessToken) {
-        return userService.deleteUser(accessToken);
+        return authService.deleteUser(accessToken);
     }
 }
