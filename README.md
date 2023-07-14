@@ -32,7 +32,7 @@ Sends notifications to users regarding order updates, promotions, etc.
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/f423c72a-6429-41a9-9a2f-3abfdc68d7ca)
 
 ## Class relationship diagram
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/7896521d-7fcc-49c0-bc81-9c4f885aa08b)
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/17349e56-2384-4227-894a-69b048861ab7)
 
 ## CI/CD diagram
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/86c8824c-7680-458f-8e43-0ab68f6d4651)
