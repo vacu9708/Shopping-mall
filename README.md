@@ -1,13 +1,17 @@
 # The shopping mall consists of these microservices
 ### API gateway (port: 8080)
 Acts as a single entry point for clients, routing requests to the appropriate microservices, including rate limiter and circuit breaker 
+
 ### Order management (port: 8081)
 Handles order processing, payment processing (The refund feature will be added later)
-### User management (port: 8082)
+
+### User management (port: 8082) [API documentation](https://documenter.getpostman.com/view/26215585/2s946eBu67)
 Handles user registration, auth, etc.
+
 ### Product management (port: 8083)
 1. Manages the inventory, including tracking stock levels, and triggering alerts for low stock.
 2. Manages the catalog of products available in the shopping mall, including product information, availability, and search functionality.
+
 ### Notification (port: 8084)
 Sends notifications to users regarding order updates, promotions, etc.
 
@@ -108,6 +112,3 @@ Logstash can parse, filter, and transform log data before sending it to Elastics
 
 - `Kibana`: Visualization and Dashboards
 ---
-
-# API documentation
-https://documenter.getpostman.com/view/26215585/2s93zGzxoL
