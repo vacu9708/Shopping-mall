@@ -57,12 +57,12 @@ public class AuthService {
         // Check if the admin access token is valid
         UUID userId = UUID.fromString(verifyToken(accessToken));
         UserEntity userEntity = authRepository.findByUserId(userId);
-        if(userEntity == null || !userEntity.username.equals("admin"))
+        if(userEntity == null || !userEntity.getUsername().equals("admin"))
             throw new IllegalArgumentException("Invalid admin");
 
         // Block the request if the access token is blacklisted
         try{
-            redisTemplate.opsForValue().set(username, "X", 43200000, TimeUnit.MINUTES); // 12hours
+            redisTemplate.opsForValue().set(username, "X", 43200000, TimeUnit.MILLISECONDS); // 12hours
             // redisTemplate.opsForValue().getOperations().expireAt(userId, new Date(System.currentTimeMillis() + 43200000));
             return true;
         } catch (Exception e) {

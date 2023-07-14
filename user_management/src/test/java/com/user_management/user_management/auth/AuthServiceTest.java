@@ -111,15 +111,16 @@ public class AuthServiceTest {
     @Test
     void addInBlacklist_successful(){
         // Given
-        String accessToken = JwtUtils.generateToken(UUID.randomUUID().toString(), 900000);
+        UUID userId = UUID.randomUUID();
+        String accessToken = JwtUtils.generateToken(userId.toString(), 900000);
         // Mock authRepository.findByUsername() to return a user entity
-        UserEntity userEntity = new UserEntity(UUID.randomUUID(), "admin", "password", "email");
-        when(authRepository.findByUsername(any())).thenReturn(userEntity);
+        UserEntity userEntity = new UserEntity(userId, "admin", "password", "email");
+        when(authRepository.findByUserId(any())).thenReturn(userEntity);
         // Mock redisTemplate
         when(redisTemplate.opsForValue()).thenReturn(valueOperations);
         doNothing().when(valueOperations).set(any(), any());       
         // When
-        boolean result = authService.addInBlacklist(accessToken, userEntity.username);
+        boolean result = authService.addInBlacklist(accessToken, userEntity.getUsername());
         // Then
         assertTrue(result, "Adding in blacklist should be successful");
     }
