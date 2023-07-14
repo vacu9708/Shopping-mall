@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -38,8 +37,8 @@ public class AuthService {
     }
 
     Map<String, String> login(UserCredentialsDto userCredentialsDto) {
+        // Check if the user exists and the password is correct
         UserEntity userEntity = authRepository.findByUsername(userCredentialsDto.getUsername());
-        // Check if the user exists
         if(userEntity == null || !new BCryptPasswordEncoder().matches(userCredentialsDto.getPassword(), userEntity.getPassword()))
             throw new IllegalArgumentException("Invalid username or password");
 
@@ -54,9 +53,16 @@ public class AuthService {
         return tokens;
     }
 
-    boolean addInBlacklist(String userId) {
+    boolean addInBlacklist(String accessToken, String username) {
+        // Check if the admin access token is valid
+        UUID userId = UUID.fromString(verifyToken(accessToken));
+        UserEntity userEntity = authRepository.findByUserId(userId);
+        if(userEntity == null || !userEntity.username.equals("admin"))
+            throw new IllegalArgumentException("Invalid admin");
+
+        // Block the request if the access token is blacklisted
         try{
-            redisTemplate.opsForValue().set(userId, "X", 43200000, TimeUnit.MINUTES); // 12hours
+            redisTemplate.opsForValue().set(username, "X", 43200000, TimeUnit.MINUTES); // 12hours
             // redisTemplate.opsForValue().getOperations().expireAt(userId, new Date(System.currentTimeMillis() + 43200000));
             return true;
         } catch (Exception e) {

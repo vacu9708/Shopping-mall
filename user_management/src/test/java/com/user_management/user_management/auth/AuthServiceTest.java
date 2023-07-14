@@ -36,9 +36,10 @@ public class AuthServiceTest {
     
     static final Logger logger = LoggerFactory.getLogger(AuthServiceTest.class);
 
-    // public AuthServiceTest() { // Manual mock injection
+    // public AuthServiceTest() { // doesn't work
     //     MockitoAnnotations.openMocks(this);
-    //     authService = new AuthService(authRepository, redisTemplate);
+    //     JwtUtils = new JwtUtils();
+    //     authService = new AuthService(authRepository, redisTemplate, JwtUtils);
     // }
 
     // @BeforeEach
@@ -56,7 +57,6 @@ public class AuthServiceTest {
         boolean result = authService.registerUser(userRegisterDto);
         // Then
         assertTrue(result, "User registration should be successful");
-
     }
 
     @Test
@@ -110,11 +110,16 @@ public class AuthServiceTest {
 
     @Test
     void addInBlacklist_successful(){
-        // Mock
+        // Given
+        String accessToken = JwtUtils.generateToken(UUID.randomUUID().toString(), 900000);
+        // Mock authRepository.findByUsername() to return a user entity
+        UserEntity userEntity = new UserEntity(UUID.randomUUID(), "admin", "password", "email");
+        when(authRepository.findByUsername(any())).thenReturn(userEntity);
+        // Mock redisTemplate
         when(redisTemplate.opsForValue()).thenReturn(valueOperations);
         doNothing().when(valueOperations).set(any(), any());       
         // When
-        boolean result = authService.addInBlacklist(UUID.randomUUID().toString());
+        boolean result = authService.addInBlacklist(accessToken, userEntity.username);
         // Then
         assertTrue(result, "Adding in blacklist should be successful");
     }
@@ -157,6 +162,17 @@ public class AuthServiceTest {
         // Then
         assertNotNull(result.get("accessToken"), "Access token should not be null");
         assertNotNull(result.get("refreshToken"), "Refresh token should not be null");
+    }
+
+    @Test
+    void reissueToken_blacklistFail(){
+        // Given
+        String refreshToken = JwtUtils.generateToken(UUID.randomUUID().toString(), 43200000);
+        // Mock
+        when(redisTemplate.opsForValue()).thenReturn(valueOperations);
+        when(valueOperations.get(any())).thenReturn("X");
+        // When, Then
+        assertThrows(IllegalArgumentException.class, () -> authService.reissueToken(refreshToken));
     }
 
     @Test
