@@ -7,15 +7,18 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@Entity
+@Entity(name = "users")
 @AllArgsConstructor
+@NoArgsConstructor
 public class UserEntity  {
     @Id
     // @GeneratedValue
     // @Column(columnDefinition = "BINARY(16)")
     UUID userId;
+    @Column(unique = true)
     String username;
     String password;
     String email;
