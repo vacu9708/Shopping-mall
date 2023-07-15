@@ -5,7 +5,7 @@ Acts as a single entry point for clients, routing requests to the appropriate mi
 ### Order management (port: 8081)
 Handles order processing, payment processing (The refund feature will be added later)
 
-### User management (port: 8082) [API documentation](https://documenter.getpostman.com/view/26215585/2s946eBu67)
+### User management (port: 8082)
 Handles user registration, auth, etc.
 
 ### Product management (port: 8083)
@@ -49,6 +49,9 @@ The term "saga" in saga pattern refers to a sequence of distributed transactions
 4. `Completion`: The saga concludes when all the steps are either successfully completed or compensated.
 
 ---
+
+## API documentation
+https://youngsiks-organization.gitbook.io/shopping_mall/
 
 # Used things
 ## Basic frontend
