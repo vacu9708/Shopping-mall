@@ -53,6 +53,8 @@ The term "saga" in saga pattern refers to a sequence of distributed transactions
 ## API documentation
 https://youngsiks-organization.gitbook.io/shopping_mall/
 
+---
+
 # Used things
 ## Basic frontend
 Next.js, (redux?)
