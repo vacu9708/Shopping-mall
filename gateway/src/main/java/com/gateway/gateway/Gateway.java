@@ -20,7 +20,7 @@ public class Gateway {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedOrigins("*") // Replace this with specific origin URLs if needed
-                        .allowedMethods("GET", "POST", "PUT", "DELETE");
+                        .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE");
                         // .allowedHeaders("*")
                         // .allowCredentials(false)
                         // .maxAge(3600);
@@ -37,19 +37,31 @@ public class Gateway {
 	public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
 		return builder.routes()
 			// .route("order_management", r -> r.path("/order_management/**")
-			// 	.filters(f -> f.rewritePath("/order_management/(?<path>.*)", "/${path}")) // Convert /order_management/abc to /abc
-			// 	.uri("http://order_management:8083/")
+			// 	.uri("http://localhost:8081/")
 			// )
-			.route("user_management", r -> r.path("/user_management/**")
+			// .route("user_management", r -> r.path("/user_management/**")
+			// 	.uri("http://localhost:8082/")
+			// )
+			// .route("product_management", r -> r.path("/product_management/**")
+			// 	.uri("http://localhost:8083/")
+			// )
+			// .route("notification", r -> r.path("/notification/**")
+			// 	.uri("http://localhost:8084/")
+			// )
+			.route("order_management", r -> r.path("/order_management/**")
+				.filters(f -> f.rewritePath("/order_management/(?<path>.*)", "/${path}")) // Convert /order_management/abc to /abc
 				.uri("http://localhost:8081/")
 			)
-			.route("product_management", r -> r.path("/product_management/**")
+			.route("user_management", r -> r.path("/user_management/**")
+				.filters(f -> f.rewritePath("/user_management/(?<path>.*)", "/${path}"))
 				.uri("http://localhost:8082/")
 			)
-			.route("order_management", r -> r.path("/order_management/**")
+			.route("product_management", r -> r.path("/product_management/**")
+				.filters(f -> f.rewritePath("/product_management/(?<path>.*)", "/${path}"))
 				.uri("http://localhost:8083/")
 			)
 			.route("notification", r -> r.path("/notification/**")
+				.filters(f -> f.rewritePath("/notification/(?<path>.*)", "/${path}"))
 				.uri("http://localhost:8084/")
 			)
 			.route(p -> p

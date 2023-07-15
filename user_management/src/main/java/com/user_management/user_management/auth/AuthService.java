@@ -5,9 +5,13 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.catalina.connector.Response;
+import org.hibernate.DuplicateMappingException;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.UnexpectedRollbackException;
 
 import com.user_management.user_management.auth.Dto.*;
 import com.user_management.user_management.auth.Utils.JwtUtils;
@@ -24,67 +28,68 @@ public class AuthService {
     final RedisTemplate<String, String> redisTemplate;
 
     @Transactional
-    boolean registerUser(UserRegisterDto UserRegisterDto) {
-        System.out.println(UserRegisterDto);
-        String hashedPassword = new BCryptPasswordEncoder().encode(UserRegisterDto.getPassword());
-        try{
-            authRepository.addUser(UserRegisterDto.getUsername(), hashedPassword, UserRegisterDto.getEmail());
-            return true;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return false;
-        }
+    ResponseEntity<String> registerUser(UserRegisterDto userRegisterDto) {
+        // Check if the username already exists
+        if(authRepository.findByUsername(userRegisterDto.getUsername()) != null)
+            return ResponseEntity.badRequest().body("USERNAME_EXISTS");
+
+        String hashedPassword = new BCryptPasswordEncoder().encode(userRegisterDto.getPassword());
+        authRepository.addUser(userRegisterDto.getUsername(), hashedPassword, userRegisterDto.getEmail());
+        return ResponseEntity.ok("OK");
     }
 
-    Map<String, String> login(UserCredentialsDto userCredentialsDto) {
+    ResponseEntity<?> login(UserCredentialsDto userCredentialsDto) {
         // Check if the user exists and the password is correct
         UserEntity userEntity = authRepository.findByUsername(userCredentialsDto.getUsername());
         if(userEntity == null || !new BCryptPasswordEncoder().matches(userCredentialsDto.getPassword(), userEntity.getPassword()))
-            throw new IllegalArgumentException("Invalid username or password");
+            return ResponseEntity.badRequest().body("INVALID_CREDENTIALS");
+
+        // Check if the user has been blacklisted
+        // if(redisTemplate.opsForValue().get(userEntity.getUserId().toString()) != null)
+        //     return ResponseEntity.badRequest().body("User has been blacklisted");
 
         // Generate tokens
-        String accessToken = JwtUtils.generateToken(userEntity.getUserId().toString(), 900000); // 15 minutes
-        String refreshToken = JwtUtils.generateToken(userEntity.getUserId().toString(), 43200000); // 12 hours
+        String username = userEntity.getUserId().toString();
+        String accessToken = JwtUtils.generateToken(username, 900000); // 15 minutes
+        String refreshToken = JwtUtils.generateToken(username, 43200000); // 12 hours
         
         // Return tokens
-        Map<String, String> tokens = new HashMap<>();
-        tokens.put("accessToken", accessToken);
-        tokens.put("refreshToken", refreshToken);
-        return tokens;
+        return ResponseEntity.ok(new TokenPairDto(accessToken, refreshToken));
     }
 
-    boolean addInBlacklist(String accessToken, String username) {
-        // Check if the admin access token is valid
-        UUID userId = UUID.fromString(verifyToken(accessToken));
-        UserEntity userEntity = authRepository.findByUserId(userId);
-        if(userEntity == null || !userEntity.getUsername().equals("admin"))
-            throw new IllegalArgumentException("Invalid admin");
-
-        // Block the request if the access token is blacklisted
-        try{
-            redisTemplate.opsForValue().set(username, "X", 43200000, TimeUnit.MILLISECONDS); // 12hours
-            // redisTemplate.opsForValue().getOperations().expireAt(userId, new Date(System.currentTimeMillis() + 43200000));
-            return true;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return false;
-        }
-    }
-    String verifyToken(String accessToken) {
+    ResponseEntity<String> verifyToken(String accessToken) {
         try{
             Claims accessTokenClaims = JwtUtils.getTokenClaims(accessToken);
-            return accessTokenClaims.get("userId", String.class);
+            return ResponseEntity.ok(accessTokenClaims.get("userId", String.class));
         } catch (ExpiredJwtException e) {
-            throw new IllegalArgumentException("Token has expired");
+            return ResponseEntity.badRequest().body("EXPIRED_TOKEN");
             // return "Access token has expired";
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new IllegalArgumentException("Invalid token");
+            return ResponseEntity.badRequest().body("INVALID_TOKEN");
         }
     }
     
-
-    Map<String, String> reissueToken(String refreshToken) {
+    ResponseEntity<String> addInBlacklist(String accessToken, String username) {
+        // if the access token is invalid, return bad request
+        ResponseEntity<String> response = verifyToken(accessToken);
+        if(response.getStatusCode().value() != 200)
+            return ResponseEntity.badRequest().body("INVALID_TOKEN");
+        // if the access token is not from admin, return bad request
+        UUID adminId = UUID.fromString(response.getBody());
+        UserEntity adminEntity = authRepository.findByUserId(adminId);
+        if(adminEntity == null || !adminEntity.getUsername().equals("admin"))
+            return ResponseEntity.badRequest().body("NOT_ADMIN");
+        // Blacklist the user
+        UserEntity userEntity = authRepository.findByUsername(username);
+        if(userEntity == null)
+            return ResponseEntity.badRequest().body("USER_NOT_FOUND");
+        redisTemplate.opsForValue().set(userEntity.getUserId().toString(), "X", 43200000, TimeUnit.MILLISECONDS); // 12hours
+        // redisTemplate.opsForValue().set(username, "X");
+        // redisTemplate.opsForValue().getOperations().expireAt(userId, new Date(System.currentTimeMillis() + 43200000));
+        return ResponseEntity.ok("OK");
+    }
+    
+    ResponseEntity<?> reissueToken(String refreshToken) {
         Claims refreshTokenClaims;
         String userId;
         try{
@@ -94,35 +99,33 @@ public class AuthService {
             // if(refreshTokenClaims.getExpiration().before(new Date()))
             //     throw new IllegalArgumentException("Refresh token has expired");
         } catch (ExpiredJwtException e) {
-            throw new IllegalArgumentException("Token has expired");
+            return ResponseEntity.badRequest().body("EXPIRED_TOKEN");
         } catch (Exception e) {
-            throw new IllegalArgumentException("Invalid token");
+            return ResponseEntity.badRequest().body("INVALID_TOKEN");
         }
 
         // Block the request if the refresh token is blacklisted
+        // System.out.println(redisTemplate.opsForValue().get(userId));
         if(redisTemplate.opsForValue().get(userId) != null)
-            throw new IllegalArgumentException("Refresh token has been blacklisted");
+            return ResponseEntity.badRequest().body("USER_BLACKLISTED");
 
         // Generate tokens
         String newAccessToken = JwtUtils.generateToken(userId, 900000);
         String newRefreshToken = JwtUtils.generateToken(userId, 43200000);
         
         // Return tokens
-        Map<String, String> tokens = new HashMap<>();
-        tokens.put("accessToken", newAccessToken);
-        tokens.put("refreshToken", newRefreshToken);
-        return tokens;
+        return ResponseEntity.ok(new TokenPairDto(newAccessToken, newRefreshToken));
     }
 
-    boolean deleteUser(String accessToken) {
-        UUID userId = UUID.fromString(verifyToken(accessToken));
-        try{
-            authRepository.deleteByUserId(userId);
-            return true;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return false;
-        }
+    @Transactional
+    ResponseEntity<String> deleteUser(String accessToken) {
+        // if the access token is invalid, return bad request
+        ResponseEntity<String> response = verifyToken(accessToken);
+        if(response.getStatusCode().value() != 200)
+            return ResponseEntity.badRequest().body("INVALID_TOKEN");
+        // Delete the user
+        UUID userId = UUID.fromString(response.getBody());
+        authRepository.deleteByUserId(userId);
+        return ResponseEntity.ok("OK");
     }
-    
 }

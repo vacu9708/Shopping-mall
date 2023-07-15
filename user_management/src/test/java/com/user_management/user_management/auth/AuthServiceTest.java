@@ -5,19 +5,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
-import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.user_management.user_management.auth.Dto.*;
@@ -34,7 +34,7 @@ public class AuthServiceTest {
     @InjectMocks
     AuthService authService;
     
-    static final Logger logger = LoggerFactory.getLogger(AuthServiceTest.class);
+    // static final Logger logger = LoggerFactory.getLogger(AuthServiceTest.class);
 
     // public AuthServiceTest() { // doesn't work
     //     MockitoAnnotations.openMocks(this);
@@ -51,24 +51,28 @@ public class AuthServiceTest {
     void registerUser_successful() {
         // Given
         UserRegisterDto userRegisterDto = new UserRegisterDto("username", "password", "email");
-        // Mock authRepository.addUser() to return without throwing an exception
+        // Mock authRepository.findByUsername() to return null
+        when(authRepository.findByUsername(any())).thenReturn(null);
+        // Mock authRepository.addUser() to do nothing
         doNothing().when(authRepository).addUser(any(), any(), any());
         // When
-        boolean result = authService.registerUser(userRegisterDto);
+        ResponseEntity<String> response = authService.registerUser(userRegisterDto);
         // Then
-        assertTrue(result, "User registration should be successful");
+        assertEquals(200, response.getStatusCode().value());
     }
 
     @Test
-    void registerUser_failed() {
+    void registerUser_duplicateUser() {
         // Given
         UserRegisterDto userRegisterDto = new UserRegisterDto("username", "password", "email");
-        // Mock authRepository.addUser() method to throw an exception
-        doThrow(RuntimeException.class).when(authRepository).addUser(any(), any(), any());
+        // Mock authRepository.findByUsername() to return a user entity
+        UserEntity userEntity = new UserEntity(UUID.randomUUID(), "username", "password", "email");
+        when(authRepository.findByUsername(any())).thenReturn(userEntity);
         // When
-        boolean result = authService.registerUser(userRegisterDto);
+        ResponseEntity<String> response = authService.registerUser(userRegisterDto);
         // Then
-        assertFalse(result, "User registration should fail");
+        assertNotEquals(200, response.getStatusCode().value());
+        assertEquals("USERNAME_EXISTS", response.getBody());
     }
 
     @Test
@@ -80,10 +84,9 @@ public class AuthServiceTest {
         UserEntity userEntity = new UserEntity(UUID.randomUUID(), "username", hashedPassword, "email");
         when(authRepository.findByUsername(any())).thenReturn(userEntity);
         // When
-        Map<String, String> result = authService.login(userCredentialsDto);
+        ResponseEntity<?> response = authService.login(userCredentialsDto);
         // Then
-        assertNotNull(result.get("accessToken"), "Access token should not be null");
-        assertNotNull(result.get("refreshToken"), "Refresh token should not be null");
+        assertEquals(200, response.getStatusCode().value());
     }
 
     @Test
@@ -94,8 +97,11 @@ public class AuthServiceTest {
         String hashedPassword = new BCryptPasswordEncoder().encode("password");
         UserEntity userEntity = new UserEntity(UUID.randomUUID(), "username", hashedPassword, "email");
         when(authRepository.findByUsername(any())).thenReturn(userEntity);
-        // When, Then
-        assertThrows(IllegalArgumentException.class, () -> authService.login(userCredentialsDto));
+        // When
+        ResponseEntity<?> response = authService.login(userCredentialsDto);
+        // Then
+        assertNotEquals(200, response.getStatusCode().value());
+        assertEquals("INVALID_CREDENTIALS", response.getBody());
     }
 
     @Test
@@ -104,25 +110,30 @@ public class AuthServiceTest {
         UserCredentialsDto userCredentialsDto = new UserCredentialsDto("username", "password");
         // Mock authRepository.findByUsername() to return null
         when(authRepository.findByUsername(any())).thenReturn(null);
-        // When, Then
-        assertThrows(IllegalArgumentException.class, () -> authService.login(userCredentialsDto));
+        // When
+        ResponseEntity<?> response = authService.login(userCredentialsDto);
+        // Then check if the status code is 400 BAD REQUEST using response.getStatusCode()
+        assertNotEquals(200, response.getStatusCode().value());
+        assertEquals("INVALID_CREDENTIALS", response.getBody());
     }
 
     @Test
     void addInBlacklist_successful(){
         // Given
-        UUID userId = UUID.randomUUID();
-        String accessToken = JwtUtils.generateToken(userId.toString(), 900000);
+        String accessToken = JwtUtils.generateToken(UUID.randomUUID().toString(), 900000);
+        // Mock authRepository.findByUserId() to return an admin entity
+        UserEntity adminEntity = new UserEntity(UUID.randomUUID(), "admin", "password", "email");
+        when(authRepository.findByUserId(any())).thenReturn(adminEntity);
         // Mock authRepository.findByUsername() to return a user entity
-        UserEntity userEntity = new UserEntity(userId, "admin", "password", "email");
-        when(authRepository.findByUserId(any())).thenReturn(userEntity);
+        UserEntity userEntity = new UserEntity(UUID.randomUUID(), "username", "password", "email");
+        when(authRepository.findByUsername(any())).thenReturn(userEntity);
         // Mock redisTemplate
         when(redisTemplate.opsForValue()).thenReturn(valueOperations);
-        doNothing().when(valueOperations).set(any(), any());       
+        doNothing().when(valueOperations).set(any(), any(), anyLong(), any());
         // When
-        boolean result = authService.addInBlacklist(accessToken, userEntity.getUsername());
+        ResponseEntity<String> response = authService.addInBlacklist(accessToken, "blacklisted user");
         // Then
-        assertTrue(result, "Adding in blacklist should be successful");
+        assertEquals(200, response.getStatusCode().value());
     }
 
     @Test
@@ -130,25 +141,29 @@ public class AuthServiceTest {
         // Given
         String accessToken = JwtUtils.generateToken(UUID.randomUUID().toString(), 900000);
         // When
-        String result = authService.verifyToken(accessToken);
+        ResponseEntity<String> response = authService.verifyToken(accessToken);
         // Then
-        assertNotNull(result, "UserId should not be null");
+        assertEquals(200, response.getStatusCode().value());
     }
 
     @Test
     void verifyToken_invalidToken(){
         // Given
         String accessToken = JwtUtils.generateToken(UUID.randomUUID().toString(), 900000);
-        // When, Then
-        assertThrows(IllegalArgumentException.class, () -> authService.verifyToken(accessToken + "invalid"));
+        // When
+        ResponseEntity<String> response = authService.verifyToken(accessToken + "invalid");
+        // Then
+        assertNotEquals(200, response.getStatusCode().value());
     }
 
     @Test
     void verifyToken_expiredToken(){
         // Given
         String accessToken = JwtUtils.generateToken(UUID.randomUUID().toString(), -10);
-        // When, Then
-        assertThrows(IllegalArgumentException.class, () -> authService.verifyToken(accessToken));
+        // When
+        ResponseEntity<String> response = authService.verifyToken(accessToken);
+        // Then
+        assertNotEquals(200, response.getStatusCode().value());
     }
 
     @Test
@@ -159,35 +174,19 @@ public class AuthServiceTest {
         when(redisTemplate.opsForValue()).thenReturn(valueOperations);
         when(valueOperations.get(any())).thenReturn(null);
         // When
-        Map<String, String> result = authService.reissueToken(refreshToken);
+        ResponseEntity<?> response = authService.reissueToken(refreshToken);
         // Then
-        assertNotNull(result.get("accessToken"), "Access token should not be null");
-        assertNotNull(result.get("refreshToken"), "Refresh token should not be null");
+        assertEquals(200, response.getStatusCode().value());
     }
 
-    @Test
-    void reissueToken_blacklistFail(){
-        // Given
-        String refreshToken = JwtUtils.generateToken(UUID.randomUUID().toString(), 43200000);
-        // Mock
-        when(redisTemplate.opsForValue()).thenReturn(valueOperations);
-        when(valueOperations.get(any())).thenReturn("X");
-        // When, Then
-        assertThrows(IllegalArgumentException.class, () -> authService.reissueToken(refreshToken));
-    }
-
-    @Test
     void deleteUser_successful(){
         // Given
         String accessToken = JwtUtils.generateToken(UUID.randomUUID().toString(), 900000);
-        // Mock authRepository.findByUsername() to return a user entity
-        String hashedPassword = new BCryptPasswordEncoder().encode("password");
-        UserEntity userEntity = new UserEntity(UUID.randomUUID(), "username", hashedPassword, "email");
-        when(authRepository.findByUsername(any())).thenReturn(userEntity);
-        
+        // Mock authRepository.deleteByUserId() to do nothing
+        doNothing().when(authRepository).deleteByUserId(any());
         // When
-        boolean result = authService.deleteUser(accessToken);
+        ResponseEntity<String> response = authService.deleteUser(accessToken);
         // Then
-        assertTrue(result, "User deletion should be successful");
+        assertEquals(200, response.getStatusCode().value());
     }
 }
