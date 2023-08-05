@@ -16,8 +16,8 @@ Handles user registration, auth, etc.
 Sends notifications to users regarding order updates, promotions, etc.
 
 # Branching strategy
-- Main: Documentation, other files
-- Release: Pushes to this sbranch trigger the CI/CD process
+- Main: Documentation, etc
+- Release: Pushes to this branch trigger the Jenkins
 - Development: Merged into the main branch
 - Topics: Merged into the development branch
 
