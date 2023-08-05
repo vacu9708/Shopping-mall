@@ -8,7 +8,7 @@ Next.js, (redux?)
 - `Load balancing`: Kubernetes also includes a load balancer that distributes traffic across multiple instances of a service.
 
 ## Handling large load on the DB
-**Horizontal scaling with load balancing**: Read replicas can handle additional read-only traffic.
+- **Horizontal scaling with load balancing**: Read replicas can handle additional read-only traffic.
 
 ## Monitoring
 ### Logback with Logstash encoder:
