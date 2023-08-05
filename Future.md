@@ -1,4 +1,4 @@
-# Tools to be used in the future
+# Things to be used in the future
 ## Frontend
 Next.js, (redux?)
 
@@ -6,6 +6,9 @@ Next.js, (redux?)
 - `Scalibility`: Kubernetes allows services to be easily scaled horizontally across a cluster of machines by adding or removing instances based on demand.
 - `Service discovery`: Kubernetes provides a service discovery mechanism, allowing services to find and communicate with each other using DNS or environment variables.
 - `Load balancing`: Kubernetes also includes a load balancer that distributes traffic across multiple instances of a service.
+
+## Handling large load on the DB
+**Horizontal scaling with load balancing**: Read replicas can handle additional read-only traffic.
 
 ## Monitoring
 ### Logback with Logstash encoder:
@@ -20,10 +23,6 @@ Elasticsearch can also track the health and performance of the microservices for
 Logstash can parse, filter, and transform log data before sending it to Elasticsearch for storage and analysis.
 
 - `Kibana`: Visualization and Dashboards
-
-# Handling large load on the DB
-### Horizontal scaling with load balancing
-Read replicas can handle additional read-only traffic.
 
 # Microservices to be implemented in the future
 - **Shopping cart and wishlist in the Product management service**
