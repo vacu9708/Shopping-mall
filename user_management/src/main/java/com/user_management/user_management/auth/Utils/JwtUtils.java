@@ -18,11 +18,11 @@ import lombok.NoArgsConstructor;
 public class JwtUtils {
     static Key jwtKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode("aerkjfsdanfjsd9865agcdvhtdf265494651kdnfhfaljkasfdj"));
     
-    public static String generateToken(String userId, int expiredIn){
+    public static String generateToken(Map<String, Object> claims, int expiredIn){
         return Jwts.builder()
             .setHeaderParam("typ", "JWT")
             .setHeaderParam("alg", "HS256")
-            .claim("userId", userId)
+            .addClaims(claims)
             .setExpiration(new Date(System.currentTimeMillis() + expiredIn))
             .signWith(jwtKey)
             .compact();

@@ -1,7 +1,5 @@
 package com.user_management.user_management.auth;
 
-import java.util.Map;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,17 +27,21 @@ public class AuthController {
         return authService.login(userCredentialsDto);
     }
 
-    @GetMapping("/verifyToken")
-    ResponseEntity<String> verifyToken(@RequestHeader("accessToken") String accessToken) {
-        return authService.verifyToken(accessToken);
+    @GetMapping("/verifyAccessToken")
+    ResponseEntity<?> verifyToken(@RequestHeader("accessToken") String accessToken) {
+        return authService.verifyAccessToken(accessToken);
     }
 
     @PostMapping("/addInBlacklist/{username}")
-    ResponseEntity<String> addInBlacklist(@RequestHeader("accessToken") String accessToken, @PathVariable String username) {
-        return authService.addInBlacklist(accessToken, username);
+    ResponseEntity<String> editBlacklist(@RequestHeader("accessToken") String accessToken, @PathVariable String username) {
+        return authService.editBlacklist(accessToken, username, "add");
+    }
+    @DeleteMapping("/removeFromBlacklist/{username}")
+    ResponseEntity<String> removeFromBlacklist(@RequestHeader("accessToken") String accessToken, @PathVariable String username) {
+        return authService.editBlacklist(accessToken, username, "remove");
     }
 
-    @GetMapping("/reissueToken")
+    @GetMapping("/reissueTokens")
     ResponseEntity<?> reissueToken(@RequestHeader("refreshToken") String refreshToken) {
         return authService.reissueToken(refreshToken);
     }
