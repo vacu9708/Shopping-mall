@@ -20,7 +20,8 @@ Sends notifications to users regarding order updates, promotions, etc.
 - Release: Pushes to this sbranch trigger the CI/CD process
 - Development: Merged into the main branch
 - Topics: Merged into the development branch
- 
+
+---
 # Architecture
 ## ER diagram
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/f423c72a-6429-41a9-9a2f-3abfdc68d7ca)
@@ -43,12 +44,10 @@ The term "saga" in saga pattern refers to a sequence of distributed transactions
 4. `Completion`: The saga concludes when all the steps are either successfully completed or compensated.
 
 ---
-
 ## API documentation
 https://youngsiks-organization.gitbook.io/shopping_mall/
 
 ---
-
 # Used things
 ## Backend
 Spring boot
@@ -62,7 +61,7 @@ MySQL
 
 ## Redis
 - For storing data good to cache such as refresh tokens, wishlist, shopping cart
-- Rate limit
+- (Rate limit)
 
 ## JWT
 For decoupled auth service facilitating easier load balanacing
@@ -81,4 +80,5 @@ AWS EC2(for deployment), AWS S3(for storing images)
 
 ## Jenkins
 Jenkins in combination with github webhook, AWS EC2
+
 ---
