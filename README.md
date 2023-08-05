@@ -15,12 +15,6 @@ Handles user registration, auth, etc.
 ### Notification (port: 8084)
 Sends notifications to users regarding order updates, promotions, etc.
 
-### To be implemented in the future:
-- **Shopping cart and wishlist in the Product management service**
-- **Reviews and Ratings Service**: Manages customer reviews and ratings for products, allowing users to provide feedback and make informed decisions.
-- **Recommendations Service**: Provides personalized product recommendations to users based on their browsing and purchase history.
-- **Analytics Service**: Collects and analyzes data on user behavior, sales trends, and other metrics to gain insights and make data-driven decisions.
-
 # Branching strategy
 - Main: Documentation, other files
 - Release: Pushes to this sbranch trigger the CI/CD process
@@ -56,9 +50,6 @@ https://youngsiks-organization.gitbook.io/shopping_mall/
 ---
 
 # Used things
-## Basic frontend
-Next.js, (redux?)
-
 ## Backend
 Spring boot
 
@@ -82,38 +73,12 @@ For non-blocking communication across microservices
 ## Kafka
 For decoupled communication between microservices for scenarios such as order notifications.
 
-## Testing
-Junit
-
 ## Docker
 For containerizing individual microservices
 
 ## Cloud
 AWS EC2(for deployment), AWS S3(for storing images)
 
-## CI/CD
-Jenkins (in combination with github webhook, AWS EC2)<br>
-CI/CD pipelines are used to automate build, testing and deployment process.
-
-## Postman
-For API testing and documentation
-
-## Kubernetes (to be implemented later)
-- `Scalibility`: Kubernetes allows services to be easily scaled horizontally across a cluster of machines by adding or removing instances based on demand.
-- `Service discovery`: Kubernetes provides a service discovery mechanism, allowing services to find and communicate with each other using DNS or environment variables.
-- `Load balancing`: Kubernetes also includes a load balancer that distributes traffic across multiple instances of a service.
-
-## Monitoring and Logging (to be implemented later)
-### Logback with Logstash encoder:
-Logback as the logging framework and a Logstash encoder to format log messages in a way that can be easily consumed by Logstash.
-
-### ELK stack
-- `Elasticsearch`: For log Aggregation, Analysis, and Alerting<br>
-Log data from microservices is sent to Elasticsearch which is a distributed search and analytics.<br>
-Elasticsearch can also track the health and performance of the microservices for alerting.
-
-- `Logstash`: Centralized log collection pipeline<br>
-Logstash can parse, filter, and transform log data before sending it to Elasticsearch for storage and analysis.
-
-- `Kibana`: Visualization and Dashboards
+## Jenkins
+Jenkins in combination with github webhook, AWS EC2
 ---
