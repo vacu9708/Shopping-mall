@@ -18,7 +18,6 @@ public class UserEntity  {
     // @GeneratedValue
     // @Column(columnDefinition = "BINARY(16)")
     UUID userId;
-    @Column(unique = true)
     String username;
     String password;
     String email;

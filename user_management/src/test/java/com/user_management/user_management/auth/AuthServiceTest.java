@@ -12,6 +12,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 import org.springframework.boot.test.context.SpringBootTest;
@@ -83,6 +84,9 @@ public class AuthServiceTest {
         String hashedPassword = new BCryptPasswordEncoder().encode("password");
         UserEntity userEntity = new UserEntity(UUID.randomUUID(), "username", hashedPassword, "email");
         when(authRepository.findByUsername(any())).thenReturn(userEntity);
+        // Mock redis template
+        when(redisTemplate.opsForValue()).thenReturn(valueOperations);
+        when(valueOperations.get(any())).thenReturn(null);
         // When
         ResponseEntity<?> response = authService.login(userCredentialsDto);
         // Then
@@ -118,40 +122,39 @@ public class AuthServiceTest {
     }
 
     @Test
-    void addInBlacklist_successful(){
+    void verifyAccessToken_successful(){
         // Given
-        String accessToken = JwtUtils.generateToken(UUID.randomUUID().toString(), 900000);
-        // Mock authRepository.findByUserId() to return an admin entity
-        UserEntity adminEntity = new UserEntity(UUID.randomUUID(), "admin", "password", "email");
-        when(authRepository.findByUserId(any())).thenReturn(adminEntity);
-        // Mock authRepository.findByUsername() to return a user entity
-        UserEntity userEntity = new UserEntity(UUID.randomUUID(), "username", "password", "email");
-        when(authRepository.findByUsername(any())).thenReturn(userEntity);
-        // Mock redisTemplate
-        when(redisTemplate.opsForValue()).thenReturn(valueOperations);
-        doNothing().when(valueOperations).set(any(), any(), anyLong(), any());
+        HashMap<String, Object> claims = new HashMap<String, Object>();
+        claims.put("userId", UUID.randomUUID().toString());
+        String accessToken = JwtUtils.generateToken(claims, 900000);
         // When
-        ResponseEntity<String> response = authService.addInBlacklist(accessToken, "blacklisted user");
+        ResponseEntity<?> response = authService.verifyAccessToken(accessToken);
         // Then
         assertEquals(200, response.getStatusCode().value());
     }
 
     @Test
-    void verifyToken_successful(){
+    void editBlacklistAdd_successful(){
         // Given
-        String accessToken = JwtUtils.generateToken(UUID.randomUUID().toString(), 900000);
+        HashMap<String, Object> claims = new HashMap<String, Object>();
+        claims.put("userId", UUID.randomUUID());
+        String accessToken = JwtUtils.generateToken(claims, 900000);
+        // Mock authRepository.findByUserId() to return an admin entity
+        UserEntity adminEntity = new UserEntity(UUID.randomUUID(), "admin", "password", "email");
+        when(authRepository.findByUserId(any())).thenReturn(adminEntity);
+        // Mock redisTemplate
+        when(redisTemplate.opsForValue()).thenReturn(valueOperations);
+        doNothing().when(valueOperations).set(any(), any(), anyLong(), any());
         // When
-        ResponseEntity<String> response = authService.verifyToken(accessToken);
+        ResponseEntity<String> response = authService.editBlacklist(accessToken, "blacklisted user", "add");
         // Then
         assertEquals(200, response.getStatusCode().value());
     }
 
     @Test
     void verifyToken_invalidToken(){
-        // Given
-        String accessToken = JwtUtils.generateToken(UUID.randomUUID().toString(), 900000);
         // When
-        ResponseEntity<String> response = authService.verifyToken(accessToken + "invalid");
+        ResponseEntity<?> response = authService.verifyAccessToken("invaild token");
         // Then
         assertNotEquals(200, response.getStatusCode().value());
     }
@@ -159,9 +162,11 @@ public class AuthServiceTest {
     @Test
     void verifyToken_expiredToken(){
         // Given
-        String accessToken = JwtUtils.generateToken(UUID.randomUUID().toString(), -10);
+        HashMap<String, Object> claims = new HashMap<String, Object>();
+        claims.put("userId", UUID.randomUUID());
+        String accessToken = JwtUtils.generateToken(claims, -10);
         // When
-        ResponseEntity<String> response = authService.verifyToken(accessToken);
+        ResponseEntity<?> response = authService.verifyAccessToken(accessToken);
         // Then
         assertNotEquals(200, response.getStatusCode().value());
     }
@@ -169,8 +174,11 @@ public class AuthServiceTest {
     @Test
     void reissueToken_successful(){
         // Given
-        String refreshToken = JwtUtils.generateToken(UUID.randomUUID().toString(), 43200000);
-        // Mock
+        HashMap<String, Object> claims = new HashMap<String, Object>();
+        claims.put("userId", UUID.randomUUID());
+        claims.put("username", "username");
+        String refreshToken = JwtUtils.generateToken(claims, 900000);
+        // Mock redis template
         when(redisTemplate.opsForValue()).thenReturn(valueOperations);
         when(valueOperations.get(any())).thenReturn(null);
         // When
@@ -181,7 +189,9 @@ public class AuthServiceTest {
 
     void deleteUser_successful(){
         // Given
-        String accessToken = JwtUtils.generateToken(UUID.randomUUID().toString(), 900000);
+        HashMap<String, Object> claims = new HashMap<String, Object>();
+        claims.put("userId", UUID.randomUUID());
+        String accessToken = JwtUtils.generateToken(claims, 900000);
         // Mock authRepository.deleteByUserId() to do nothing
         doNothing().when(authRepository).deleteByUserId(any());
         // When
