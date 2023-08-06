@@ -82,3 +82,11 @@ AWS EC2(for deployment), AWS S3(for storing images)
 Jenkins in combination with github webhook, AWS EC2
 
 ---
+
+# How to execute the application
+1. Execute the docker-compose for Kafka and Redis
+~~~
+docker-compose -f kafka_redis_docker_compose.yml up -d
+~~~
+2. Execute Build all.bat
+3. Execute docker-compose_start.bat
