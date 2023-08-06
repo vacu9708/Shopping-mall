@@ -2,12 +2,13 @@
 ## Frontend
 Next.js, (redux?)
 
-## Kubernetes
+## Load balancing
+### Kubernetes
 - `Scalibility`: Kubernetes allows services to be easily scaled horizontally across a cluster of machines by adding or removing instances based on demand.
 - `Service discovery`: Kubernetes provides a service discovery mechanism, allowing services to find and communicate with each other using DNS or environment variables.
 - `Load balancing`: Kubernetes also includes a load balancer that distributes traffic across multiple instances of a service.
 
-## Handling large load on the DB
+### Handling large load on the DB
 - **Horizontal scaling with load balancing**: Read replicas can handle additional read-only traffic.
 
 ## Monitoring
