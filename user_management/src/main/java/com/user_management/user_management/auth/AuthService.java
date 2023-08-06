@@ -51,10 +51,10 @@ public class AuthService {
         // Generate tokens
         Map<String, Object> accessTokenClaims = new HashMap<>();
         accessTokenClaims.put("userId", userEntity.getUserId());
+        accessTokenClaims.put("username", userEntity.getUsername());
         String accessToken = JwtUtils.generateToken(accessTokenClaims, 900000);
 
         Map<String, Object> refreshTokenClaims = new HashMap<>();
-        refreshTokenClaims.put("userId", userEntity.getUserId());
         refreshTokenClaims.put("username", userEntity.getUsername());
         String refreshToken = JwtUtils.generateToken(refreshTokenClaims, 43200000);
         
@@ -66,8 +66,6 @@ public class AuthService {
         Claims accessTokenClaims;
         try{
             accessTokenClaims = JwtUtils.getTokenClaims(accessToken);
-            if(accessTokenClaims.get("username", String.class) != null)
-                return ResponseEntity.badRequest().body("REFRESH_TOKEN_NOT_ALLOWED");
             // Check if the refresh token has been expired
             // if(refreshTokenClaims.getExpiration().before(new Date()))
             //     throw new IllegalArgumentException("Refresh token has expired");
@@ -77,25 +75,27 @@ public class AuthService {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("INVALID_TOKEN");
         }
-
-        return ResponseEntity.ok(accessTokenClaims.get("userId", String.class));
+        // Ensure the token is not a refresh token
+        if(accessTokenClaims.get("userId", String.class) == null)
+            return ResponseEntity.badRequest().body("REFRESH_TOKEN_NOT_ALLOWED");
+        // Return access token claims, which includes userId and username, and expiriation time
+        return ResponseEntity.ok(accessTokenClaims);
     }
     
     ResponseEntity<String> editBlacklist(String accessToken, String username, String action) {
         Claims accessTokenClaims;   
         try{
             accessTokenClaims = JwtUtils.getTokenClaims(accessToken);
-            if(accessTokenClaims.get("username", String.class) != null)
-                return ResponseEntity.badRequest().body("REFRESH_TOKEN_NOT_ALLOWED");
         } catch (ExpiredJwtException e) {
             return ResponseEntity.badRequest().body("EXPIRED_TOKEN");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("INVALID_TOKEN");
         }
+        // Ensure the token is not a refresh token
+        if(accessTokenClaims.get("userId", String.class) == null)
+            return ResponseEntity.badRequest().body("REFRESH_TOKEN_NOT_ALLOWED");
         // Check if the user is admin
-        UUID adminId = UUID.fromString(accessTokenClaims.get("userId", String.class));
-        UserEntity adminEntity = authRepository.findByUserId(adminId);
-        if(adminEntity == null || !adminEntity.getUsername().equals("admin"))
+        if(accessTokenClaims.get("username", String.class) == "admin")
             return ResponseEntity.badRequest().body("NOT_ADMIN");
         // Add the user in the blacklist
         if(action == "add"){
@@ -115,15 +115,15 @@ public class AuthService {
         String username;
         try{
             refreshTokenClaims = JwtUtils.getTokenClaims(refreshToken);
-            username = refreshTokenClaims.get("username", String.class);
-            if(username == null)
-                return ResponseEntity.badRequest().body("ACCESS_TOKEN_NOT_ALLOWED");
         } catch (ExpiredJwtException e) {
             return ResponseEntity.badRequest().body("EXPIRED_TOKEN");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("INVALID_TOKEN");
         }
-
+        username = refreshTokenClaims.get("username", String.class);
+        // Ensure the token is not an access token
+        if(username == null)
+            return ResponseEntity.badRequest().body("ACCESS_TOKEN_NOT_ALLOWED");
         // Block the request if the user has been blacklisted
         if(redisTemplate.opsForValue().get(username) != null)
             return ResponseEntity.badRequest().body("BLACKLISTED_USER");
@@ -144,13 +144,15 @@ public class AuthService {
         Claims accessTokenClaims;
         try{
             accessTokenClaims = JwtUtils.getTokenClaims(accessToken);
-            if(accessTokenClaims.get("username", String.class) != null)
-                return ResponseEntity.badRequest().body("REFRESH_TOKEN_NOT_ALLOWED");
         } catch (ExpiredJwtException e) {
             return ResponseEntity.badRequest().body("EXPIRED_TOKEN");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("INVALID_TOKEN");
         }
+        // Ensure the token is not a refresh token
+        if(accessTokenClaims.get("userId", String.class) == null)
+            return ResponseEntity.badRequest().body("REFRESH_TOKEN_NOT_ALLOWED");
+
         UUID userId = UUID.fromString(accessTokenClaims.get("userId", String.class));
         // Delete the user
         authRepository.deleteByUserId(userId);
