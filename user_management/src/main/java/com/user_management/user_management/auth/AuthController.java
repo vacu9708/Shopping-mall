@@ -42,8 +42,9 @@ public class AuthController {
     }
 
     @GetMapping("/reissueTokens")
-    ResponseEntity<?> reissueToken(@RequestHeader("refreshToken") String refreshToken) {
-        return authService.reissueToken(refreshToken);
+    ResponseEntity<?> reissueToken(@RequestHeader("accessToken") String accessToken,
+                                    @RequestHeader("refreshToken") String refreshToken) {
+        return authService.reissueToken(accessToken, refreshToken);
     }
 
     @DeleteMapping("/user")
