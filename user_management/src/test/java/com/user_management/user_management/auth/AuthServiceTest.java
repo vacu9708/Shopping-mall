@@ -124,9 +124,10 @@ public class AuthServiceTest {
     @Test
     void verifyAccessToken_successful(){
         // Given
-        HashMap<String, Object> claims = new HashMap<String, Object>();
-        claims.put("userId", UUID.randomUUID().toString());
-        String accessToken = JwtUtils.generateToken(claims, 900000);
+        HashMap<String, Object> accessTokenClaims = new HashMap<String, Object>();
+        accessTokenClaims.put("userId", UUID.randomUUID().toString());
+        accessTokenClaims.put("username", "testUsername");
+        String accessToken = JwtUtils.generateToken(accessTokenClaims, 900000);
         // When
         ResponseEntity<?> response = authService.verifyAccessToken(accessToken);
         // Then
@@ -174,15 +175,19 @@ public class AuthServiceTest {
     @Test
     void reissueToken_successful(){
         // Given
-        HashMap<String, Object> claims = new HashMap<String, Object>();
-        claims.put("userId", UUID.randomUUID());
-        claims.put("username", "username");
-        String refreshToken = JwtUtils.generateToken(claims, 900000);
+        HashMap<String, Object> accessTokenClaims = new HashMap<String, Object>();
+        accessTokenClaims.put("userId", UUID.randomUUID().toString());
+        accessTokenClaims.put("username", "testUsername");
+        String accessToken = JwtUtils.generateToken(accessTokenClaims, 900000);
+
+        HashMap<String, Object> refreshTokenClaims = new HashMap<String, Object>();
+        refreshTokenClaims.put("username", "username");
+        String refreshToken = JwtUtils.generateToken(refreshTokenClaims, 900000);
         // Mock redis template
         when(redisTemplate.opsForValue()).thenReturn(valueOperations);
         when(valueOperations.get(any())).thenReturn(null);
         // When
-        ResponseEntity<?> response = authService.reissueToken(refreshToken);
+        ResponseEntity<?> response = authService.reissueToken(accessToken, refreshToken);
         // Then
         assertEquals(200, response.getStatusCode().value());
     }

@@ -32,7 +32,7 @@ public class AuthService {
 
         String hashedPassword = new BCryptPasswordEncoder().encode(userRegisterDto.getPassword());
         authRepository.addUser(userRegisterDto.getUsername(), hashedPassword, userRegisterDto.getEmail());
-        return ResponseEntity.ok("");
+        return ResponseEntity.ok("OK");
     }
 
     ResponseEntity<?> login(UserCredentialsDto userCredentialsDto) {
@@ -105,7 +105,7 @@ public class AuthService {
         
         // redisTemplate.opsForValue().set(username, "X");
         // redisTemplate.opsForValue().getOperations().expireAt(userId, new Date(System.currentTimeMillis() + 43200000));
-        return ResponseEntity.ok("");
+        return ResponseEntity.ok("OK");
     }
     
     ResponseEntity<?> reissueToken(String accessToken, String refreshToken) {
@@ -152,6 +152,6 @@ public class AuthService {
         UUID userId = UUID.fromString(accessTokenClaims.get("userId", String.class));
         // Delete the user
         authRepository.deleteByUserId(userId);
-        return ResponseEntity.ok("");
+        return ResponseEntity.ok("OK");
     }
 }
