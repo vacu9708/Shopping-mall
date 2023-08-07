@@ -5,13 +5,10 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.catalina.connector.Response;
-import org.hibernate.DuplicateMappingException;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.UnexpectedRollbackException;
 
 import com.user_management.user_management.auth.Dto.*;
 import com.user_management.user_management.auth.Utils.JwtUtils;
@@ -79,6 +76,7 @@ public class AuthService {
         if(accessTokenClaims.get("userId", String.class) == null)
             return ResponseEntity.badRequest().body("REFRESH_TOKEN_NOT_ALLOWED");
         // Return access token claims, which includes userId and username, and expiriation time
+        accessTokenClaims.remove("exp");
         return ResponseEntity.ok(accessTokenClaims);
     }
     
@@ -110,32 +108,30 @@ public class AuthService {
         return ResponseEntity.ok("");
     }
     
-    ResponseEntity<?> reissueToken(String refreshToken) {
-        Claims refreshTokenClaims;
-        String username;
+    ResponseEntity<?> reissueToken(String accessToken, String refreshToken) {
+        Claims refreshTokenClaims, accessTokenClaims;
         try{
+            accessTokenClaims = JwtUtils.getTokenClaims(accessToken);
             refreshTokenClaims = JwtUtils.getTokenClaims(refreshToken);
         } catch (ExpiredJwtException e) {
             return ResponseEntity.badRequest().body("EXPIRED_TOKEN");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("INVALID_TOKEN");
         }
-        username = refreshTokenClaims.get("username", String.class);
-        // Ensure the token is not an access token
-        if(username == null)
+        
+        // Ensure the refresh token is not an access token
+        if(refreshTokenClaims.get("userId", String.class) != null)
             return ResponseEntity.badRequest().body("ACCESS_TOKEN_NOT_ALLOWED");
         // Block the request if the user has been blacklisted
+        String username = refreshTokenClaims.get("username", String.class);
         if(redisTemplate.opsForValue().get(username) != null)
             return ResponseEntity.badRequest().body("BLACKLISTED_USER");
 
-        // Generate tokens
-        Map<String, Object> accessTokenClaims = new HashMap<>();
-        String userId = refreshTokenClaims.get("userId", String.class);
-        accessTokenClaims.put("userId", userId);
+        // Generate new tokens
         String newAccessToken = JwtUtils.generateToken(accessTokenClaims, 900000);
         String newRefreshToken = JwtUtils.generateToken(refreshTokenClaims, 43200000);
         
-        // Return tokens
+        // Return the new tokens
         return ResponseEntity.ok(new TokenPairDto(newAccessToken, newRefreshToken));
     }
 
