@@ -43,8 +43,6 @@
                 productImg: base64Image,
                 productImgSize: productImg.size
             }
-            console.log(newProductDto);
-            
 
             axios.post('product_management/addProduct', newProductDto, {
                 headers: {
@@ -57,7 +55,32 @@
             })
         }
 
+        const onImageChange2 = async () => {
+            const productImg = document.getElementById("imageInput").files[0];
 
+            // FormData
+            const formData = new FormData();
+            formData.append('productImg', productImg);
+
+            const newProductDto = {
+                name: "new product",
+                description: "new product description",
+                price: 1000,
+                stock: 100,
+            }
+            formData.append('newProductDto', JSON.stringify(newProductDto));
+
+            axios.post('product_management/addProduct', formData, {
+                headers: {
+                    'accessToken': sessionStorage.getItem('accessToken'),
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                console.log(response.data);
+                // downloadImage();
+            })
+        }
 
         function downloadImage() {
             axios.get('/download')
