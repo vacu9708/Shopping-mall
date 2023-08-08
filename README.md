@@ -24,7 +24,8 @@ Sends notifications to users regarding order updates, promotions, etc.
 ---
 # Architecture
 ## ER diagram
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/f423c72a-6429-41a9-9a2f-3abfdc68d7ca)
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/f423c72a-6429-41a9-9a2f-3abfdc68d7ca)<br>
+[Schema](https://github.com/vacu9708/Shopping-mall/blob/main/schema.sql)
 
 ## Class relationship diagram
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/ec5a40c2-72a8-4d37-a79a-c5d5ee5ebe44)
