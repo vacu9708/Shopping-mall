@@ -12,7 +12,7 @@ CREATE DATABASE product_management;
 USE product_management;
 CREATE TABLE products (
 	`product_id` BINARY(16) DEFAULT(UUID_TO_BIN(UUID())) PRIMARY KEY,
-	`name` VARCHAR(20),
+	`name` VARCHAR(20) NOT NULL,
 	`description` VARCHAR(100),
 	`price` INT UNSIGNED,
     `stock` INT UNSIGNED DEFAULT(0),
