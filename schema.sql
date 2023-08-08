@@ -2,9 +2,10 @@ CREATE DATABASE user_management;
 USE user_management;
 CREATE TABLE users (
 	`user_id` BINARY(16) DEFAULT(UUID_TO_BIN(UUID())) PRIMARY KEY,
-	`username` VARCHAR(20) NOT NULL UNIQUE,
+	`usernameproducts` VARCHAR(20) NOT NULL, -- UNIQUE  
 	`password` VARCHAR(65) NOT NULL,
-	`email` VARCHAR(40) NOT NULL
+	`email` VARCHAR(40) NOT NULL,
+    INDEX username (username)
 );
 
 CREATE DATABASE product_management;
@@ -14,7 +15,8 @@ CREATE TABLE products (
 	`name` VARCHAR(20),
 	`description` VARCHAR(100),
 	`price` INT UNSIGNED,
-    `stock` INT UNSIGNED DEFAULT(0)
+    `stock` INT UNSIGNED DEFAULT(0),
+    `img_location` VARCHAR(100)
 );
 
 CREATE DATABASE order_management;
@@ -30,5 +32,4 @@ CREATE TABLE orders (
 -- INSERT INTO users (username, password) VALUES ("abce", 123);
 -- ALTER TABLE users MODIFY COLUMN name varchar(20);
 -- ALTER TABLE users ADD COLUMN name varchar(20) not null;
--- ALTER TABLE price ADD INDEX aptId(aptID);
 -- ALTER TABLE price DROP INDEX aptId;
