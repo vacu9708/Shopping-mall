@@ -19,4 +19,5 @@ public class ProductEntity  {
     String description;
     int price;
     int stock;
+    String imgLocation;
 }

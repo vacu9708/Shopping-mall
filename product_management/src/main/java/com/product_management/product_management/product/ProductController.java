@@ -1,5 +1,7 @@
 package com.product_management.product_management.product;
 
+import java.util.UUID;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,15 +18,15 @@ public class ProductController {
         return productService.addProduct(newProductDto);
     }
 
-    @PatchMapping("/setStock")
-    ResponseEntity<String> setStock(@RequestHeader("accessToken") String accessToken,
-                                    @PathVariable int productId,
-                                    @PathVariable int stock) {
-        return productService.setStock(accessToken, productId, stock);
+    @GetMapping("/getProducts/{howMany}/{page}")
+    ResponseEntity<?> getProducts(@PathVariable int howMany, @PathVariable int page) {
+        return productService.getProducts(howMany, page);
     }
 
-    @GetMapping("/getProducts")
-    ResponseEntity<?> getProducts(int page, int howMany) {
-        return productService.getProducts(page, howMany);
+    @PatchMapping("/setStock/{productId}/{stockChange}")
+    ResponseEntity<String> setStock(@RequestHeader("accessToken") String accessToken,
+                                    @PathVariable UUID productId,
+                                    @PathVariable int stockChange) {
+        return productService.setStock(accessToken, productId, stockChange);
     }
 }
