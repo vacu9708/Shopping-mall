@@ -77,6 +77,7 @@ public class AuthService {
             return ResponseEntity.badRequest().body("REFRESH_TOKEN_NOT_ALLOWED");
         // Return access token claims, which includes userId and username, and expiriation time
         accessTokenClaims.remove("exp");
+        
         return ResponseEntity.ok(accessTokenClaims);
     }
     
@@ -93,7 +94,7 @@ public class AuthService {
         if(accessTokenClaims.get("userId", String.class) == null)
             return ResponseEntity.badRequest().body("REFRESH_TOKEN_NOT_ALLOWED");
         // Check if the user is admin
-        if(accessTokenClaims.get("username", String.class) == "admin")
+        if(!accessTokenClaims.get("username", String.class).equals("admin"))
             return ResponseEntity.badRequest().body("NOT_ADMIN");
         // Add the user in the blacklist
         if(action == "add"){

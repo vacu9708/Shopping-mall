@@ -10,4 +10,6 @@ public class NewProductDto {
     String description;
     int price;
     int stock;
+    String productImg;
+    int productImgSize;
 }
