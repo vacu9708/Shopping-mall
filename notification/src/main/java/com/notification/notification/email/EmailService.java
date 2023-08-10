@@ -22,27 +22,27 @@ public class EmailService {
     @Autowired
     private JavaMailSender emailSender;
 
-   @KafkaListener(topics = {"sendEmail"}, containerFactory = "ListenerContainerFactoryString", groupId = "group1")
-    void sendTextMessage(String msg) throws JsonMappingException, JsonProcessingException {
+   @KafkaListener(topics = {"email"}, containerFactory = "ListenerContainerFactoryString", groupId = "group1")
+    void sendTextMessage(String emailJson) throws JsonMappingException, JsonProcessingException {
         SimpleMailMessage email = new SimpleMailMessage();
-        Email parsed = new ObjectMapper().readValue(msg, Email.class);
+        EmailDto emailDto = new ObjectMapper().readValue(emailJson, EmailDto.class);
 
-        email.setTo("vacu9708@naver.com"); 
-        email.setSubject("Test from spring boot");
-        email.setText(parsed.msg);
+        email.setTo(emailDto.getTo()); 
+        email.setSubject(emailDto.getSubject());
+        email.setText(emailDto.getText());
 
         emailSender.send(email);
     }
 
-    void sendMessageWithAttachment() throws MessagingException {
-        MimeMessage email = emailSender.createMimeMessage(); 
-        MimeMessageHelper emailHelper = new MimeMessageHelper(email, true);
+    // void sendMessageWithAttachment() throws MessagingException {
+    //     MimeMessage email = emailSender.createMimeMessage(); 
+    //     MimeMessageHelper emailHelper = new MimeMessageHelper(email, true);
 
-        emailHelper.setTo("vacu9708@naver.com"); 
-        emailHelper.setSubject("Test from spring boot"); 
-        emailHelper.setText("Hello World \n Spring Boot Email");
+    //     emailHelper.setTo("vacu9708@naver.com"); 
+    //     emailHelper.setSubject("Test from spring boot"); 
+    //     emailHelper.setText("Hello World \n Spring Boot Email");
         
-        FileSystemResource file = new FileSystemResource(new File("pathToAttachment"));
-        emailHelper.addAttachment("Invoice", file);
-    }
+    //     FileSystemResource file = new FileSystemResource(new File("pathToAttachment"));
+    //     emailHelper.addAttachment("Invoice", file);
+    // }
 }
