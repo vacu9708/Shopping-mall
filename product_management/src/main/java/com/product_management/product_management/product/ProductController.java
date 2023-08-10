@@ -24,9 +24,8 @@ public class ProductController {
     }
 
     @PatchMapping("/setStock/{productId}/{stockChange}")
-    ResponseEntity<String> setStock(@RequestHeader("accessToken") String accessToken,
-                                    @PathVariable UUID productId,
+    ResponseEntity<String> setStock(@PathVariable UUID productId,
                                     @PathVariable int stockChange) {
-        return productService.setStock(accessToken, productId, stockChange);
+        return productService.setStock(productId, stockChange);
     }
 }
