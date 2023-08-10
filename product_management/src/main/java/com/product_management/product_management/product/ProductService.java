@@ -61,21 +61,21 @@ public class ProductService {
         return ResponseEntity.ok(productRepository.getProducts(howMany, page));
     }
 
-    ResponseEntity<String> setStock(String accessToken, UUID productId, int stockChange) {
+    ResponseEntity<String> setStock(UUID productId, int stockChange) {
         // Get accessToken claims
-        CompletableFuture<AccessTokenClaimsDto> promise1 = WebClient.create()
-            .get()
-            .uri("http://localhost:8080/user_management/verifyAccessToken")
-            .header("accessToken", accessToken)
-            .retrieve()
-            .bodyToMono(AccessTokenClaimsDto.class)
-            .toFuture();
+        // CompletableFuture<AccessTokenClaimsDto> promise1 = WebClient.create()
+        //     .get()
+        //     .uri("http://localhost:8080/user_management/verifyAccessToken")
+        //     .header("accessToken", accessToken)
+        //     .retrieve()
+        //     .bodyToMono(AccessTokenClaimsDto.class)
+        //     .toFuture();
 
         // Check if the user is an admin
-        AccessTokenClaimsDto accessTokenClaimsDto = promise1.join();
-        if (!accessTokenClaimsDto.getUsername().equals("admin")) {
-            return ResponseEntity.status(403).body("NOT_ADMIN");
-        }
+        // AccessTokenClaimsDto accessTokenClaimsDto = promise1.join();
+        // if (!accessTokenClaimsDto.getUsername().equals("admin")) {
+        //     return ResponseEntity.status(403).body("NOT_ADMIN");
+        // }
 
         productRepository.setStock(productId, stockChange);
         return ResponseEntity.ok("OK");
