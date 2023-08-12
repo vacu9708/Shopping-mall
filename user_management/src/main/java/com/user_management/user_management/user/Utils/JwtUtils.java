@@ -1,8 +1,7 @@
-package com.user_management.user_management.auth.Utils;
+package com.user_management.user_management.user.Utils;
 
 import java.security.Key;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Component;

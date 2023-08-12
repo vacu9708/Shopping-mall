@@ -1,8 +1,8 @@
-package com.user_management.user_management.auth;
+package com.user_management.user_management.user;
 
 import java.util.UUID;
 
-import jakarta.persistence.Column;
+// import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;

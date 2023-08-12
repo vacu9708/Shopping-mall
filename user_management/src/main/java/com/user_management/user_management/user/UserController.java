@@ -1,16 +1,16 @@
-package com.user_management.user_management.auth;
+package com.user_management.user_management.user;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.user_management.user_management.auth.Dto.*;
+import com.user_management.user_management.user.Dto.*;
 
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-public class AuthController {
-    final AuthService authService;
+public class UserController {
+    final UserService authService;
 
     @PostMapping("/registerUser")
     ResponseEntity<String> registerUser(@RequestBody UserRegisterDto userRegisterDto) {
@@ -30,6 +30,11 @@ public class AuthController {
     @GetMapping("/verifyAccessToken")
     ResponseEntity<?> verifyToken(@RequestHeader("accessToken") String accessToken) {
         return authService.verifyAccessToken(accessToken);
+    }
+
+    @GetMapping("/getUserInfo")
+    ResponseEntity<?> getUserInfo(@RequestHeader("accessToken") String accessToken) {
+        return authService.getUserInfo(accessToken);
     }
 
     @PostMapping("/addInBlacklist/{username}")
