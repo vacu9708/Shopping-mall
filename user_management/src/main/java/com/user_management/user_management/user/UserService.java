@@ -42,8 +42,8 @@ public class UserService {
             return ResponseEntity.badRequest().body("INVALID_CREDENTIALS");
 
         // Check if the user has been blacklisted
-        if(redisTemplate.opsForValue().get(userEntity.getUsername().toString()) != null)
-            return ResponseEntity.badRequest().body("BLACKLISTED_USER");
+        // if(redisTemplate.opsForValue().get(userEntity.getUsername().toString()) != null)
+        //     return ResponseEntity.badRequest().body("BLACKLISTED_USER");
 
         // Generate tokens
         Map<String, Object> accessTokenClaims = new HashMap<>();
