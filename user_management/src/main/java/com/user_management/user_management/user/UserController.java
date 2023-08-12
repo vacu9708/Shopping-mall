@@ -32,7 +32,7 @@ public class UserController {
         return authService.verifyAccessToken(accessToken);
     }
 
-    @GetMapping("/getUserInfo")
+    @GetMapping("/userInfo")
     ResponseEntity<?> getUserInfo(@RequestHeader("accessToken") String accessToken) {
         return authService.getUserInfo(accessToken);
     }
