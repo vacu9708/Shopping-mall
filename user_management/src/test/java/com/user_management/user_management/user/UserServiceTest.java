@@ -1,4 +1,4 @@
-package com.user_management.user_management.auth;
+package com.user_management.user_management.user;
 
 import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,19 +21,22 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.user_management.user_management.auth.Dto.*;
-import com.user_management.user_management.auth.Utils.JwtUtils;
+import com.user_management.user_management.user.UserRepository;
+import com.user_management.user_management.user.UserService;
+import com.user_management.user_management.user.UserEntity;
+import com.user_management.user_management.user.Dto.*;
+import com.user_management.user_management.user.Utils.JwtUtils;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class AuthServiceTest {
-    @Mock AuthRepository authRepository;
+public class UserServiceTest {
+    @Mock UserRepository authRepository;
     @Mock RedisTemplate<String, String> redisTemplate;
     @Mock ValueOperations<String, String> valueOperations;
 
     @InjectMocks
-    AuthService authService;
+    UserService authService;
     
     // static final Logger logger = LoggerFactory.getLogger(AuthServiceTest.class);
 
@@ -142,7 +145,7 @@ public class AuthServiceTest {
         String accessToken = JwtUtils.generateToken(claims, 900000);
         // Mock authRepository.findByUserId() to return an admin entity
         UserEntity adminEntity = new UserEntity(UUID.randomUUID(), "admin", "password", "email");
-        when(authRepository.findByUserId(any())).thenReturn(adminEntity);
+        when(authRepository.findByUsername(any())).thenReturn(adminEntity);
         // Mock redisTemplate
         when(redisTemplate.opsForValue()).thenReturn(valueOperations);
         doNothing().when(valueOperations).set(any(), any(), anyLong(), any());
@@ -198,7 +201,7 @@ public class AuthServiceTest {
         claims.put("userId", UUID.randomUUID());
         String accessToken = JwtUtils.generateToken(claims, 900000);
         // Mock authRepository.deleteByUserId() to do nothing
-        doNothing().when(authRepository).deleteByUserId(any());
+        doNothing().when(authRepository).deleteByUsername(any());
         // When
         ResponseEntity<String> response = authService.deleteUser(accessToken);
         // Then

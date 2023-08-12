@@ -1,4 +1,4 @@
-package com.user_management.user_management.auth.Dto;
+package com.user_management.user_management.user.Dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

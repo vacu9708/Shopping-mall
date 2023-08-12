@@ -1,4 +1,4 @@
-package com.user_management.user_management.auth;
+package com.user_management.user_management.user;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,8 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import com.user_management.user_management.auth.Dto.*;
-import com.user_management.user_management.auth.Utils.JwtUtils;
+import com.user_management.user_management.user.Dto.*;
+import com.user_management.user_management.user.Utils.JwtUtils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -20,8 +20,8 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class AuthService {
-    final AuthRepository authRepository;
+public class UserService {
+    final UserRepository authRepository;
     final RedisTemplate<String, String> redisTemplate;
 
     @Transactional
@@ -75,10 +75,27 @@ public class AuthService {
         // Ensure the token is not a refresh token
         if(accessTokenClaims.get("userId", String.class) == null)
             return ResponseEntity.badRequest().body("REFRESH_TOKEN_NOT_ALLOWED");
-        // Return access token claims, which includes userId and username, and expiriation time
+        // Return access token claims, which includes userId, username, and expiriation time
         accessTokenClaims.remove("exp");
-        
         return ResponseEntity.ok(accessTokenClaims);
+    }
+
+    ResponseEntity<?> getUserInfo(String accessToken){
+        Claims accessTokenClaims;
+        try{
+            accessTokenClaims = JwtUtils.getTokenClaims(accessToken);
+        } catch (ExpiredJwtException e) {
+            return ResponseEntity.badRequest().body("EXPIRED_TOKEN");
+            // return "Access token has expired";
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("INVALID_TOKEN");
+        }
+        // Ensure the token is not a refresh token
+        if(accessTokenClaims.get("userId", String.class) == null)
+            return ResponseEntity.badRequest().body("REFRESH_TOKEN_NOT_ALLOWED");
+        // Return userInfo
+        UserEntity userEntity = authRepository.findByUsername(accessTokenClaims.get("username", String.class));
+        return ResponseEntity.ok(new UserInfoDto(userEntity.getUserId(), userEntity.getUsername(), userEntity.getEmail()));
     }
     
     ResponseEntity<String> editBlacklist(String accessToken, String username, String action) {
@@ -149,10 +166,8 @@ public class AuthService {
         // Ensure the token is not a refresh token
         if(accessTokenClaims.get("userId", String.class) == null)
             return ResponseEntity.badRequest().body("REFRESH_TOKEN_NOT_ALLOWED");
-
-        UUID userId = UUID.fromString(accessTokenClaims.get("userId", String.class));
         // Delete the user
-        authRepository.deleteByUserId(userId);
+        authRepository.deleteByUsername(accessTokenClaims.get("username", String.class));
         return ResponseEntity.ok("OK");
     }
 }

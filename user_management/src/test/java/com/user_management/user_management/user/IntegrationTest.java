@@ -1,8 +1,10 @@
-package com.user_management.user_management.auth;
+package com.user_management.user_management.user;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.user_management.user_management.auth.Dto.*;
-import com.user_management.user_management.auth.Utils.JwtUtils;
+import com.user_management.user_management.user.UserRepository;
+import com.user_management.user_management.user.UserService;
+import com.user_management.user_management.user.Dto.*;
+import com.user_management.user_management.user.Utils.JwtUtils;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
@@ -29,9 +31,9 @@ public class IntegrationTest {
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
     @Autowired
-    private AuthService authService;
+    private UserService authService;
     @Autowired
-    private static AuthRepository authRepository;
+    private static UserRepository authRepository;
 
     // Clean up after testing
     @AfterAll
