@@ -15,6 +15,8 @@ public interface ProductRepository extends JpaRepository<ProductEntity, UUID>{
     @Query(value = "INSERT INTO products (name, description, price, stock, img_location) VALUES (?1, ?2, ?3, ?4, ?5)", nativeQuery = true)
     void addProduct(String name, String description, int price, int stock, String imgLocation);
 
+    String findByName(String name);
+
     @Query(value = "SELECT * FROM products LIMIT ?1 OFFSET ?2", nativeQuery = true)
     List<ProductEntity> getProducts(int howMany, int page);
     

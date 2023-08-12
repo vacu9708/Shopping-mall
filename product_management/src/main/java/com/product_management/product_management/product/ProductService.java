@@ -26,11 +26,13 @@ public class ProductService {
     final AmazonS3 amazonS3;
     
     ResponseEntity<String> addProduct(NewProductDto newProductDto) {
+        // Check if the same product name already exists
+        if(productRepository.findByName(newProductDto.getName()) != null)
+            return ResponseEntity.badRequest().body("PRODUCT_NAME_EXISTS");
+
         String imgLocation = "shopping_mall/products/"+newProductDto.getName()+LocalDateTime.now().toString()+".jpg";
         String base64Img = newProductDto.getProductImg();
         // Convert base64Img to Inputstream
-        // InputStream productImg = new ByteArrayInputStream(Base64.getMimeDecoder().decode(base64Img));
-        // InputStream productImg = new ByteArrayInputStream(Base64.getUrlDecoder().decode(base64Img));
         InputStream productImg = new ByteArrayInputStream(Base64.getDecoder().decode(base64Img));
         // metadata
         ObjectMetadata metadata = new ObjectMetadata();
