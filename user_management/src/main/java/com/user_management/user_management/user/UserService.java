@@ -93,8 +93,11 @@ public class UserService {
         // Ensure the token is not a refresh token
         if(accessTokenClaims.get("userId", String.class) == null)
             return ResponseEntity.badRequest().body("REFRESH_TOKEN_NOT_ALLOWED");
-        // Return userInfo
-        UserEntity userEntity = userRepository.findByUsername(accessTokenClaims.get("username", String.class));
+        
+        UserEntity userEntity = userRepository.findByUserId(accessTokenClaims.get("userId", UUID.class));
+        // Check if the user exists
+        if(userEntity == null)
+            return ResponseEntity.notFound().build();
         return ResponseEntity.ok(new UserInfoDto(userEntity.getUserId(), userEntity.getUsername(), userEntity.getEmail()));
     }
     
@@ -166,8 +169,11 @@ public class UserService {
         // Ensure the token is not a refresh token
         if(accessTokenClaims.get("userId", String.class) == null)
             return ResponseEntity.badRequest().body("REFRESH_TOKEN_NOT_ALLOWED");
+        // Check if the user exists
+        if(userRepository.existsById(accessTokenClaims.get("userId", UUID.class)) == false)
+            return ResponseEntity.notFound().build();
         // Delete the user
-        userRepository.deleteByUsername(accessTokenClaims.get("username", String.class));
+        userRepository.deleteById(accessTokenClaims.get("userId", UUID.class));
         return ResponseEntity.ok("OK");
     }
 }
