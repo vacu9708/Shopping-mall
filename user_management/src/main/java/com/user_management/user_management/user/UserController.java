@@ -32,7 +32,7 @@ public class UserController {
         return authService.verifyAccessToken(accessToken);
     }
 
-    @GetMapping("/userInfo")
+    @GetMapping("/getUserInfo")
     ResponseEntity<?> getUserInfo(@RequestHeader("accessToken") String accessToken) {
         return authService.getUserInfo(accessToken);
     }
@@ -52,7 +52,7 @@ public class UserController {
         return authService.reissueToken(accessToken, refreshToken);
     }
 
-    @DeleteMapping("/user")
+    @DeleteMapping("/deleteUser")
     ResponseEntity<String> deleteUser(@RequestHeader("accessToken") String accessToken) {
         return authService.deleteUser(accessToken);
     }
