@@ -15,9 +15,10 @@ public interface ProductRepository extends JpaRepository<ProductEntity, UUID>{
     @Query(value = "INSERT INTO products (name, description, price, stock, img_location) VALUES (?1, ?2, ?3, ?4, ?5)", nativeQuery = true)
     void addProduct(String name, String description, int price, int stock, String imgLocation);
 
-    String findByName(String name);
+    Boolean existsByName(String name);
 
-    ProductEntity findByProductId(UUID productId);
+    @Query(value = "SELECT * FROM products WHERE product_id = ?1", nativeQuery = true)
+    ProductEntity findByproductId(UUID productId);
 
     @Query(value = "SELECT * FROM products LIMIT ?1 OFFSET ?2", nativeQuery = true)
     List<ProductEntity> getProducts(int howMany, int page);
@@ -26,5 +27,6 @@ public interface ProductRepository extends JpaRepository<ProductEntity, UUID>{
     @Query(value = "UPDATE products SET stock = stock + ?2 WHERE product_id = ?1", nativeQuery = true)
     void setStock(UUID productId, int stockChange);
 
-    void deleteByProductId(UUID productId);
+    @Modifying
+    void deleteByName(String name);
 }

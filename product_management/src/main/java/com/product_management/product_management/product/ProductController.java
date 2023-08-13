@@ -14,8 +14,8 @@ import lombok.RequiredArgsConstructor;
 public class ProductController {
     final ProductService productService;
     @PostMapping("/addProduct")
-    ResponseEntity<String> addProduct(@RequestBody NewProductDto newProductDto) {
-        return productService.addProduct(newProductDto);
+    ResponseEntity<String> addProduct(@RequestBody ProductDto productDto) {
+        return productService.addProduct(productDto);
     }
 
     @GetMapping("/getProducts/{howMany}/{page}")
