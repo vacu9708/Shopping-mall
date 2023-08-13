@@ -14,8 +14,8 @@ import lombok.RequiredArgsConstructor;
 public class ProductController {
     final ProductService productService;
     @PostMapping("/addProduct")
-    ResponseEntity<String> addProduct(@RequestBody NewProductDto newProductDto) {
-        return productService.addProduct(newProductDto);
+    ResponseEntity<String> addProduct(@RequestBody ProductDto productDto) {
+        return productService.addProduct(productDto);
     }
 
     @GetMapping("/getProducts/{howMany}/{page}")
@@ -23,9 +23,26 @@ public class ProductController {
         return productService.getProducts(howMany, page);
     }
 
+    @GetMapping("/getProduct/{productId}")
+    ResponseEntity<?> getProduct(@PathVariable UUID productId) {
+        return productService.getProduct(productId);
+    }
+
     @PatchMapping("/setStock/{productId}/{stockChange}")
     ResponseEntity<String> setStock(@PathVariable UUID productId,
                                     @PathVariable int stockChange) {
         return productService.setStock(productId, stockChange);
     }
+
+    @DeleteMapping("/deleteProduct/{productId}")
+    ResponseEntity<String> deleteProduct(@PathVariable UUID productId) {
+        return productService.deleteProduct(productId);
+    }
+
+    // @GetMapping("/searchProducts")
+    // ResponseEntity<?> searchProducts(@RequestParam String query,
+    //                                  @RequestParam int howMany,
+    //                                  @RequestParam int page) {
+    //     return productService.searchProducts(query, howMany, page);
+    // }
 }

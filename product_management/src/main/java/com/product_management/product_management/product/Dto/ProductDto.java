@@ -1,11 +1,11 @@
 package com.product_management.product_management.product.Dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Builder;
+import lombok.Getter;
 
-@AllArgsConstructor
-@Data
-public class NewProductDto {
+@Builder
+@Getter
+public class ProductDto {
     String name;
     String description;
     int price;
