@@ -1,4 +1,4 @@
-package com.product_management.product_management.product;
+package com.product_management.product_management;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

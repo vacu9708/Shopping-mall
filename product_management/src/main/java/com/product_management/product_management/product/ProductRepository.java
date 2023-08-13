@@ -17,6 +17,8 @@ public interface ProductRepository extends JpaRepository<ProductEntity, UUID>{
 
     String findByName(String name);
 
+    ProductEntity findByProductId(UUID productId);
+
     @Query(value = "SELECT * FROM products LIMIT ?1 OFFSET ?2", nativeQuery = true)
     List<ProductEntity> getProducts(int howMany, int page);
     
@@ -24,7 +26,5 @@ public interface ProductRepository extends JpaRepository<ProductEntity, UUID>{
     @Query(value = "UPDATE products SET stock = stock + ?2 WHERE product_id = ?1", nativeQuery = true)
     void setStock(UUID productId, int stockChange);
 
-    @Modifying
-    @Query(value = "DELETE FROM products WHERE product_id = ?1", nativeQuery = true)
-    void deleteProduct(String productId);
+    void deleteByProductId(UUID productId);
 }

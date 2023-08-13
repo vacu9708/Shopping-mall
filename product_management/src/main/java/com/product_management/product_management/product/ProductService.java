@@ -48,7 +48,7 @@ public class ProductService {
                 return false;
             }
         });
-        
+        // Add product
         CompletableFuture<Void> future2 = CompletableFuture.runAsync(() -> {
             productRepository.addProduct(newProductDto.getName(), newProductDto.getDescription(), newProductDto.getPrice(), newProductDto.getStock(), imgLocation);
         });
@@ -61,6 +61,22 @@ public class ProductService {
 
     ResponseEntity<?> getProducts(int howMany, int page) {
         return ResponseEntity.ok(productRepository.getProducts(howMany, page));
+    }
+
+    ResponseEntity<?> getProduct(UUID productId) {
+        ProductEntity productEntity = productRepository.findByProductId(productId);
+        if (productEntity == null) {
+            return ResponseEntity.notFound().build();
+        }
+        // Return productDto
+        ProductDto productDto = ProductDto.builder()
+            .name(productEntity.getName())
+            .description(productEntity.getDescription())
+            .price(productEntity.getPrice())
+            .stock(productEntity.getStock())
+            .productImg(productEntity.getImgLocation())
+            .build();
+        return ResponseEntity.ok(productDto);
     }
 
     ResponseEntity<String> setStock(UUID productId, int stockChange) {
@@ -82,4 +98,14 @@ public class ProductService {
         productRepository.setStock(productId, stockChange);
         return ResponseEntity.ok("OK");
     }
+
+    ResponseEntity<String> deleteProduct(UUID productId) {
+        // Check if the product exists
+        if (productRepository.findByProductId(productId) == null) {
+            return ResponseEntity.notFound().build();
+        }
+        productRepository.deleteByProductId(productId);
+        return ResponseEntity.ok("OK");
+    }
+
 }
