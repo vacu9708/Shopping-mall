@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 public class ProductService {
     final ProductRepository productRepository;
     final AmazonS3 amazonS3;
-    
+    aaaaaa
     ResponseEntity<String> addProduct(NewProductDto newProductDto) {
         // Check if the same product name already exists
         if(productRepository.findByName(newProductDto.getName()) != null)
