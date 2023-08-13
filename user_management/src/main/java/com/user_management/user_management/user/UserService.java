@@ -21,29 +21,29 @@ import lombok.RequiredArgsConstructor;
 @Component
 @RequiredArgsConstructor
 public class UserService {
-    final UserRepository authRepository;
+    final UserRepository userRepository;
     final RedisTemplate<String, String> redisTemplate;
 
     @Transactional
     ResponseEntity<String> registerUser(UserRegisterDto userRegisterDto) {
         // Check if the username already exists
-        if(authRepository.findByUsername(userRegisterDto.getUsername()) != null)
+        if(userRepository.findByUsername(userRegisterDto.getUsername()) != null)
             return ResponseEntity.badRequest().body("USERNAME_EXISTS");
-
+        // Add user to the database
         String hashedPassword = new BCryptPasswordEncoder().encode(userRegisterDto.getPassword());
-        authRepository.addUser(userRegisterDto.getUsername(), hashedPassword, userRegisterDto.getEmail());
+        userRepository.addUser(userRegisterDto.getUsername(), hashedPassword, userRegisterDto.getEmail());
         return ResponseEntity.ok("OK");
     }
 
     ResponseEntity<?> login(UserCredentialsDto userCredentialsDto) {
         // Check if the user exists and the password is correct
-        UserEntity userEntity = authRepository.findByUsername(userCredentialsDto.getUsername());
+        UserEntity userEntity = userRepository.findByUsername(userCredentialsDto.getUsername());
         if(userEntity == null || !new BCryptPasswordEncoder().matches(userCredentialsDto.getPassword(), userEntity.getPassword()))
             return ResponseEntity.badRequest().body("INVALID_CREDENTIALS");
 
         // Check if the user has been blacklisted
-        // if(redisTemplate.opsForValue().get(userEntity.getUsername().toString()) != null)
-        //     return ResponseEntity.badRequest().body("BLACKLISTED_USER");
+        if(redisTemplate.opsForValue().get(userEntity.getUsername().toString()) != null)
+            return ResponseEntity.badRequest().body("BLACKLISTED_USER");
 
         // Generate tokens
         Map<String, Object> accessTokenClaims = new HashMap<>();
@@ -94,7 +94,7 @@ public class UserService {
         if(accessTokenClaims.get("userId", String.class) == null)
             return ResponseEntity.badRequest().body("REFRESH_TOKEN_NOT_ALLOWED");
         // Return userInfo
-        UserEntity userEntity = authRepository.findByUsername(accessTokenClaims.get("username", String.class));
+        UserEntity userEntity = userRepository.findByUsername(accessTokenClaims.get("username", String.class));
         return ResponseEntity.ok(new UserInfoDto(userEntity.getUserId(), userEntity.getUsername(), userEntity.getEmail()));
     }
     
@@ -167,7 +167,7 @@ public class UserService {
         if(accessTokenClaims.get("userId", String.class) == null)
             return ResponseEntity.badRequest().body("REFRESH_TOKEN_NOT_ALLOWED");
         // Delete the user
-        authRepository.deleteByUsername(accessTokenClaims.get("username", String.class));
+        userRepository.deleteByUsername(accessTokenClaims.get("username", String.class));
         return ResponseEntity.ok("OK");
     }
 }
