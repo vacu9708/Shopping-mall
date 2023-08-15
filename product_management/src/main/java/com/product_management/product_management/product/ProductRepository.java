@@ -29,4 +29,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, UUID>{
 
     @Modifying
     void deleteByName(String name);
+
+    @Query(value = "SELECT * FROM products WHERE name LIKE %:keyword% OR description LIKE %:keyword% LIMIT :howMany OFFSET :page", nativeQuery = true)
+    List<ProductEntity> searchProducts(String keyword, int howMany, int page);
 }

@@ -7,7 +7,6 @@ import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -69,6 +68,7 @@ public class Gateway {
 			.build();
 	}
 
+	// Implement the functional interface KeyResolver to resolve the key to be used for rate limiting.
 	@Bean
 	KeyResolver redisKeyResolver() {
 		return exchange -> Mono.just(exchange.getRequest().getRemoteAddress().getAddress().getHostAddress());

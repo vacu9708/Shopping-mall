@@ -28,19 +28,19 @@ import lombok.RequiredArgsConstructor;
 public class ProductService {
     final ProductRepository productRepository;
     final AmazonS3 amazonS3;
-    
-    ResponseEntity<String> addProduct(ProductDto productDto) {
+
+    ResponseEntity<String> addProduct(NewProductDto newProductDto) {
         // Check if the same product name already exists
-        if(productRepository.existsByName(productDto.getName()) != false)
+        if(productRepository.existsByName(newProductDto.getName()) != false)
             return ResponseEntity.badRequest().body("PRODUCT_NAME_EXISTS");
 
-        String imgLocation = "shopping_mall/products/"+productDto.getName()+LocalDateTime.now().toString()+".jpg";
-        String base64Img = productDto.getProductImg();
+        String imgLocation = "shopping_mall/products/"+newProductDto.getName()+LocalDateTime.now().toString()+".jpg";
+        String base64Img = newProductDto.getProductImg();
         // Convert base64Img to Inputstream
         InputStream productImg = new ByteArrayInputStream(Base64.getDecoder().decode(base64Img));
         // metadata
         ObjectMetadata metadata = new ObjectMetadata();
-        metadata.setContentLength(productDto.getProductImgSize());
+        metadata.setContentLength(newProductDto.getProductImgSize());
         // Object to upload
         PutObjectRequest putObjectRequest = new PutObjectRequest("yasvacu", imgLocation, productImg, metadata)
             .withCannedAcl(com.amazonaws.services.s3.model.CannedAccessControlList.PublicRead);
@@ -57,7 +57,7 @@ public class ProductService {
         // Add product to DB
         CompletableFuture<Boolean> future2 = CompletableFuture.supplyAsync(() -> {
             try {
-                productRepository.addProduct(productDto.getName(), productDto.getDescription(), productDto.getPrice(), productDto.getStock(), imgLocation);
+                productRepository.addProduct(newProductDto.getName(), newProductDto.getDescription(), newProductDto.getPrice(), newProductDto.getStock(), imgLocation);
                 return true;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -89,7 +89,7 @@ public class ProductService {
         if(future2.join()){
             // Prepare for compensation
             rollbacks.push(() -> {
-                productRepository.deleteByName(productDto.getName());
+                productRepository.deleteByName(newProductDto.getName());
             });
         }
         else{
@@ -107,7 +107,7 @@ public class ProductService {
             return ResponseEntity.internalServerError().body(errMsg);
     }
 
-    ResponseEntity<?> getProducts(int howMany, int page) {
+    ResponseEntity<List<ProductEntity>> getProducts(int howMany, int page) {
         return ResponseEntity.ok(productRepository.getProducts(howMany, page));
     }
 
@@ -116,15 +116,8 @@ public class ProductService {
         if (productEntity == null) {
             return ResponseEntity.notFound().build();
         }
-        // Return productDto
-        ProductDto productDto = ProductDto.builder()
-            .name(productEntity.getName())
-            .description(productEntity.getDescription())
-            .price(productEntity.getPrice())
-            .stock(productEntity.getStock())
-            .productImg(productEntity.getImgLocation())
-            .build();
-        return ResponseEntity.ok(productDto);
+
+        return ResponseEntity.ok(productEntity);
     }
 
     ResponseEntity<String> setStock(UUID productId, int stockChange) {
@@ -169,4 +162,8 @@ public class ProductService {
         return ResponseEntity.ok("OK");
     }
 
+    ResponseEntity<List<ProductEntity>> searchProducts(String query, int howMany, int page) {
+        List<ProductEntity> productEntities = productRepository.searchProducts(query, howMany, page);
+        return ResponseEntity.ok(productEntities);
+    }
 }
