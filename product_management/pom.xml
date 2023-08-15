@@ -84,6 +84,11 @@
 			<artifactId>hibernate-core</artifactId>
 			<version>6.2.5.Final</version>
 		</dependency>
+		<!-- Spring security -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
 		<!--logging-->
 		<!-- <dependency>
 			<groupId>org.springframework.boot</groupId>
