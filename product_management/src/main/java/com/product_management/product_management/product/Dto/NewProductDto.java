@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class ProductDto {
+public class NewProductDto {
     String name;
     String description;
     int price;

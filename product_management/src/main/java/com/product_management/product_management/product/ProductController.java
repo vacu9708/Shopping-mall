@@ -1,5 +1,6 @@
 package com.product_management.product_management.product;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
@@ -22,12 +23,12 @@ public class ProductController {
     }
 
     @PostMapping("/manager/addProduct")
-    ResponseEntity<String> addProduct(@RequestBody ProductDto productDto) {
+    ResponseEntity<String> addProduct(@RequestBody NewProductDto productDto) {
         return productService.addProduct(productDto);
     }
 
     @GetMapping("/getProducts/{howMany}/{page}")
-    ResponseEntity<?> getProducts(@PathVariable int howMany, @PathVariable int page) {
+    ResponseEntity<List<ProductEntity>> getProducts(@PathVariable int howMany, @PathVariable int page) {
         return productService.getProducts(howMany, page);
     }
 
@@ -47,10 +48,10 @@ public class ProductController {
         return productService.deleteProduct(productId);
     }
 
-    // @GetMapping("/searchProducts")
-    // ResponseEntity<?> searchProducts(@RequestParam String query,
-    //                                  @RequestParam int howMany,
-    //                                  @RequestParam int page) {
-    //     return productService.searchProducts(query, howMany, page);
-    // }
+    @GetMapping("/searchProducts/{query}/{howMany}/{page}")
+    ResponseEntity<List<ProductEntity>> searchProducts(@PathVariable String query,
+                                                        @PathVariable int howMany,
+                                                        @PathVariable int page) {
+        return productService.searchProducts(query, howMany, page);
+    }
 }
