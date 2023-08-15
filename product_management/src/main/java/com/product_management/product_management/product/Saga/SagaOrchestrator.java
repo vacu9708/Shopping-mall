@@ -4,6 +4,7 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.concurrent.CompletableFuture;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import com.amazonaws.AmazonServiceException;
@@ -20,7 +21,7 @@ public class SagaOrchestrator {
     final ProductRepository productRepository;
     final AmazonS3 amazonS3;
 
-    public String addProduct(PutObjectRequest putObjectRequest, NewProductDto newProductDto, String imgLocation) {
+    public ResponseEntity<String> addProduct(PutObjectRequest putObjectRequest, NewProductDto newProductDto, String imgLocation) {
         // Upload product image to S3
         CompletableFuture<Boolean> future1 = CompletableFuture.supplyAsync(() -> {
             try {
@@ -81,13 +82,13 @@ public class SagaOrchestrator {
         }
 
         if(success) {
-            return "OK";
+            return ResponseEntity.ok("OK");
         }
         // Perform compensation if necessary
         else {
             while(!rollbacks.isEmpty())
                 rollbacks.pop().run();
-            return errMsg;
+            return ResponseEntity.internalServerError().body(errMsg);
         }    
     }
 }

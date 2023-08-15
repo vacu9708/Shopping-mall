@@ -43,12 +43,9 @@ public class ProductService {
         PutObjectRequest putObjectRequest = new PutObjectRequest("yasvacu", imgLocation, productImg, metadata)
             .withCannedAcl(com.amazonaws.services.s3.model.CannedAccessControlList.PublicRead);
         // Execute saga
-        String result = sagaOrchestrator.addProduct(putObjectRequest, newProductDto, imgLocation);
+        ResponseEntity<String> result = sagaOrchestrator.addProduct(putObjectRequest, newProductDto, imgLocation);
         // Response
-        if(result == "OK")
-            return ResponseEntity.ok(result);
-        else
-            return ResponseEntity.internalServerError().body(result);
+        return result;
     }
 
     ResponseEntity<List<ProductEntity>> getProducts(int howMany, int page) {
