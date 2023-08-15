@@ -36,7 +36,7 @@
             const base64Image = (await toBase64(productImg)).split('base64,')[1];
 
             const newProductDto = {
-                name: "new product",
+                name: "new product3",
                 description: "new product description",
                 price: 1000,
                 stock: 100,
@@ -44,7 +44,7 @@
                 productImgSize: productImg.size
             }
 
-            axios.post('product_management/addProduct', newProductDto, {
+            axios.post('product_management/manager/addProduct', newProductDto, {
                 headers: {
                     'accessToken': sessionStorage.getItem('accessToken')
                 }
@@ -54,33 +54,33 @@
                 // downloadImage();
             })
         }
+        // Using FormData
+        // const onImageChange2 = async () => {
+        //     const productImg = document.getElementById("imageInput").files[0];
 
-        const onImageChange2 = async () => {
-            const productImg = document.getElementById("imageInput").files[0];
+        //     // FormData
+        //     const formData = new FormData();
+        //     formData.append('productImg', productImg);
 
-            // FormData
-            const formData = new FormData();
-            formData.append('productImg', productImg);
+        //     const newProductDto = {
+        //         name: "new product3",
+        //         description: "new product description",
+        //         price: 1000,
+        //         stock: 100,
+        //     }
+        //     formData.append('newProductDto', JSON.stringify(newProductDto));
 
-            const newProductDto = {
-                name: "new product",
-                description: "new product description",
-                price: 1000,
-                stock: 100,
-            }
-            formData.append('newProductDto', JSON.stringify(newProductDto));
-
-            axios.post('product_management/addProduct', formData, {
-                headers: {
-                    'accessToken': sessionStorage.getItem('accessToken'),
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => {
-                console.log(response.data);
-                // downloadImage();
-            })
-        }
+        //     axios.post('product_management/addProduct', formData, {
+        //         headers: {
+        //             'accessToken': sessionStorage.getItem('accessToken'),
+        //             'Content-Type': 'application/json'
+        //         }
+        //     })
+        //     .then(response => {
+        //         console.log(response.data);
+        //         // downloadImage();
+        //     })
+        // }
 
         function downloadImage() {
             axios.get('/download')

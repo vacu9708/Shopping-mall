@@ -2,13 +2,9 @@ package com.product_management.product_management.product;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Base64;
-import java.util.Deque;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 
 import org.joda.time.LocalDateTime;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +16,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.product_management.product_management.product.Dto.*;
+import com.product_management.product_management.product.Saga.SagaOrchestrator;
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,13 +25,14 @@ import lombok.RequiredArgsConstructor;
 public class ProductService {
     final ProductRepository productRepository;
     final AmazonS3 amazonS3;
+    final SagaOrchestrator sagaOrchestrator;
 
     ResponseEntity<String> addProduct(NewProductDto newProductDto) {
         // Check if the same product name already exists
         if(productRepository.existsByName(newProductDto.getName()) != false)
             return ResponseEntity.badRequest().body("PRODUCT_NAME_EXISTS");
 
-        String imgLocation = "shopping_mall/products/"+newProductDto.getName()+LocalDateTime.now().toString()+".jpg";
+        String imgLocation = "shopping_mall/products/"+newProductDto.getName()+" "+LocalDateTime.now().toString()+".jpg";
         String base64Img = newProductDto.getProductImg();
         // Convert base64Img to Inputstream
         InputStream productImg = new ByteArrayInputStream(Base64.getDecoder().decode(base64Img));
@@ -44,67 +42,13 @@ public class ProductService {
         // Object to upload
         PutObjectRequest putObjectRequest = new PutObjectRequest("yasvacu", imgLocation, productImg, metadata)
             .withCannedAcl(com.amazonaws.services.s3.model.CannedAccessControlList.PublicRead);
-        // Upload product image to S3
-        CompletableFuture<Boolean> future1 = CompletableFuture.supplyAsync(() -> {
-            try {
-                amazonS3.putObject(putObjectRequest);
-                return true;
-            } catch (AmazonServiceException e) {
-                System.err.println(e.getErrorMessage());
-                return false;
-            }
-        });
-        // Add product to DB
-        CompletableFuture<Boolean> future2 = CompletableFuture.supplyAsync(() -> {
-            try {
-                productRepository.addProduct(newProductDto.getName(), newProductDto.getDescription(), newProductDto.getPrice(), newProductDto.getStock(), imgLocation);
-                return true;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return false;
-            }
-            
-        });
-
-        // Join futures and prepare for compensations
-        Deque<Runnable> rollbacks = new LinkedList<>();
-        Boolean success = true;
-        String errMsg = "";
-        
-        if(future1.join()){
-            // Prepare for compensation
-            rollbacks.push(() -> {
-                try {
-                    amazonS3.deleteObject("yasvacu", imgLocation);
-                } catch (AmazonServiceException e) {
-                    System.out.println(e.getErrorMessage());
-                }
-            });
-        }
-        else{
-            success = false;
-            errMsg = "S3_ERROR";
-        }
-
-        if(future2.join()){
-            // Prepare for compensation
-            rollbacks.push(() -> {
-                productRepository.deleteByName(newProductDto.getName());
-            });
-        }
-        else{
-            success = false;
-            errMsg = "DB_ERROR";
-        }
-
-        if(success)
-            return ResponseEntity.ok("OK");
-        // Perform compensation if necessary
+        // Execute saga
+        String result = sagaOrchestrator.addProduct(putObjectRequest, newProductDto, imgLocation);
+        // Response
+        if(result == "OK")
+            return ResponseEntity.ok(result);
         else
-            while(!rollbacks.isEmpty()){
-                rollbacks.pop().run();
-            }
-            return ResponseEntity.internalServerError().body(errMsg);
+            return ResponseEntity.internalServerError().body(result);
     }
 
     ResponseEntity<List<ProductEntity>> getProducts(int howMany, int page) {
