@@ -7,13 +7,21 @@ import org.springframework.web.bind.annotation.*;
 
 import com.product_management.product_management.product.Dto.*;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
 public class ProductController {
     final ProductService productService;
-    @PostMapping("/addProduct")
+
+    @GetMapping("/test")
+    ResponseEntity<String> test(HttpServletRequest request) {
+        // System.out.println(request.getRemoteAddr());
+        return ResponseEntity.ok("test");
+    }
+
+    @PostMapping("/manager/addProduct")
     ResponseEntity<String> addProduct(@RequestBody ProductDto productDto) {
         return productService.addProduct(productDto);
     }
@@ -28,13 +36,13 @@ public class ProductController {
         return productService.getProduct(productId);
     }
 
-    @PatchMapping("/setStock/{productId}/{stockChange}")
+    @PatchMapping("/manager/setStock/{productId}/{stockChange}")
     ResponseEntity<String> setStock(@PathVariable UUID productId,
                                     @PathVariable int stockChange) {
         return productService.setStock(productId, stockChange);
     }
 
-    @DeleteMapping("/deleteProduct/{productId}")
+    @DeleteMapping("/manager/deleteProduct/{productId}")
     ResponseEntity<String> deleteProduct(@PathVariable UUID productId) {
         return productService.deleteProduct(productId);
     }

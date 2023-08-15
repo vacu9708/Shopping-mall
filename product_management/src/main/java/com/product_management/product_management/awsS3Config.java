@@ -9,7 +9,7 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 
 
 @Configuration
-public class awsS3Config {
+public class AwsS3Config {
     @Bean
     public AmazonS3 s3Client() {
         // BasicAWSCredentials awsCredentials = new BasicAWSCredentials(accessKey, secretKey);
