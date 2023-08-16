@@ -1,10 +1,8 @@
-package com.notification.notification.email;
+package com.notification.notification.email.Dto;
 
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
 public class EmailDto {
     String to;
     String subject;

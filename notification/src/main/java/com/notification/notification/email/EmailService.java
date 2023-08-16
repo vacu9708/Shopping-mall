@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.notification.notification.email.Dto.EmailDto;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
