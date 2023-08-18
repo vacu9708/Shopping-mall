@@ -1,9 +1,9 @@
 version: '3'
-name: shoppingmall # name does not work in Jenkins
+# name: shoppingmall # name does not work in Jenkins
 services:
   gateway:
     build:
-      context: ../gateway
+      context: ../../gateway
       dockerfile: Dockerfile
     image: gateway:gateway
     container_name: gateway
@@ -14,7 +14,7 @@ services:
 
   order_management:
     build:
-      context: ../order_management
+      context: ../../order_management
       dockerfile: Dockerfile
     image: order_management:order_management
     container_name: order_management
@@ -27,7 +27,7 @@ services:
 
   user_management:
     build:
-      context: ../user_management
+      context: ../../user_management
       dockerfile: Dockerfile
     image: user_management:user_management
     container_name: user_management
@@ -38,7 +38,7 @@ services:
 
   product_management:
     build:
-      context: ../product_management
+      context: ../../product_management
       dockerfile: Dockerfile
     image: product_management:product_management
     container_name: product_management
@@ -49,7 +49,7 @@ services:
 
   notification:
     build:
-      context: ../notification
+      context: ../../notification
       dockerfile: Dockerfile
     image: notification:notification
     container_name: notification
