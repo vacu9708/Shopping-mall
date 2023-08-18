@@ -66,7 +66,7 @@ public class OrderService {
         List<OrderEntity> orders = orderRepository.findByUserId(userInfoDto.getUserId());
         List<UserOrderDto> userOrders = new LinkedList<>(); 
         for(var order: orders){
-            // JOIN orderedItems and orderedProducts
+            // Distributed JOIN of orderedItems and orderedProducts
             List<OrderedItemEntity> orderedItems = orderedItemRepository.findAllByOrderId(order.getOrderId());
             List<ProductDto> orderedProducts = new LinkedList<>();
             for(var orderedItem: orderedItems){
@@ -85,7 +85,7 @@ public class OrderService {
                     .build()
                 );
             }
-            // Add a userOrder
+            // Add a userOrder using the query results
             userOrders.add(UserOrderDto.builder()
                 .orderId(order.getOrderId())
                 .orderDate(order.getOrderDate())
