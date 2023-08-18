@@ -24,7 +24,6 @@ public class UserService {
     final UserRepository userRepository;
     final RedisTemplate<String, String> redisTemplate;
 
-    @Transactional
     ResponseEntity<String> registerUser(UserRegisterDto userRegisterDto) {
         // Check if the username already exists
         if(userRepository.findByUsername(userRegisterDto.getUsername()) != null)
@@ -90,11 +89,12 @@ public class UserService {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("INVALID_TOKEN");
         }
+        UUID userId = UUID.fromString(accessTokenClaims.get("userId", String.class));
         // Ensure the token is not a refresh token
-        if(accessTokenClaims.get("userId", String.class) == null)
+        if(userId == null)
             return ResponseEntity.badRequest().body("REFRESH_TOKEN_NOT_ALLOWED");
         
-        UserEntity userEntity = userRepository.findByUserId(accessTokenClaims.get("userId", UUID.class));
+        UserEntity userEntity = userRepository.findByUserId(userId);
         // Check if the user exists
         if(userEntity == null)
             return ResponseEntity.notFound().build();
