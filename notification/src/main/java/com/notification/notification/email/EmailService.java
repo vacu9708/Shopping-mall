@@ -25,6 +25,7 @@ public class EmailService {
 
    @KafkaListener(topics = {"email"}, containerFactory = "ListenerContainerFactoryString", groupId = "group1")
     void sendTextMessage(String emailJson) throws JsonMappingException, JsonProcessingException {
+        System.out.println("Sending email!");
         SimpleMailMessage email = new SimpleMailMessage();
         EmailDto emailDto = new ObjectMapper().readValue(emailJson, EmailDto.class);
 
