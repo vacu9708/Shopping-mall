@@ -79,6 +79,6 @@ services:
     extra_hosts:
       - "localhost:host-gateway"
 
-# networks:
-#   myNetwork:
-#     driver: bridge
+networks:
+  myNetwork:
+    driver: bridge
