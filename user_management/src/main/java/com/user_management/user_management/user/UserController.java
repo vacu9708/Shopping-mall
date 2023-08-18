@@ -12,6 +12,11 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
     final UserService authService;
 
+    @GetMapping("/test")
+    ResponseEntity<String> test() {
+        return ResponseEntity.ok("Test");
+    }
+
     @PostMapping("/registerUser")
     ResponseEntity<String> registerUser(@RequestBody UserRegisterDto userRegisterDto) {
         return authService.registerUser(userRegisterDto);

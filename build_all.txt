@@ -17,5 +17,3 @@ cd ..
 cd notification
 ./mvnw clean package
 cd ..
-
-pause

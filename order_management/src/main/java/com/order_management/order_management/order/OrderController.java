@@ -11,11 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
 
+import com.order_management.order_management.order.api.OrderApis;
+import com.order_management.order_management.order.dto.EmailDto;
 import com.order_management.order_management.order.dto.OrderDto;
-import com.order_management.order_management.order.dto.ProductDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,20 +23,21 @@ import lombok.RequiredArgsConstructor;
 // @RequestMapping("/order_management")
 public class OrderController {
     final OrderService orderService;
+    final OrderApis orderApis;
 
     @GetMapping("/test")
-    ResponseEntity<?> getTest() {
-        try{
-            return WebClient.create()
-                .get().uri("http://localhost:8080/product_management/getProduct/0a8fd1c7-3ba0-11ee-81f6-14857f22e600")
-                .retrieve()
-                .toEntity(ProductDto.class)
-                .block();
-        } catch(WebClientResponseException e){
-            HttpStatusCode status = e.getStatusCode();
-            String errorMessage = e.getResponseBodyAsString();
-            return ResponseEntity.status(status).body(errorMessage);
-        }
+    String test() {
+        return "test";
+    }
+
+    @GetMapping("/emailTest")
+    void emailTest() {
+        EmailDto emailDto = EmailDto.builder()
+            .to("vacu9708@naver.com")
+            .subject("Test email")
+            .text("Test email")
+            .build();
+        orderApis.sendEmail(emailDto);
     }
 
     @PostMapping("/makeOrder")

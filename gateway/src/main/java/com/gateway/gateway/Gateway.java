@@ -20,7 +20,7 @@ public class Gateway {
 	public String test() {
 		return "test";
 	}
-
+	
 	@Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
