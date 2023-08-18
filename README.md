@@ -95,5 +95,6 @@ Jenkins in combination with github webhook, AWS EC2
 
 # How to execute the application
 1. Install Docker
-2. Execute the commands that are in Build all.bat to build Spring apps
-3. Execute the commands that are in docker-compose_start.bat
+2. Set your AWS S3 credentials [guide](https://github.com/vacu9708/Tools-etc/blob/main/AWS/AWS%20credentials.md)
+3. Execute the commands that are in Build all.bat to build Spring apps
+4. Execute the commands that are in docker-compose_start.bat
