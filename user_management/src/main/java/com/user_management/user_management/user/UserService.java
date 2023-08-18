@@ -170,10 +170,10 @@ public class UserService {
         if(accessTokenClaims.get("userId", String.class) == null)
             return ResponseEntity.badRequest().body("REFRESH_TOKEN_NOT_ALLOWED");
         // Check if the user exists
-        if(userRepository.existsById(accessTokenClaims.get("userId", UUID.class)) == false)
+        if(userRepository.existsByUsername(accessTokenClaims.get("username", String.class)) == false)
             return ResponseEntity.notFound().build();
         // Delete the user
-        userRepository.deleteById(accessTokenClaims.get("userId", UUID.class));
+        userRepository.deleteByUsername(accessTokenClaims.get("username", String.class));
         return ResponseEntity.ok("OK");
     }
 }

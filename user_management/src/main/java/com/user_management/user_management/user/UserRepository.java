@@ -14,6 +14,8 @@ public interface UserRepository extends JpaRepository<UserEntity, UUID>{
     @Query(value = "INSERT INTO users (username, password, email) VALUES (?1, ?2, ?3)", nativeQuery = true)
     void addUser(String username, String password, String email);
 
+    boolean existsByUsername(String username);
+
     UserEntity findByUserId(UUID userId);
 
     UserEntity findByUsername(String username);

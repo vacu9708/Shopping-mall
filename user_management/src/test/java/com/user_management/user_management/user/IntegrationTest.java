@@ -32,13 +32,11 @@ public class IntegrationTest {
     private RedisTemplate<String, String> redisTemplate;
     @Autowired
     private UserService authService;
-    @Autowired
-    private static UserRepository authRepository;
 
     // Clean up after testing
     @AfterAll
-    static void cleanUp() {
-        authRepository.deleteByUsername("testUser");
+    static void cleanUp(@Autowired UserRepository userRepository) {
+        userRepository.deleteByUsername("testUser");
     }
 
     @Test

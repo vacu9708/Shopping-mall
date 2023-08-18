@@ -17,7 +17,37 @@ services:
       dockerfile: Dockerfile
     image: order_management:order_management
     ports:
+      - 8081:8081
+    extra_hosts:
+      - "localhost:host-gateway"
+
+  user_management:
+    build:
+      context: ./user_management
+      dockerfile: Dockerfile
+    image: user_management:user_management
+    ports:
+      - 8082:8082
+    extra_hosts:
+      - "localhost:host-gateway"
+
+  product_management:
+    build:
+      context: ./product_management
+      dockerfile: Dockerfile
+    image: product_management:product_management
+    ports:
       - 8083:8083
+    extra_hosts:
+      - "localhost:host-gateway"
+
+  notification:
+    build:
+      context: ./notification
+      dockerfile: Dockerfile
+    image: notification:notification
+    ports:
+      - 8084:8084
     extra_hosts:
       - "localhost:host-gateway"
 
