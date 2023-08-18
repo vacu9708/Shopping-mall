@@ -1,34 +1,35 @@
 # The shopping mall consists of these microservices
 ### API gateway (port: 8080)
-Acts as a single entry point for clients, routing requests to the appropriate microservices, including rate limiter and circuit breaker 
+Acts as a single entry point for clients, routing requests to the appropriate microservices 
 
 ### Order management (port: 8081)
-Handles order processing, payment processing (The refund feature will be added later)
+Handles order processing
 
 ### User management (port: 8082)
-Handles user registration, auth, etc.
+Handles user-related features such as user registration, auth, etc.
 
 ### Product management (port: 8083)
-1. Manages the inventory, including tracking stock levels, and triggering alerts for low stock.
-2. Manages the catalog of products available in the shopping mall, including product information, availability, and search functionality.
+1. Manages the inventory
+2. Manages the catalog of products available in the shopping mall
 
 ### Notification (port: 8084)
 Sends notifications to users regarding order updates, promotions, etc.
 
-# Branching strategy
-- Main: Documentation, etc
-- Release: Pushes to this branch trigger the Jenkins
-- Development: Merged into the main branch
-- Topics: Merged into the development branch
-
 ---
 # Architecture
+## Branching strategy
+- Topics: Development is performed and completed work is merged into the Development branch
+- Development: Changes are tested and merged into the Relase branch
+- Release: Pushes to this branch trigger the Jenkins for deployment
+- Main: Documentation, etc
+
 ## ER diagram
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/f423c72a-6429-41a9-9a2f-3abfdc68d7ca)<br>
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/51fd3bb9-5adb-4986-a3fb-a7f2529e3126)
+
 [Schema](https://github.com/vacu9708/Shopping-mall/blob/main/schema.sql)
 
-## Class relationship diagram
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/ec5a40c2-72a8-4d37-a79a-c5d5ee5ebe44)
+## Class relationship
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/0e09cf8d-0b5a-4090-82b9-c7f6747b9474)
 
 ## CI/CD diagram
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/86c8824c-7680-458f-8e43-0ab68f6d4651)
@@ -36,48 +37,56 @@ Sends notifications to users regarding order updates, promotions, etc.
 ## AWS S3 diagram
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/61eb5213-2f03-4012-958e-04a462c07658)
 
-## Distributed transactions
-The term "saga" in saga pattern refers to a sequence of distributed transactions or steps.<br>
+## Login flow
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/6e313aa6-a655-4715-ab4f-137df80ab32f)
 
-1. `Start`: OrderService.makeOrder() triggers the saga
-2. `Local transactions`: The saga includes payment, setting the stock, placing the order 
-3. `Compensation`: If a transaction failed, the saga pattern invokes a compensation action that undoes the completed steps, ensuring data consistency.
+## Making order flow
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/6634f67a-84a7-4adb-9e08-2adf6640c65d)
+
+## Distributed transaction
+The term "saga" in the saga pattern refers to a sequence of local transactions or steps.
+1. `Start`: A distributed transaction is triggered.
+2. `Local transactions`: The saga includes local transactions such as payment, setting the stock, placing the order.
+3. `Compensation`: If a step failed, compensation actions that undo the previously succeded steps are invoked, ensuring data consistency.
 4. `Completion`: The saga concludes when all the steps are either successfully completed or compensated.
 
 ---
-## API documentation
-https://youngsiks-organization.gitbook.io/shopping_mall/
+### [API documentation link](https://youngsiks-organization.gitbook.io/shopping_mall/)
+### [Future plan link](https://github.com/vacu9708/Shopping-mall/blob/main/Future%20plan.md)
 
 ---
-# Used things
+# What was used
 ## Backend
 Spring boot
-
-## Spring cloud gateway
-Spring cloud gateway acts as a router and forwards incoming requests to the appropriate downstream microservices based on the defined routes.<br>
-It is combined with resilience4j, which monitors the calls to external services. If a particular service fails or responds slowly, it trips the circuit breaker, preventing further calls to that service.
 
 ## Database
 MySQL
 
-## Redis
-- For storing data good to cache such as refresh tokens, wishlist, shopping cart
-- (Rate limit)
-
 ## JWT
-For decoupled auth service facilitating easier load balanacing
+For decoupled authentication, authrization facilitating easier load balancing
 
 ## Webflux, CompletableFuture
-For non-blocking communication across microservices
+For non-blocking communication across services
+
+## Redis
+- For storing data good to cache such as refresh tokens, (wishlist, shopping cart)
+- For request rate limit
+
+## Spring cloud gateway
+Spring cloud gateway acts as a router and forwards incoming requests to the appropriate downstream microservices based on the defined routes.
+
+## Spring security
+Used to permit only authenticated requests to specific APIs
 
 ## Kafka
 For decoupled communication between microservices for scenarios such as order notifications.
 
 ## Docker
-For containerizing individual microservices
+For containerizing individual microservices so that they can work without the environment setting
 
 ## Cloud
-AWS EC2(for deployment), AWS S3(for storing images)
+- AWS EC2(for deployment)
+- AWS S3(for storing images)
 
 ## Jenkins
 Jenkins in combination with github webhook, AWS EC2
@@ -89,5 +98,11 @@ Jenkins in combination with github webhook, AWS EC2
 ~~~
 docker-compose -f kafka_redis_docker_compose.yml up -d
 ~~~
-2. Execute Build all.bat
-3. Execute docker-compose_start.bat
+2. Install MySQL
+~~~
+sudo apt update
+sudo apt upgrade
+sudo apt install mysql-server
+~~~
+3. Execute the commands that are in Build all.bat
+4. Execute the commands that are in docker-compose_start.bat
