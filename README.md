@@ -94,15 +94,6 @@ Jenkins in combination with github webhook, AWS EC2
 ---
 
 # How to execute the application
-1. Execute the docker-compose for Kafka and Redis
-~~~
-docker-compose -f kafka_redis_docker_compose.yml up -d
-~~~
-2. Install MySQL
-~~~
-sudo apt update
-sudo apt upgrade
-sudo apt install mysql-server
-~~~
-3. Execute the commands that are in Build all.bat
-4. Execute the commands that are in docker-compose_start.bat
+1. Install Docker
+2. Execute the commands that are in Build all.bat to build Spring apps
+3. Execute the commands that are in docker-compose_start.bat
