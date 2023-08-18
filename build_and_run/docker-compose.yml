@@ -1,5 +1,5 @@
 version: '3'
-# name: shopping_mall # name does not work in Jenkins
+name: shoppingmall # name does not work in Jenkins
 services:
   gateway:
     build:
@@ -20,6 +20,8 @@ services:
     container_name: order_management
     ports:
       - 8081:8081
+    networks:
+      - myNetwork
     extra_hosts:
       - "localhost:host-gateway"
 
@@ -33,8 +35,6 @@ services:
       - 8082:8082
     extra_hosts:
       - "localhost:host-gateway"
-    networks:
-      - myNetwork
 
   product_management:
     build:

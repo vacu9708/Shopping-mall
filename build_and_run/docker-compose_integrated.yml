@@ -1,5 +1,5 @@
 version: '3'
-# name: shopping_mall # name does not work in Jenkins
+name: shoppingmall # name does not work in Jenkins
 services:
   # Kafka/Zookeeper
   zookeeper:
