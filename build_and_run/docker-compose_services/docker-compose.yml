@@ -6,13 +6,13 @@ services:
     container_name: redis
     command: redis-server #--appendonly yes
     # command: ["redis-server", "--bind", "redis", "--port", "6379"]
-    ports:
-      - '6379:6379'
+    # ports:
+    #   - '6379:6379'
     # expose:
     #   - '6379'
+    network_mode: "host"
     volumes:
       - '/redis_data:/redis_data'
-    network_mode: "host"
 
   gateway:
     build:
@@ -20,9 +20,9 @@ services:
       dockerfile: Dockerfile
     image: gateway:gateway
     container_name: gateway
-    ports:
-      - 8080:8080
     network_mode: "host"
+    # ports:
+    #   - 8080:8080
     # extra_hosts:
     #   - "localhost:host-gateway"
 
@@ -32,9 +32,9 @@ services:
       dockerfile: Dockerfile
     image: order_management:order_management
     container_name: order_management
-    ports:
-      - 8081:8081
     network_mode: "host"
+    # ports:
+    #   - 8081:8081
     # extra_hosts:
     #   - "localhost:host-gateway"
 
@@ -44,9 +44,9 @@ services:
       dockerfile: Dockerfile
     image: user_management:user_management
     container_name: user_management
-    ports:
-      - 8082:8082
     network_mode: "host"
+    # ports:
+    #   - 8082:8082
     # extra_hosts:
     #   - "localhost:host-gateway"
 
@@ -56,9 +56,9 @@ services:
       dockerfile: Dockerfile
     image: product_management:product_management
     container_name: product_management
-    ports:
-      - 8083:8083
     network_mode: "host"
+    # ports:
+    #   - 8083:8083
     # extra_hosts:
     #   - "localhost:host-gateway"
 
@@ -68,9 +68,9 @@ services:
       dockerfile: Dockerfile
     image: notification:notification
     container_name: notification
-    ports:
-      - 8084:8084
     network_mode: "host"
+    # ports:
+    #   - 8084:8084
     # extra_hosts:
     #   - "localhost:host-gateway"
 
