@@ -13,7 +13,7 @@ Handles user-related features such as user registration, auth, etc.
 2. Manages the catalog of products available in the shopping mall
 
 ### Notification (port: 8084)
-Sends notifications to users regarding order updates, promotions, etc.
+Sends notifications to users regarding orders, promotions, verification email
 
 ---
 # Architecture
