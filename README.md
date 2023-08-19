@@ -101,3 +101,4 @@ Jenkins in combination with github webhook, AWS EC2
 5. Add the schema generation queries that are in the schema.sql
 6. Execute the commands that are in build_all.txt to build Spring apps
 7. Execute the commands that are in docker-compose.txt to run the server containers
+8. Expose ports on which the containers run
