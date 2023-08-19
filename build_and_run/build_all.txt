@@ -1,19 +1,19 @@
-cd gateway
+cd ../gateway
 ./mvnw clean package
-cd ..
+cd ../build_and_run
 
-cd order_management
+cd ../order_management
 ./mvnw clean package
-cd ..
+cd ../build_and_run
 
-cd user_management
+cd ../user_management
 ./mvnw clean package
-cd ..
+cd ../build_and_run
 
-cd product_management
+cd ../product_management
 ./mvnw clean package
-cd ..
+cd ../build_and_run
 
-cd notification
+cd ../notification
 ./mvnw clean package
-cd ..
+cd ../build_and_run

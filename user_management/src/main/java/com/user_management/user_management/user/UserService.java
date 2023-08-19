@@ -101,31 +101,16 @@ public class UserService {
         return ResponseEntity.ok(new UserInfoDto(userEntity.getUserId(), userEntity.getUsername(), userEntity.getEmail()));
     }
     
-    ResponseEntity<String> editBlacklist(String accessToken, String username, String action) {
-        Claims accessTokenClaims;   
-        try{
-            accessTokenClaims = JwtUtils.getTokenClaims(accessToken);
-        } catch (ExpiredJwtException e) {
-            return ResponseEntity.badRequest().body("EXPIRED_TOKEN");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("INVALID_TOKEN");
-        }
-        // Ensure the token is not a refresh token
-        if(accessTokenClaims.get("userId", String.class) == null)
-            return ResponseEntity.badRequest().body("REFRESH_TOKEN_NOT_ALLOWED");
-        // Check if the user is admin
-        if(!accessTokenClaims.get("username", String.class).equals("admin"))
-            return ResponseEntity.badRequest().body("NOT_ADMIN");
+    ResponseEntity<String> editBlacklist(String username, String action) {
         // Add the user in the blacklist
         if(action == "add"){
             redisTemplate.opsForValue().set(username, "X", 43200000, TimeUnit.MILLISECONDS); // 12hours
+            // redisTemplate.opsForValue().set(username, "X");
+            // redisTemplate.opsForValue().getOperations().expireAt(userId, new Date(System.currentTimeMillis() + 43200000));
         }
         else if(action.equals("remove")){
             redisTemplate.delete(username);
         }
-        
-        // redisTemplate.opsForValue().set(username, "X");
-        // redisTemplate.opsForValue().getOperations().expireAt(userId, new Date(System.currentTimeMillis() + 43200000));
         return ResponseEntity.ok("OK");
     }
     

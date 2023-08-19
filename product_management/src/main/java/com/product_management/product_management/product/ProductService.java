@@ -15,9 +15,10 @@ import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.product_management.product_management.product.Dto.*;
-import com.product_management.product_management.product.Saga.SagaOrchestrator;
+import com.product_management.product_management.product.dto.*;
+import com.product_management.product_management.product.saga.SagaOrchestrator;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Component
@@ -35,17 +36,22 @@ public class ProductService {
         String imgLocation = "shopping_mall/products/"+newProductDto.getName()+" "+LocalDateTime.now().toString()+".jpg";
         String base64Img = newProductDto.getProductImg();
         // Convert base64Img to Inputstream
-        InputStream productImg = new ByteArrayInputStream(Base64.getDecoder().decode(base64Img));
+        byte[] decodedImg = Base64.getDecoder().decode(base64Img);
+        InputStream productImg = new ByteArrayInputStream(decodedImg);
         // metadata
         ObjectMetadata metadata = new ObjectMetadata();
-        metadata.setContentLength(newProductDto.getProductImgSize());
+        metadata.setContentLength(decodedImg.length);
+        metadata.setContentType("image/jpeg");
         // Object to upload
         PutObjectRequest putObjectRequest = new PutObjectRequest("yasvacu", imgLocation, productImg, metadata)
             .withCannedAcl(com.amazonaws.services.s3.model.CannedAccessControlList.PublicRead);
         // Execute saga
-        ResponseEntity<String> result = sagaOrchestrator.addProduct(putObjectRequest, newProductDto, imgLocation);
+        String sagaResult = sagaOrchestrator.addProduct(putObjectRequest, newProductDto, imgLocation);
         // Response
-        return result;
+        if(sagaResult.equals("OK"))
+            return ResponseEntity.ok("OK");
+        else
+            return ResponseEntity.internalServerError().body(sagaResult);
     }
 
     ResponseEntity<List<ProductEntity>> getProducts(int howMany, int page) {
@@ -80,11 +86,15 @@ public class ProductService {
         if (productRepository.existsById(productId) == false) {
             return ResponseEntity.notFound().build();
         }
-
-        productRepository.setStock(productId, stockChange);
+        try{
+            productRepository.setStock(productId, stockChange);
+        } catch(Exception e){
+            return ResponseEntity.internalServerError().body("DB_ERROR");
+        }
         return ResponseEntity.ok("OK");
     }
 
+    @Transactional
     ResponseEntity<String> deleteProduct(UUID productId) {
         // Check if the product exists
         if (productRepository.existsById(productId) == false) {
@@ -93,9 +103,9 @@ public class ProductService {
 
         // Delete the product image from S3
         try {
-            amazonS3.deleteObject("yasvacu", productRepository.findByproductId(productId).getImgLocation());
+            amazonS3.deleteObject("yasvacu", productRepository.findByProductId(productId).getImgLocation());
         } catch (AmazonServiceException e) {
-            System.out.println(e.getErrorMessage());
+            // System.out.println(e.getErrorMessage());
             return ResponseEntity.internalServerError().body("S3_ERROR");
         }
 

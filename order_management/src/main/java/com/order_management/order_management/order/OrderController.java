@@ -16,6 +16,7 @@ import com.order_management.order_management.order.api.OrderApis;
 import com.order_management.order_management.order.dto.EmailDto;
 import com.order_management.order_management.order.dto.OrderDto;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -26,9 +27,11 @@ public class OrderController {
     final OrderApis orderApis;
 
     @GetMapping("/test")
-    String test() {
-        return "test";
+    ResponseEntity<String> test(HttpServletRequest request) {
+        System.out.println(request.getRemoteAddr());
+        return ResponseEntity.ok("test");
     }
+
 
     @GetMapping("/emailTest")
     void emailTest() {
