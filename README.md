@@ -95,10 +95,10 @@ Jenkins in combination with github webhook, AWS EC2
 
 # How to execute the application
 1. Install Docker
-2. Set your AWS S3 credentials [guide](https://github.com/vacu9708/Tools-etc/blob/main/AWS/AWS%20credentials.md)
-3. Go to "build and run" directory
-4. Execute the commands that are in docker-compose_prerequisites.txt to run Kafka, MySql, Redis
-5. Add the schema generation queries that are in the schema.sql
-6. Execute the commands that are in build_all.txt to build Spring apps
+2. 2. Create "credentials" file in \product_management. ["The file's format](https://github.com/vacu9708/Tools-etc/blob/main/AWS/AWS%20credentials.md)
+3. Go to "build_and_run" directory
+4. Execute the commands that are in build_all.txt to build the Spring apps
+5. Execute the commands that are in docker-compose_prerequisites.txt
+6. Execute the schema generation queries that are in schema.sql
 7. Execute the commands that are in docker-compose.txt to run the server containers
 8. Expose ports on which the containers run
