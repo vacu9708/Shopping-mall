@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.joda.time.LocalDateTime;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 // import org.springframework.web.reactive.function.client.WebClient;
@@ -61,7 +62,7 @@ public class ProductService {
     ResponseEntity<?> getProduct(UUID productId) {
         ProductEntity productEntity = productRepository.findById(productId).get();
         if (productEntity == null) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("PRODUCT_NOT_FOUND");
         }
 
         return ResponseEntity.ok(productEntity);
@@ -84,7 +85,8 @@ public class ProductService {
         // }
         // Check if the product exists
         if (productRepository.existsById(productId) == false) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("PRODUCT_NOT_FOUND");
+    
         }
         try{
             productRepository.setStock(productId, stockChange);
@@ -98,7 +100,7 @@ public class ProductService {
     ResponseEntity<String> deleteProduct(UUID productId) {
         // Check if the product exists
         if (productRepository.existsById(productId) == false) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("PRODUCT_NOT_FOUND");
         }
 
         // Delete the product image from S3

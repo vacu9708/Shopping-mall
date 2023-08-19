@@ -12,8 +12,7 @@ services:
     #   - '6379'
     volumes:
       - '/redis_data:/redis_data'
-    networks:
-      - myNetwork
+    network_mode: "host"
 
   gateway:
     build:
@@ -23,8 +22,9 @@ services:
     container_name: gateway
     ports:
       - 8080:8080
-    extra_hosts:
-      - "localhost:host-gateway"
+    network_mode: "host"
+    # extra_hosts:
+    #   - "localhost:host-gateway"
 
   order_management:
     build:
@@ -34,8 +34,9 @@ services:
     container_name: order_management
     ports:
       - 8081:8081
-    extra_hosts:
-      - "localhost:host-gateway"
+    network_mode: "host"
+    # extra_hosts:
+    #   - "localhost:host-gateway"
 
   user_management:
     build:
@@ -45,10 +46,9 @@ services:
     container_name: user_management
     ports:
       - 8082:8082
-    networks:
-      - myNetwork
-    extra_hosts:
-      - "localhost:host-gateway"
+    network_mode: "host"
+    # extra_hosts:
+    #   - "localhost:host-gateway"
 
   product_management:
     build:
@@ -58,8 +58,9 @@ services:
     container_name: product_management
     ports:
       - 8083:8083
-    extra_hosts:
-      - "localhost:host-gateway"
+    network_mode: "host"
+    # extra_hosts:
+    #   - "localhost:host-gateway"
 
   notification:
     build:
@@ -69,9 +70,11 @@ services:
     container_name: notification
     ports:
       - 8084:8084
-    extra_hosts:
-      - "localhost:host-gateway"
+    network_mode: "host"
+    # extra_hosts:
+    #   - "localhost:host-gateway"
 
-networks:
-  myNetwork:
-    driver: bridge
+# VERY SLOW due to NAT rewriting overhead
+# networks:
+#   myNetwork:
+#     driver: bridge

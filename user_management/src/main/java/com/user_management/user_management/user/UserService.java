@@ -6,6 +6,7 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -47,12 +48,12 @@ public class UserService {
         // Generate tokens
         Map<String, Object> accessTokenClaims = new HashMap<>();
         accessTokenClaims.put("userId", userEntity.getUserId());
-        accessTokenClaims.put("username", userEntity.getUsername());
+        // accessTokenClaims.put("username", userEntity.getUsername());
         String accessToken = JwtUtils.generateToken(accessTokenClaims, 1800000);
 
         Map<String, Object> refreshTokenClaims = new HashMap<>();
-        refreshTokenClaims.put("username", userEntity.getUsername());
-        String refreshToken = JwtUtils.generateToken(refreshTokenClaims, 43200000);
+        // refreshTokenClaims.put("username", userEntity.getUsername());
+        String refreshToken = JwtUtils.generateToken(refreshTokenClaims, 10800000);
         
         // Return tokens
         return ResponseEntity.ok(new TokenPairDto(accessToken, refreshToken));
@@ -97,7 +98,8 @@ public class UserService {
         UserEntity userEntity = userRepository.findByUserId(userId);
         // Check if the user exists
         if(userEntity == null)
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("USER_NOT_FOUND");
+
         return ResponseEntity.ok(new UserInfoDto(userEntity.getUserId(), userEntity.getUsername(), userEntity.getEmail()));
     }
     
@@ -115,7 +117,7 @@ public class UserService {
     }
     
     ResponseEntity<?> reissueToken(String accessToken, String refreshToken) {
-        Claims refreshTokenClaims, accessTokenClaims;
+        Claims accessTokenClaims, refreshTokenClaims;
         try{
             accessTokenClaims = JwtUtils.getTokenClaims(accessToken);
             refreshTokenClaims = JwtUtils.getTokenClaims(refreshToken);
@@ -124,18 +126,15 @@ public class UserService {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("INVALID_TOKEN");
         }
-        
-        // Ensure the refresh token is not an access token
-        if(refreshTokenClaims.get("userId", String.class) != null)
-            return ResponseEntity.badRequest().body("ACCESS_TOKEN_NOT_ALLOWED");
+
         // Block the request if the user has been blacklisted
-        String username = refreshTokenClaims.get("username", String.class);
+        String username = accessTokenClaims.get("username", String.class);
         if(redisTemplate.opsForValue().get(username) != null)
             return ResponseEntity.badRequest().body("BLACKLISTED_USER");
 
         // Generate new tokens
-        String newAccessToken = JwtUtils.generateToken(accessTokenClaims, 900000);
-        String newRefreshToken = JwtUtils.generateToken(refreshTokenClaims, 43200000);
+        String newAccessToken = JwtUtils.generateToken(accessTokenClaims, 1800000);
+        String newRefreshToken = JwtUtils.generateToken(refreshTokenClaims, 10800000);
         
         // Return the new tokens
         return ResponseEntity.ok(new TokenPairDto(newAccessToken, newRefreshToken));
@@ -152,13 +151,14 @@ public class UserService {
             return ResponseEntity.badRequest().body("INVALID_TOKEN");
         }
         // Ensure the token is not a refresh token
-        if(accessTokenClaims.get("userId", String.class) == null)
+        UUID userId = UUID.fromString(accessTokenClaims.get("userId", String.class));
+        if(userId == null)
             return ResponseEntity.badRequest().body("REFRESH_TOKEN_NOT_ALLOWED");
         // Check if the user exists
-        if(userRepository.existsByUsername(accessTokenClaims.get("username", String.class)) == false)
-            return ResponseEntity.notFound().build();
+        if(userRepository.existsByUserId(userId) == false)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("USER_NOT_FOUND");
         // Delete the user
-        userRepository.deleteByUsername(accessTokenClaims.get("username", String.class));
+        userRepository.deleteByUserId(userId);
         return ResponseEntity.ok("OK");
     }
 }
