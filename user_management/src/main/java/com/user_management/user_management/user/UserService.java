@@ -48,7 +48,7 @@ public class UserService {
         // Generate tokens
         Map<String, Object> accessTokenClaims = new HashMap<>();
         accessTokenClaims.put("userId", userEntity.getUserId());
-        // accessTokenClaims.put("username", userEntity.getUsername());
+        accessTokenClaims.put("username", userEntity.getUsername());
         String accessToken = JwtUtils.generateToken(accessTokenClaims, 1800000);
 
         Map<String, Object> refreshTokenClaims = new HashMap<>();
@@ -104,14 +104,18 @@ public class UserService {
     }
     
     ResponseEntity<String> editBlacklist(String username, String action) {
+        // Find username
+        UserEntity userEntity = userRepository.findByUsername(username);
+        if(userEntity == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("USER_NOT_FOUND");
         // Add the user in the blacklist
         if(action == "add"){
-            redisTemplate.opsForValue().set(username, "X", 43200000, TimeUnit.MILLISECONDS); // 12hours
+            redisTemplate.opsForValue().set(userEntity.getUsername(), "X", 43200000, TimeUnit.MILLISECONDS); // 12hours
             // redisTemplate.opsForValue().set(username, "X");
             // redisTemplate.opsForValue().getOperations().expireAt(userId, new Date(System.currentTimeMillis() + 43200000));
         }
         else if(action.equals("remove")){
-            redisTemplate.delete(username);
+            redisTemplate.delete(userEntity.getUsername());
         }
         return ResponseEntity.ok("OK");
     }
@@ -128,8 +132,8 @@ public class UserService {
         }
 
         // Block the request if the user has been blacklisted
-        String username = accessTokenClaims.get("username", String.class);
-        if(redisTemplate.opsForValue().get(username) != null)
+        String userId = accessTokenClaims.get("userId", String.class);
+        if(redisTemplate.opsForValue().get(userId) != null)
             return ResponseEntity.badRequest().body("BLACKLISTED_USER");
 
         // Generate new tokens
