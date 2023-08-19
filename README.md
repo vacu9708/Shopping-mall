@@ -75,7 +75,7 @@ For non-blocking communication across services
 ## Spring cloud gateway
 Spring cloud gateway acts as a router and forwards incoming requests to the appropriate downstream microservices based on the defined routes.
 
-## Spring security
+## Spring AOP
 Used to permit only authenticated requests to specific APIs
 
 ## Kafka
