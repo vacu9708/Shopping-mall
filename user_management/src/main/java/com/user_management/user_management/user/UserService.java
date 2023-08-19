@@ -48,7 +48,7 @@ public class UserService {
         Map<String, Object> accessTokenClaims = new HashMap<>();
         accessTokenClaims.put("userId", userEntity.getUserId());
         accessTokenClaims.put("username", userEntity.getUsername());
-        String accessToken = JwtUtils.generateToken(accessTokenClaims, 900000);
+        String accessToken = JwtUtils.generateToken(accessTokenClaims, 1800000);
 
         Map<String, Object> refreshTokenClaims = new HashMap<>();
         refreshTokenClaims.put("username", userEntity.getUsername());
