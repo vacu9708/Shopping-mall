@@ -6,7 +6,7 @@ import java.util.UUID;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.product_management.product_management.product.Dto.*;
+import com.product_management.product_management.product.dto.*;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class ProductController {
     }
 
     @PostMapping("/manager/addProduct")
-    ResponseEntity<String> addProduct(@RequestBody NewProductDto productDto) {
+    ResponseEntity<String> managerAddProduct(HttpServletRequest request, @RequestBody NewProductDto productDto) {
         return productService.addProduct(productDto);
     }
 
@@ -38,13 +38,14 @@ public class ProductController {
     }
 
     @PatchMapping("/manager/setStock/{productId}/{stockChange}")
-    ResponseEntity<String> setStock(@PathVariable UUID productId,
-                                    @PathVariable int stockChange) {
+    ResponseEntity<String> managerSetStock(HttpServletRequest request,
+                                            @PathVariable UUID productId,
+                                            @PathVariable int stockChange) {
         return productService.setStock(productId, stockChange);
     }
 
     @DeleteMapping("/manager/deleteProduct/{productId}")
-    ResponseEntity<String> deleteProduct(@PathVariable UUID productId) {
+    ResponseEntity<String> managerDeleteProduct(HttpServletRequest request, @PathVariable UUID productId) {
         return productService.deleteProduct(productId);
     }
 

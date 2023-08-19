@@ -5,12 +5,20 @@ import org.springframework.web.bind.annotation.*;
 
 import com.user_management.user_management.user.Dto.*;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
 public class UserController {
     final UserService authService;
+
+    @GetMapping("/test")
+    ResponseEntity<String> test(HttpServletRequest request) {
+        System.out.println(request.getRemoteAddr());
+        return ResponseEntity.ok("test");
+    }
+
 
     @PostMapping("/registerUser")
     ResponseEntity<String> registerUser(@RequestBody UserRegisterDto userRegisterDto) {
@@ -37,13 +45,13 @@ public class UserController {
         return authService.getUserInfo(accessToken);
     }
 
-    @PostMapping("/addInBlacklist/{username}")
-    ResponseEntity<String> editBlacklist(@RequestHeader("accessToken") String accessToken, @PathVariable String username) {
-        return authService.editBlacklist(accessToken, username, "add");
+    @PostMapping("/manager/addInBlacklist/{username}")
+    ResponseEntity<String> managerEditBlacklist(@PathVariable String username) {
+        return authService.editBlacklist(username, "add");
     }
-    @DeleteMapping("/removeFromBlacklist/{username}")
-    ResponseEntity<String> removeFromBlacklist(@RequestHeader("accessToken") String accessToken, @PathVariable String username) {
-        return authService.editBlacklist(accessToken, username, "remove");
+    @DeleteMapping("/manager/removeFromBlacklist/{username}")
+    ResponseEntity<String> removeFromBlacklist(@PathVariable String username) {
+        return authService.editBlacklist(username, "remove");
     }
 
     @GetMapping("/reissueTokens")

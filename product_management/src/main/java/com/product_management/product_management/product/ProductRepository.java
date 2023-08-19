@@ -18,18 +18,19 @@ public interface ProductRepository extends JpaRepository<ProductEntity, UUID>{
     Boolean existsByName(String name);
 
     @Query(value = "SELECT * FROM products WHERE product_id = ?1", nativeQuery = true)
-    ProductEntity findByproductId(UUID productId);
+    ProductEntity findByProductId(UUID productId);
 
     @Query(value = "SELECT * FROM products LIMIT ?1 OFFSET ?2", nativeQuery = true)
     List<ProductEntity> getProducts(int howMany, int page);
     
+    @Query(value = "SELECT * FROM products WHERE name LIKE %:keyword% OR description LIKE %:keyword% LIMIT :howMany OFFSET :page", nativeQuery = true)
+    List<ProductEntity> searchProducts(String keyword, int howMany, int page);
+
     @Modifying
     @Query(value = "UPDATE products SET stock = stock + ?2 WHERE product_id = ?1", nativeQuery = true)
     void setStock(UUID productId, int stockChange);
 
-    @Modifying
+    // @Modifying
+    // @Query(value = "DELETE FROM products WHERE name = ?1", nativeQuery = true)
     void deleteByName(String name);
-
-    @Query(value = "SELECT * FROM products WHERE name LIKE %:keyword% OR description LIKE %:keyword% LIMIT :howMany OFFSET :page", nativeQuery = true)
-    List<ProductEntity> searchProducts(String keyword, int howMany, int page);
 }

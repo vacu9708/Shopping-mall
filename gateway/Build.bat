@@ -1,2 +1,2 @@
-mvnw clean package
+./mvnw.cmd clean package
 pause
