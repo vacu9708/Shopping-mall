@@ -20,7 +20,7 @@ public interface OrderRepository extends JpaRepository<OrderEntity, UUID>{
     // @Query(value = "SELECT * FROM orders WHERE order_id = ?;", nativeQuery = true)
     // OrderEntity findByOrderId(UUID orderId);
 
-    @Query(value="SELECT * FROM orders A WHERE user_id = ?;", nativeQuery = true)
+    @Query(value="SELECT * FROM orders A WHERE user_id = ? ORDER BY orderDate;", nativeQuery = true)
     List<OrderEntity> findByUserId(UUID userId);
 
     // Check if the order belongs to the user before cancelling order

@@ -33,7 +33,8 @@ public class ProductService {
         if(productRepository.existsByName(newProductDto.getName()) != false)
             return ResponseEntity.badRequest().body("PRODUCT_NAME_EXISTS");
 
-        String imgLocation = "shopping_mall/products/"+newProductDto.getName()+" "+LocalDateTime.now().toString()+".jpg";
+        String imgLocation = "shopping_mall/products/"+newProductDto.getName()+"-"+UUID.randomUUID().toString()+".jpg";
+        // String imgLocation = "shopping_mall/products/"+newProductDto.getName()+" "+LocalDateTime.now().toString()+".jpg";
         String base64Img = newProductDto.getProductImg();
         // Convert base64Img to Inputstream
         byte[] decodedImg = Base64.getDecoder().decode(base64Img);
@@ -41,7 +42,6 @@ public class ProductService {
         // metadata
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentLength(decodedImg.length);
-        metadata.setContentType("image/jpeg");
         // Object to upload
         PutObjectRequest putObjectRequest = new PutObjectRequest("yasvacu", imgLocation, productImg, metadata)
             .withCannedAcl(com.amazonaws.services.s3.model.CannedAccessControlList.PublicRead);
