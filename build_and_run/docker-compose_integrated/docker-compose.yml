@@ -51,12 +51,12 @@ services:
   redis:
     image: redis:latest
     container_name: redis
-    command: redis-server --appendonly yes
+    command: redis-server #--appendonly yes
     # command: ["redis-server", "--bind", "redis", "--port", "6379"]
     ports:
       - '6379:6379'
-    expose:
-      - '6379'
+    # expose:
+    #   - '6379'
     volumes:
       - '/redis_data:/redis_data'
     networks:
@@ -68,7 +68,7 @@ services:
 
   gateway:
     build:
-      context: ../gateway
+      context: ../../gateway
       dockerfile: Dockerfile
     image: gateway:gateway
     container_name: gateway
@@ -79,7 +79,7 @@ services:
 
   order_management:
     build:
-      context: ../order_management
+      context: ../../order_management
       dockerfile: Dockerfile
     image: order_management:order_management
     container_name: order_management
@@ -93,14 +93,12 @@ services:
 
   user_management:
     build:
-      context: ../user_management
+      context: ../../user_management
       dockerfile: Dockerfile
     image: user_management:user_management
     container_name: user_management
     ports:
       - 8082:8082
-    extra_hosts:
-      - "localhost:host-gateway"
     depends_on:
       mySql:
         condition: service_healthy
@@ -108,10 +106,12 @@ services:
         condition: service_healthy
     networks:
       - myNetwork
+    extra_hosts:
+      - "localhost:host-gateway"
 
   product_management:
     build:
-      context: ../product_management
+      context: ../../product_management
       dockerfile: Dockerfile
     image: product_management:product_management
     container_name: product_management
@@ -125,7 +125,7 @@ services:
 
   notification:
     build:
-      context: ../notification
+      context: ../../notification
       dockerfile: Dockerfile
     image: notification:notification
     container_name: notification
