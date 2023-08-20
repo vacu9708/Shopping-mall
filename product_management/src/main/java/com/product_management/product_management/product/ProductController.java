@@ -19,7 +19,7 @@ public class ProductController {
     @GetMapping("/test")
     ResponseEntity<String> test(HttpServletRequest request) {
         // System.out.println(request.getRemoteAddr());
-        return ResponseEntity.ok("test");
+        return ResponseEntity.ok("test!");
     }
 
     @PostMapping("/manager/addProduct")
