@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,7 @@ public class UserService {
     final UserRepository userRepository;
     final RedisTemplate<String, String> redisTemplate;
     final KafkaTemplate<String, String> kafkaTemplate;
+    @Value("${host_public_ip: localhost}") String ip;
 
     ResponseEntity<String> signUpEmail(UserRegisterDto userRegisterDto) throws JsonProcessingException {
         // Check if the username already exists
@@ -52,7 +54,7 @@ public class UserService {
             .to(userRegisterDto.getEmail())
             .subject("Sign up email")
             .text("Dear "+userRegisterDto.getUsername()+" Click the link to complete your sign-up."+
-                "\nhttp://localhost:8080/user_management/registerUser/"+signUpToken)
+                "\nhttp://"+ip+":8080/user_management/registerUser/"+signUpToken)
             .build();
         String emailJson = new ObjectMapper().writeValueAsString(emailDto);
         try{
