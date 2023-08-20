@@ -38,7 +38,7 @@ Sends notifications to users regarding orders, promotions, verification email
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/61eb5213-2f03-4012-958e-04a462c07658)
 
 ## Login flow
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/c48e0ef5-bc29-4b8d-9641-afe02cebe1b1)
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/abb0da47-5e22-447d-9066-10b9b54339c9)
 
 ## Making order flow
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/6634f67a-84a7-4adb-9e08-2adf6640c65d)
