@@ -17,7 +17,7 @@ public class UserController {
     @GetMapping("/test")
     ResponseEntity<String> test(HttpServletRequest request) {
         System.out.println(request.getRemoteAddr());
-        return ResponseEntity.ok("test");
+        return ResponseEntity.ok("test!");
     }
 
     @PostMapping("/signUpEmail")
