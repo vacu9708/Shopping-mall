@@ -27,7 +27,7 @@ Logstash can parse, filter, and transform log data before sending it to Elastics
 - `Kibana`: Visualization and Dashboards
 
 ## Compensation after distributed transactions failed because of system failures (like unexpected shutdowns)
-- Keep logging of the start and end of each local transaction and automate the compensation of incomplete local transactions after system failures.
+- Keep logging of the start and end of each local transaction and automate the compensation of local transactions that did not end after system failures.
 
 ## Circuit breaker
 Combine Cloud gateway with resilience4j, which monitors the calls to external services. If a particular service fails or responds slowly, it trips the circuit breaker, preventing further calls to that service.
