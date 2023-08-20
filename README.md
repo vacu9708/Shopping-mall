@@ -94,6 +94,7 @@ Jenkins in combination with github webhook, AWS EC2
 ---
 
 # How to execute the application
+The current docker-compose only works on Linux
 1. Install Docker
 2. Create "credentials" file in \product_management. [The file's format](https://github.com/vacu9708/Tools-etc/blob/main/AWS/AWS%20credentials.md)
 3. Go to "build_and_run" directory
