@@ -34,7 +34,6 @@ Logstash can parse, filter, and transform log data before sending it to Elastics
 Combine Cloud gateway with resilience4j, which monitors the calls to external services. If a particular service fails or responds slowly, it trips the circuit breaker, preventing further calls to that service.
 
 ## Essential but incomplete features
-- Email verification for registering
 - Payment
 - cancelOrder()
 
