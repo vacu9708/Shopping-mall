@@ -6,6 +6,9 @@ WORKDIR /app
 # Copy the JAR file into the container
 COPY target/app.jar /app/app.jar
 
+# AWS credentials
+COPY credentials credentials
+
 # Expose the ports that the Spring Boot application will run on
 EXPOSE 8083
 

@@ -6,12 +6,14 @@ import java.util.UUID;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @Entity(name = "users")
 @AllArgsConstructor
+@Builder
 @NoArgsConstructor
 public class UserEntity  {
     @Id

@@ -1,4 +1,4 @@
-package com.product_management.product_management.product.Dto;
+package com.product_management.product_management.product.dto;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -11,5 +11,4 @@ public class NewProductDto {
     int price;
     int stock;
     String productImg;
-    int productImgSize;
 }

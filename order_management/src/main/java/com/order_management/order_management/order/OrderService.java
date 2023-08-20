@@ -71,9 +71,9 @@ public class OrderService {
             List<ProductDto> orderedProducts = new LinkedList<>();
             for(var orderedItem: orderedItems){
                 response = orderApis.getProduct(orderedItem.getId().getProductId());
-                if(response.getStatusCode().value() != 200){
-                    return response;
-                }
+                // if(response.getStatusCode().value() != 200){
+                //     return response;
+                // }
                 orderedProducts.add((ProductDto) response.getBody());
             }
 

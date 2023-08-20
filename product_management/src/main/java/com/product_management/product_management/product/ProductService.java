@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.joda.time.LocalDateTime;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 // import org.springframework.web.reactive.function.client.WebClient;
@@ -15,9 +16,10 @@ import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.product_management.product_management.product.Dto.*;
-import com.product_management.product_management.product.Saga.SagaOrchestrator;
+import com.product_management.product_management.product.dto.*;
+import com.product_management.product_management.product.saga.SagaOrchestrator;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Component
@@ -32,20 +34,25 @@ public class ProductService {
         if(productRepository.existsByName(newProductDto.getName()) != false)
             return ResponseEntity.badRequest().body("PRODUCT_NAME_EXISTS");
 
-        String imgLocation = "shopping_mall/products/"+newProductDto.getName()+" "+LocalDateTime.now().toString()+".jpg";
+        String imgLocation = "shopping_mall/products/"+newProductDto.getName()+"-"+UUID.randomUUID().toString()+".jpg";
+        // String imgLocation = "shopping_mall/products/"+newProductDto.getName()+" "+LocalDateTime.now().toString()+".jpg";
         String base64Img = newProductDto.getProductImg();
         // Convert base64Img to Inputstream
-        InputStream productImg = new ByteArrayInputStream(Base64.getDecoder().decode(base64Img));
+        byte[] decodedImg = Base64.getDecoder().decode(base64Img);
+        InputStream productImg = new ByteArrayInputStream(decodedImg);
         // metadata
         ObjectMetadata metadata = new ObjectMetadata();
-        metadata.setContentLength(newProductDto.getProductImgSize());
+        metadata.setContentLength(decodedImg.length);
         // Object to upload
         PutObjectRequest putObjectRequest = new PutObjectRequest("yasvacu", imgLocation, productImg, metadata)
             .withCannedAcl(com.amazonaws.services.s3.model.CannedAccessControlList.PublicRead);
         // Execute saga
-        ResponseEntity<String> result = sagaOrchestrator.addProduct(putObjectRequest, newProductDto, imgLocation);
+        String sagaResult = sagaOrchestrator.addProduct(putObjectRequest, newProductDto, imgLocation);
         // Response
-        return result;
+        if(sagaResult.equals("OK"))
+            return ResponseEntity.ok("OK");
+        else
+            return ResponseEntity.internalServerError().body(sagaResult);
     }
 
     ResponseEntity<List<ProductEntity>> getProducts(int howMany, int page) {
@@ -55,7 +62,7 @@ public class ProductService {
     ResponseEntity<?> getProduct(UUID productId) {
         ProductEntity productEntity = productRepository.findById(productId).get();
         if (productEntity == null) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("PRODUCT_NOT_FOUND");
         }
 
         return ResponseEntity.ok(productEntity);
@@ -78,24 +85,29 @@ public class ProductService {
         // }
         // Check if the product exists
         if (productRepository.existsById(productId) == false) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("PRODUCT_NOT_FOUND");
+    
         }
-
-        productRepository.setStock(productId, stockChange);
+        try{
+            productRepository.setStock(productId, stockChange);
+        } catch(Exception e){
+            return ResponseEntity.internalServerError().body("DB_ERROR");
+        }
         return ResponseEntity.ok("OK");
     }
 
+    @Transactional
     ResponseEntity<String> deleteProduct(UUID productId) {
         // Check if the product exists
         if (productRepository.existsById(productId) == false) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("PRODUCT_NOT_FOUND");
         }
 
         // Delete the product image from S3
         try {
-            amazonS3.deleteObject("yasvacu", productRepository.findByproductId(productId).getImgLocation());
+            amazonS3.deleteObject("yasvacu", productRepository.findByProductId(productId).getImgLocation());
         } catch (AmazonServiceException e) {
-            System.out.println(e.getErrorMessage());
+            // System.out.println(e.getErrorMessage());
             return ResponseEntity.internalServerError().body("S3_ERROR");
         }
 

@@ -1,17 +1,17 @@
-package com.product_management.product_management.product.Saga;
+package com.product_management.product_management.product.saga;
 
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.concurrent.CompletableFuture;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.product_management.product_management.product.ProductRepository;
-import com.product_management.product_management.product.Dto.NewProductDto;
+import com.product_management.product_management.product.dto.NewProductDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,28 +20,31 @@ import lombok.RequiredArgsConstructor;
 public class SagaOrchestrator {
     final ProductRepository productRepository;
     final AmazonS3 amazonS3;
+    final TransactionTemplate transactionTemplate;
 
-    public ResponseEntity<String> addProduct(PutObjectRequest putObjectRequest, NewProductDto newProductDto, String imgLocation) {
+    public String addProduct(PutObjectRequest putObjectRequest, NewProductDto newProductDto, String imgLocation) {
         // Upload product image to S3
-        CompletableFuture<Boolean> future1 = CompletableFuture.supplyAsync(() -> {
+        CompletableFuture<String> future1 = CompletableFuture.supplyAsync(() -> {
             try {
                 amazonS3.putObject(putObjectRequest);
-                return true;
+                return "OK";
             } catch (AmazonServiceException e) {
-                System.err.println(e.getErrorMessage());
-                return false;
+                return e.getErrorMessage();
+            } catch (Exception e) {
+                return e.getMessage();
             }
         });
         // Add product to DB
-        CompletableFuture<Boolean> future2 = CompletableFuture.supplyAsync(() -> {
-            try {
-                productRepository.addProduct(newProductDto.getName(), newProductDto.getDescription(), newProductDto.getPrice(), newProductDto.getStock(), imgLocation);
-                return true;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return false;
-            }
-            
+        CompletableFuture<String> future2 = CompletableFuture.supplyAsync(() -> {
+            transactionTemplate.execute(status -> {
+                try {
+                    productRepository.addProduct(newProductDto.getName(), newProductDto.getDescription(), newProductDto.getPrice(), newProductDto.getStock(), imgLocation);
+                return "OK";
+                } catch (Exception e) {
+                    return "DB_ERROR";
+                } 
+            });
+            return "OK";
         });
 
         // Join futures and prepare for compensations
@@ -49,7 +52,8 @@ public class SagaOrchestrator {
         Boolean success = true;
         String errMsg = "";
         
-        if(future1.join()){
+        String future1Result = future1.join();
+        if(future1Result.equals("OK")){
             // Prepare for compensation
             rollbacks.push(() -> {
                 try {
@@ -61,34 +65,29 @@ public class SagaOrchestrator {
         }
         else{
             success = false;
-            errMsg = "S3_ERROR";
+            errMsg += future1Result+"\n";
         }
 
-        if(future2.join()){
+        String future2Result = future2.join();
+        if(future2Result.equals("OK")){
             // Prepare for compensation
             rollbacks.push(() -> {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
                 productRepository.deleteByName(newProductDto.getName());
             });
         }
         else{
             success = false;
-            errMsg = "DB_ERROR";
+            errMsg += future2Result+"\n";
         }
 
+        // Complete the transaction or perform compensation if necessary
         if(success) {
-            return ResponseEntity.ok("OK");
+            return "OK";
         }
-        // Perform compensation if necessary
         else {
             while(!rollbacks.isEmpty())
                 rollbacks.pop().run();
-            return ResponseEntity.internalServerError().body(errMsg);
+            return errMsg;
         }    
     }
 }

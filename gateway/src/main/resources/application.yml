@@ -1,0 +1,40 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: order_management
+        uri: http://127.0.0.1:8081/
+        predicates:
+        - Path=/order_management/**
+        filters:
+        - RewritePath=/order_management/(?<path>.*), /$\{path}
+        - name: RequestRateLimiter
+          args:
+            redis-rate-limiter.replenishRate: 1
+            redis-rate-limiter.burstCapacity: 2
+      - id: user_management
+        uri: http://127.0.0.1:8082/
+        predicates:
+        - Path=/user_management/**
+        filters:
+        - RewritePath=/user_management/(?<path>.*), /$\{path}
+        - name: RequestRateLimiter
+          args:
+            redis-rate-limiter.replenishRate: 1
+            redis-rate-limiter.burstCapacity: 2
+      - id: product_management
+        uri: http://127.0.0.1:8083/
+        predicates:
+        - Path=/product_management/**
+        filters:
+        - RewritePath=/product_management/(?<path>.*), /$\{path}
+        - name: RequestRateLimiter
+          args:
+            redis-rate-limiter.replenishRate: 1
+            redis-rate-limiter.burstCapacity: 2
+      - id: notification
+        uri: http://127.0.0.1:8084/
+        predicates:
+        - Path=/notification/**
+        filters:
+        - RewritePath=/notification/(?<path>.*), /$\{path}

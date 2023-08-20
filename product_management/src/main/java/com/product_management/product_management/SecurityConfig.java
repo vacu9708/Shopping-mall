@@ -12,10 +12,10 @@ import org.springframework.security.web.access.expression.WebExpressionAuthoriza
 public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        String allowedIps = "hasIpAddress('127.0.0.1')";
+        String allowedIps = "hasIpAddress('localhost') or hasIpAddress('15.164.163.95')";
         return http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(request -> request
-                    .requestMatchers("/manager/**").access(new WebExpressionAuthorizationManager(allowedIps))
+                    // .requestMatchers("/manager/**").access(new WebExpressionAuthorizationManager(allowedIps))
                     .anyRequest().permitAll()
                     // .anyRequest().authenticated()
                 ).build();
