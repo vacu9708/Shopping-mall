@@ -14,11 +14,12 @@ public interface UserRepository extends JpaRepository<UserEntity, UUID>{
     @Query(value = "INSERT INTO users (username, password, email) VALUES (?1, ?2, ?3)", nativeQuery = true)
     void addUser(String username, String password, String email);
 
-    boolean existsByUsername(String username);
+    boolean existsByUserId(UUID uuid);
 
+    // @Query(value = "SELECT * FROM users WHERE user_id = ?;", nativeQuery = true)
     UserEntity findByUserId(UUID userId);
 
     UserEntity findByUsername(String username);
 
-    void deleteByUsername(String username);
+    void deleteByUserId(UUID userId);
 }

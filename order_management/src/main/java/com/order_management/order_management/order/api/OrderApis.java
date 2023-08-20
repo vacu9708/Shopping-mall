@@ -65,6 +65,7 @@ public class OrderApis {
         try{
             return WebClient.create()
                 .patch().uri("http://localhost:8080/product_management/manager/setStock/"+productId+"/"+quantity)
+                .header("password", "123")
                 .retrieve()
                 .toEntity(String.class)
                 .block();

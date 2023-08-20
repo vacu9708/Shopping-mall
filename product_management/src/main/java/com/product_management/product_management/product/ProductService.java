@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.joda.time.LocalDateTime;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 // import org.springframework.web.reactive.function.client.WebClient;
@@ -33,7 +34,8 @@ public class ProductService {
         if(productRepository.existsByName(newProductDto.getName()) != false)
             return ResponseEntity.badRequest().body("PRODUCT_NAME_EXISTS");
 
-        String imgLocation = "shopping_mall/products/"+newProductDto.getName()+" "+LocalDateTime.now().toString()+".jpg";
+        String imgLocation = "shopping_mall/products/"+newProductDto.getName()+"-"+UUID.randomUUID().toString()+".jpg";
+        // String imgLocation = "shopping_mall/products/"+newProductDto.getName()+" "+LocalDateTime.now().toString()+".jpg";
         String base64Img = newProductDto.getProductImg();
         // Convert base64Img to Inputstream
         byte[] decodedImg = Base64.getDecoder().decode(base64Img);
@@ -41,7 +43,6 @@ public class ProductService {
         // metadata
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentLength(decodedImg.length);
-        metadata.setContentType("image/jpeg");
         // Object to upload
         PutObjectRequest putObjectRequest = new PutObjectRequest("yasvacu", imgLocation, productImg, metadata)
             .withCannedAcl(com.amazonaws.services.s3.model.CannedAccessControlList.PublicRead);
@@ -61,7 +62,7 @@ public class ProductService {
     ResponseEntity<?> getProduct(UUID productId) {
         ProductEntity productEntity = productRepository.findById(productId).get();
         if (productEntity == null) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("PRODUCT_NOT_FOUND");
         }
 
         return ResponseEntity.ok(productEntity);
@@ -84,7 +85,8 @@ public class ProductService {
         // }
         // Check if the product exists
         if (productRepository.existsById(productId) == false) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("PRODUCT_NOT_FOUND");
+    
         }
         try{
             productRepository.setStock(productId, stockChange);
@@ -98,7 +100,7 @@ public class ProductService {
     ResponseEntity<String> deleteProduct(UUID productId) {
         // Check if the product exists
         if (productRepository.existsById(productId) == false) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("PRODUCT_NOT_FOUND");
         }
 
         // Delete the product image from S3

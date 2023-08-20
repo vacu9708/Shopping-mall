@@ -3,6 +3,7 @@ package com.user_management.user_management.user;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.user_management.user_management.user.Dto.*;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,10 +20,14 @@ public class UserController {
         return ResponseEntity.ok("test");
     }
 
+    @PostMapping("/signUpEmail")
+    ResponseEntity<String> signUpEmail(@RequestBody UserRegisterDto userRegisterDto) throws JsonProcessingException {
+        return authService.signUpEmail(userRegisterDto);
+    }
 
-    @PostMapping("/registerUser")
-    ResponseEntity<String> registerUser(@RequestBody UserRegisterDto userRegisterDto) {
-        return authService.registerUser(userRegisterDto);
+    @GetMapping("/registerUser/{signUpToken}")
+    ResponseEntity<String> registerUser(@PathVariable String signUpToken) {
+        return authService.registerUser(signUpToken);
         // try {
         //     return authService.registerUser(userRegisterDto);
         // } catch (Exception e) {
@@ -35,6 +40,11 @@ public class UserController {
         return authService.login(userCredentialsDto);
     }
 
+    @PostMapping("/manager/addInBlacklist/{username}")
+    ResponseEntity<String> managerEditBlacklist(@PathVariable String username) {
+        return authService.editBlacklist(username, "add");
+    }
+
     @GetMapping("/verifyAccessToken")
     ResponseEntity<?> verifyToken(@RequestHeader("accessToken") String accessToken) {
         return authService.verifyAccessToken(accessToken);
@@ -45,10 +55,6 @@ public class UserController {
         return authService.getUserInfo(accessToken);
     }
 
-    @PostMapping("/manager/addInBlacklist/{username}")
-    ResponseEntity<String> managerEditBlacklist(@PathVariable String username) {
-        return authService.editBlacklist(username, "add");
-    }
     @DeleteMapping("/manager/removeFromBlacklist/{username}")
     ResponseEntity<String> removeFromBlacklist(@PathVariable String username) {
         return authService.editBlacklist(username, "remove");

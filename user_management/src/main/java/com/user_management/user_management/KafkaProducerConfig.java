@@ -1,4 +1,4 @@
-package com.order_management.order_management.order;
+package com.user_management.user_management;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
