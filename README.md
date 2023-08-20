@@ -29,7 +29,7 @@ Sends notifications to users regarding orders, promotions, verification email
 [Schema](https://github.com/vacu9708/Shopping-mall/blob/main/DB/schema.sql)
 
 ## Class relationship
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/6d0d1457-13cd-4c83-a7cf-366821cf0cf7)
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/47312d45-1522-4a19-8bc2-36abed6a067f)
 
 ## CI/CD diagram
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/86c8824c-7680-458f-8e43-0ab68f6d4651)
