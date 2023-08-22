@@ -46,7 +46,7 @@ services:
     container_name: user_management
     environment:
       DB_HOST: mySql
-      HOST_PUBLIC_IP: 15.165.91.196 # for email verification
+      GATEWAY: http://15.165.91.196:8080 # for email verification when sign-up
       REDIS_HOST: redis
       KAFKA_HOST: broker
     ports:

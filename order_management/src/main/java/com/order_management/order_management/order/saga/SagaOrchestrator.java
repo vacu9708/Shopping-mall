@@ -50,6 +50,9 @@ public class SagaOrchestrator {
                 transactionTemplate.execute(status -> {
                     orderRepository.addOrder(orderId, userId);
                     orderDto.getOrderedItems().forEach(orderedItem -> {
+                        // Check if the product exists
+                        // if(orderApis.getProduct(orderedItem.getProductId()).getStatusCode().value() != 200)
+                        //     throw new RuntimeException("PRODUCT_NOT_EXIST: "+orderedItem.getProductId());
                         orderedItemRepository.addOrderedItem(orderId, orderedItem.getProductId(), orderedItem.getQuantity());
                     });
                     return null;
