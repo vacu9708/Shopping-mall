@@ -23,9 +23,9 @@ Sends notifications to users regarding orders, promotions, verification email
 - Release: Pushes to this branch trigger the Jenkins for deployment
 - Main: Documentation, etc
 
-## ER diagram
+## ER diagram ([Schema](https://github.com/vacu9708/Shopping-mall/blob/main/DB/schema.sql))
+
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/51fd3bb9-5adb-4986-a3fb-a7f2529e3126)<br>
-#### [Schema](https://github.com/vacu9708/Shopping-mall/blob/main/DB/schema.sql)
 
 ## Class relationship
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/6d3efe8c-cec8-44a9-9ef8-bff0c315291c)
