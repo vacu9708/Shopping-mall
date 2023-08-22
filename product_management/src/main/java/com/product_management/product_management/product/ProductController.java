@@ -16,8 +16,8 @@ import lombok.RequiredArgsConstructor;
 public class ProductController {
     final ProductService productService;
 
-    @GetMapping("/test")
-    ResponseEntity<String> test(HttpServletRequest request) {
+    @GetMapping("/managerTest")
+    ResponseEntity<String> managerTest(HttpServletRequest request) {
         // System.out.println(request.getRemoteAddr());
         return ResponseEntity.ok("test!");
     }

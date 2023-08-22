@@ -3,38 +3,42 @@ spring:
     gateway:
       routes:
       - id: order_management
-        uri: http://127.0.0.1:8081/
+        uri: http://${orderManagement:localhost}:8081
         predicates:
-        - Path=/order_management/**
+        - Path=/orderManagement/**
         filters:
-        - RewritePath=/order_management/(?<path>.*), /$\{path}
+        - RewritePath=/orderManagement/(?<path>.*), /$\{path}
         - name: RequestRateLimiter
           args:
             redis-rate-limiter.replenishRate: 1
             redis-rate-limiter.burstCapacity: 2
       - id: user_management
-        uri: http://127.0.0.1:8082/
+        uri: http://${userManagement:localhost}:8082
         predicates:
-        - Path=/user_management/**
+        - Path=/userManagement/**
         filters:
-        - RewritePath=/user_management/(?<path>.*), /$\{path}
+        - RewritePath=/userManagement/(?<path>.*), /$\{path}
         - name: RequestRateLimiter
           args:
             redis-rate-limiter.replenishRate: 1
             redis-rate-limiter.burstCapacity: 2
-      - id: product_management
-        uri: http://127.0.0.1:8083/
+      - id: productManagement
+        uri: http://${productManagement:localhost}:8083
         predicates:
-        - Path=/product_management/**
+        - Path=/productManagement/**
         filters:
-        - RewritePath=/product_management/(?<path>.*), /$\{path}
+        - RewritePath=/productManagement/(?<path>.*), /$\{path}
         - name: RequestRateLimiter
           args:
             redis-rate-limiter.replenishRate: 1
             redis-rate-limiter.burstCapacity: 2
       - id: notification
-        uri: http://127.0.0.1:8084/
+        uri: http://${notification:localhost}:8084
         predicates:
         - Path=/notification/**
         filters:
         - RewritePath=/notification/(?<path>.*), /$\{path}
+        - name: RequestRateLimiter
+          args:
+            redis-rate-limiter.replenishRate: 1
+            redis-rate-limiter.burstCapacity: 2

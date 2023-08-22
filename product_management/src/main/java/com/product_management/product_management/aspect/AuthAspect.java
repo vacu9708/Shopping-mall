@@ -25,6 +25,7 @@ public class AuthAspect {
         if (/*requestURL.contains("manager") &&*/ password == null || !password.equals("123")) {
             return ResponseEntity.status(403).body("MANAGER_ONLY");
         }
+        // Continue the intercepted method and finish the aspect method
         return joinPoint.proceed();
     }
 }

@@ -29,7 +29,7 @@ public class UserService {
     final UserRepository userRepository;
     final RedisTemplate<String, String> redisTemplate;
     final KafkaTemplate<String, String> kafkaTemplate;
-    @Value("${host_public_ip: localhost}") String ip;
+    @Value("${host_public_ip}") String ip;
 
     ResponseEntity<String> signUpEmail(UserRegisterDto userRegisterDto) throws JsonProcessingException {
         // Check if the username already exists
@@ -94,7 +94,7 @@ public class UserService {
             return ResponseEntity.badRequest().body("INVALID_CREDENTIALS");
 
         // Check if the user has been blacklisted
-        if(redisTemplate.opsForValue().get(userEntity.getUsername().toString()) != null)
+        if(redisTemplate.opsForValue().get(userEntity.getUserId().toString()) != null)
             return ResponseEntity.badRequest().body("BLACKLISTED_USER");
 
         // Generate tokens
