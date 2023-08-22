@@ -24,11 +24,10 @@ Sends notifications to users regarding orders, promotions, verification email
 - Main: Documentation, etc
 
 ## ER diagram ([Schema](https://github.com/vacu9708/Shopping-mall/blob/main/DB/schema.sql))
-
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/51fd3bb9-5adb-4986-a3fb-a7f2529e3126)<br>
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/51fd3bb9-5adb-4986-a3fb-a7f2529e3126)
 
 ## Class relationship
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/6d3efe8c-cec8-44a9-9ef8-bff0c315291c)
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/b9ae82d9-d33d-44f2-82f5-01f0434f5e58)
 
 ## CI/CD diagram
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/86c8824c-7680-458f-8e43-0ab68f6d4651)
