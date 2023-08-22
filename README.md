@@ -24,12 +24,11 @@ Sends notifications to users regarding orders, promotions, verification email
 - Main: Documentation, etc
 
 ## ER diagram
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/51fd3bb9-5adb-4986-a3fb-a7f2529e3126)
-
-[Schema](https://github.com/vacu9708/Shopping-mall/blob/main/DB/schema.sql)
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/51fd3bb9-5adb-4986-a3fb-a7f2529e3126)<br>
+#### [Schema](https://github.com/vacu9708/Shopping-mall/blob/main/DB/schema.sql)
 
 ## Class relationship
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/47312d45-1522-4a19-8bc2-36abed6a067f)
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/6d3efe8c-cec8-44a9-9ef8-bff0c315291c)
 
 ## CI/CD diagram
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/86c8824c-7680-458f-8e43-0ab68f6d4651)
@@ -38,7 +37,7 @@ Sends notifications to users regarding orders, promotions, verification email
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/61eb5213-2f03-4012-958e-04a462c07658)
 
 ## Login flow
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/abb0da47-5e22-447d-9066-10b9b54339c9)
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/9db51f76-12eb-460b-a431-062f00bc773f)
 
 ## Making order flow (Distributed transaction)
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/6634f67a-84a7-4adb-9e08-2adf6640c65d)
