@@ -52,7 +52,7 @@ public class OrderApis {
     public ResponseEntity<?> getProduct(UUID productId){
         try{
             return WebClient.create()
-                .get().uri(gatewayUrl+"/product_management/getProduct/"+productId)
+                .get().uri(gatewayUrl+"/productManagement/getProduct/"+productId)
                 .retrieve()
                 .toEntity(ProductDto.class)
                 .block();
@@ -66,7 +66,7 @@ public class OrderApis {
     public ResponseEntity<String> setStock(UUID productId, int quantity){
         try{
             return WebClient.create()
-                .patch().uri(gatewayUrl+"/product_management/manager/setStock/"+productId+"/"+quantity)
+                .patch().uri(gatewayUrl+"/productManagement/manager/setStock/"+productId+"/"+quantity)
                 .header("password", "123")
                 .retrieve()
                 .toEntity(String.class)
