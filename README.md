@@ -43,13 +43,6 @@ Sends notifications to users regarding orders, promotions, verification email
 ## Making order flow
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/6634f67a-84a7-4adb-9e08-2adf6640c65d)
 
-## Distributed transaction
-The term "saga" in the saga pattern refers to a sequence of local transactions or steps.
-1. `Start`: A distributed transaction is triggered.
-2. `Local transactions`: The saga includes local transactions such as payment, setting the stock, placing the order.
-3. `Compensation`: If a step failed, compensation actions that undo the previously succeded steps are invoked, ensuring data consistency.
-4. `Completion`: The saga concludes when all the steps are either successfully completed or compensated.
-
 ---
 ### [API documentation link](https://youngsiks-organization.gitbook.io/shopping_mall/)
 ### [Future plan link](https://github.com/vacu9708/Shopping-mall/blob/main/Future%20plan.md)
