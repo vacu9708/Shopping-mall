@@ -40,7 +40,7 @@ Sends notifications to users regarding orders, promotions, verification email
 ## Login flow
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/abb0da47-5e22-447d-9066-10b9b54339c9)
 
-## Making order flow
+## Making order flow (Distributed transaction)
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/6634f67a-84a7-4adb-9e08-2adf6640c65d)
 
 ---
