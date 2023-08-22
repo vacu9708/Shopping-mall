@@ -3,6 +3,7 @@ package com.order_management.order_management.order.api;
 import java.util.UUID;
 // import java.util.concurrent.CompletableFuture;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -21,13 +22,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Component
 public class OrderApis {
+    @Value("${gateway.url}") String gatewayUrl;
     final KafkaTemplate<String, String> kafkaTemplate;
 
     public ResponseEntity<?> getUserInfo(String accessToken){
         // int httpStatusCode = 200;
         try{
             return WebClient.create()
-                .get().uri("http://localhost:8080/user_management/getUserInfo")
+                .get().uri(gatewayUrl+"/userManagement/getUserInfo")
                 .header("accessToken", accessToken)
                 .retrieve()
                 .toEntity(UserInfoDto.class)
@@ -50,7 +52,7 @@ public class OrderApis {
     public ResponseEntity<?> getProduct(UUID productId){
         try{
             return WebClient.create()
-                .get().uri("http://localhost:8080/product_management/getProduct/"+productId)
+                .get().uri(gatewayUrl+"/product_management/getProduct/"+productId)
                 .retrieve()
                 .toEntity(ProductDto.class)
                 .block();
@@ -64,7 +66,7 @@ public class OrderApis {
     public ResponseEntity<String> setStock(UUID productId, int quantity){
         try{
             return WebClient.create()
-                .patch().uri("http://localhost:8080/product_management/manager/setStock/"+productId+"/"+quantity)
+                .patch().uri(gatewayUrl+"/product_management/manager/setStock/"+productId+"/"+quantity)
                 .header("password", "123")
                 .retrieve()
                 .toEntity(String.class)

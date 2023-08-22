@@ -71,6 +71,7 @@ public class OrderService {
             List<ProductDto> orderedProducts = new LinkedList<>();
             for(var orderedItem: orderedItems){
                 response = orderApis.getProduct(orderedItem.getId().getProductId());
+                // Check if the product exists
                 // if(response.getStatusCode().value() != 200){
                 //     return response;
                 // }

@@ -14,7 +14,7 @@ import java.util.Map;
 
 @Configuration
 public class KafkaProducerConfig {
-    @Value("${kafka_host}") String kafka_host;
+    @Value("${kafka.host}") String kafka_host;
     @Bean
     public ProducerFactory<String, String> producerFactoryString() {
         Map<String, Object> config = new HashMap<>();
