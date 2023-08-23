@@ -96,7 +96,7 @@ public class IntegrationTest {
     void addInBlacklist_successful() throws Exception {
         String username = "testUser";
         mockMvc.perform(post("/manager/addInBlacklist/"+username)
-                        .header("password", "1234")
+                        .header("password", "123")
                         )
                         .andExpect(status().isOk());
     }

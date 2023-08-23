@@ -72,7 +72,7 @@ public class OrderService {
             List<DetailedOrderedItem> detailedOrderedItems = new LinkedList<>();
             for(int i=0; i<orderedItems.size(); i++){
                 // Get product info
-                response = orderApis.getProductInfo(orderedItems.get(i).getId().getProductId());
+                response = orderApis.getProduct(orderedItems.get(i).getId().getProductId());
                 // if (response.getStatusCode().value() != 200) {
                 //     return response;
                 // }
