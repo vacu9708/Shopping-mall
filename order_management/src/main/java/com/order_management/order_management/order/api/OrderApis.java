@@ -22,14 +22,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Component
 public class OrderApis {
-    @Value("${gateway.url}") String gatewayUrl;
+    @Value("${user_management.url}") String userManagementAddress;
+    @Value("${product_management.url}") String productManagementAddress;
     final KafkaTemplate<String, String> kafkaTemplate;
 
     public ResponseEntity<?> getUserInfo(String accessToken){
         // int httpStatusCode = 200;
         try{
             return WebClient.create()
-                .get().uri(gatewayUrl+"/userManagement/getUserInfo")
+                .get().uri(userManagementAddress+"/getUserInfo")
                 .header("accessToken", accessToken)
                 .retrieve()
                 .toEntity(UserInfoDto.class)
@@ -40,6 +41,8 @@ public class OrderApis {
             HttpStatusCode status = e.getStatusCode();
             String errorMessage = e.getResponseBodyAsString();
             return ResponseEntity.status(status).body(errorMessage);
+        } catch(Exception e){
+            return ResponseEntity.internalServerError().body(e.getMessage());
         }
 
         // if(httpStatusCode == 200){
@@ -49,10 +52,10 @@ public class OrderApis {
         // }
     }
 
-    public ResponseEntity<?> getProduct(UUID productId){
+    public ResponseEntity<?> getProductInfo(UUID productId){
         try{
             return WebClient.create()
-                .get().uri(gatewayUrl+"/productManagement/getProduct/"+productId)
+                .get().uri(productManagementAddress+"/getProduct/"+productId)
                 .retrieve()
                 .toEntity(ProductDto.class)
                 .block();
@@ -60,13 +63,15 @@ public class OrderApis {
             HttpStatusCode status = e.getStatusCode();
             String errorMessage = e.getResponseBodyAsString();
             return ResponseEntity.status(status).body(errorMessage);
+        } catch(Exception e){
+            return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
 
     public ResponseEntity<String> setStock(UUID productId, int quantity){
         try{
             return WebClient.create()
-                .patch().uri(gatewayUrl+"/productManagement/manager/setStock/"+productId+"/"+quantity)
+                .patch().uri(productManagementAddress+"/manager/setStock/"+productId+"/"+quantity)
                 .header("password", "123")
                 .retrieve()
                 .toEntity(String.class)
@@ -75,6 +80,8 @@ public class OrderApis {
             HttpStatusCode status = e.getStatusCode();
             String errorMessage = e.getResponseBodyAsString();
             return ResponseEntity.status(status).body(errorMessage);
+        } catch(Exception e){
+            return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
 

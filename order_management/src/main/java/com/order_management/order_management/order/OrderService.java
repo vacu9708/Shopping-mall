@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import com.order_management.order_management.order.api.OrderApis;
 import com.order_management.order_management.order.dto.*;
 import com.order_management.order_management.order.dto.UserOrderDto.DetailedOrderedItem;
+import com.order_management.order_management.order.dto.UserOrderDto.OrderedProductDto;
 import com.order_management.order_management.order.dto.UserOrderDto.UserOrderDto;
 import com.order_management.order_management.order.entity.OrderEntity;
 import com.order_management.order_management.order.entity.OrderedItemEntity;
@@ -68,20 +69,22 @@ public class OrderService {
         for(var order: orders){
             // Distributed JOIN of orderedItems and orderedProducts
             List<OrderedItemEntity> orderedItems = orderedItemRepository.findAllByOrderId(order.getOrderId());
-            List<ProductDto> orderedProducts = new LinkedList<>();
-            for(var orderedItem: orderedItems){
-                response = orderApis.getProduct(orderedItem.getId().getProductId());
-                // Check if the product exists
-                // if(response.getStatusCode().value() != 200){
-                //     return response;
-                // }
-                orderedProducts.add((ProductDto) response.getBody());
-            }
-
             List<DetailedOrderedItem> detailedOrderedItems = new LinkedList<>();
             for(int i=0; i<orderedItems.size(); i++){
+                // Get product info
+                response = orderApis.getProductInfo(orderedItems.get(i).getId().getProductId());
+                // if (response.getStatusCode().value() != 200) {
+                //     return response;
+                // }
+                ProductDto productDto = (ProductDto) response.getBody();
+                OrderedProductDto orderedProductDto = OrderedProductDto.builder()
+                    .name(productDto.getName())
+                    .description(productDto.getDescription())
+                    .price(productDto.getPrice())
+                    .imgLocation(productDto.getImgLocation())
+                    .build();
                 detailedOrderedItems.add(DetailedOrderedItem.builder()
-                    .product(orderedProducts.get(i))
+                    .orderedProduct(orderedProductDto)
                     .quantity(orderedItems.get(i).getQuantity())
                     .build()
                 );

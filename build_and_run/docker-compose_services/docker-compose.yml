@@ -30,7 +30,8 @@ services:
     environment:
       DB_HOST: mySql
       KAFKA_HOST: broker
-      gateway_url: http://15.165.91.196:8080
+      product_management_address: http://productManagement:8083
+      user_management_address: http://userManagement:8082
     ports:
       - 8081:8081
     networks:
@@ -47,7 +48,7 @@ services:
     container_name: user_management
     environment:
       DB_HOST: mySql
-      gateway_url: http://15.165.91.196:8080
+      host_address: http://15.165.91.196:8080
       REDIS_HOST: redis
       KAFKA_HOST: broker
     ports:

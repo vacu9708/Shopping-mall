@@ -29,7 +29,7 @@ public class UserService {
     final UserRepository userRepository;
     final RedisTemplate<String, String> redisTemplate;
     final KafkaTemplate<String, String> kafkaTemplate;
-    @Value("${gateway.url}") String gatewayUrl;
+    @Value("${host.address}") String hostAddress;
 
     ResponseEntity<String> signUpEmail(UserRegisterDto userRegisterDto) throws JsonProcessingException {
         // Check if the username already exists
@@ -54,7 +54,7 @@ public class UserService {
             .to(userRegisterDto.getEmail())
             .subject("Sign up email")
             .text("Dear "+userRegisterDto.getUsername()+" Click the link to complete your sign-up.\n"+
-            gatewayUrl+"/userManagement/registerUser/"+signUpToken)
+            hostAddress+"/registerUser/"+signUpToken)
             .build();
         String emailJson = new ObjectMapper().writeValueAsString(emailDto);
         try{
