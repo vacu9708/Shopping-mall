@@ -15,10 +15,10 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
     final UserService authService;
 
-    @GetMapping("/test")
-    ResponseEntity<String> test(HttpServletRequest request) {
-        System.out.println(request.getRemoteAddr());
-        return ResponseEntity.ok("test");
+    @GetMapping("/managerTest")
+    ResponseEntity<String> managerTest(HttpServletRequest request) {
+        // System.out.println(request.getRemoteAddr());
+        return ResponseEntity.ok("test!");
     }
 
     @PostMapping("/signUpEmail")
@@ -42,7 +42,7 @@ public class UserController {
     }
 
     @PostMapping("/manager/addInBlacklist/{username}")
-    ResponseEntity<String> managerEditBlacklist(@PathVariable String username) {
+    ResponseEntity<String> managerEditBlacklist(HttpServletRequest request, @PathVariable String username) {
         return authService.editBlacklist(username, "add");
     }
 
@@ -56,15 +56,15 @@ public class UserController {
         return authService.getUserInfo(accessToken);
     }
 
-    @DeleteMapping("/manager/removeFromBlacklist/{username}")
-    ResponseEntity<String> removeFromBlacklist(@PathVariable String username) {
-        return authService.editBlacklist(username, "remove");
-    }
-
     @GetMapping("/reissueTokens")
     ResponseEntity<?> reissueToken(@RequestHeader("accessToken") String accessToken,
                                     @RequestHeader("refreshToken") String refreshToken) {
         return authService.reissueToken(accessToken, refreshToken);
+    }
+
+    @DeleteMapping("/manager/removeFromBlacklist/{username}")
+    ResponseEntity<String> managerRemoveFromBlacklist(HttpServletRequest request, @PathVariable String username) {
+        return authService.editBlacklist(username, "remove");
     }
 
     @DeleteMapping("/deleteUser")

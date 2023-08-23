@@ -1,6 +1,4 @@
-package com.user_management.user_management.aspect;
-// package com.product_management.product_management.product.aspect;
-
+// package com.user_management.user_management.aspect;
 
 // import org.aspectj.lang.annotation.Aspect;
 // import org.aspectj.lang.annotation.Before;
@@ -11,7 +9,7 @@ package com.user_management.user_management.aspect;
 // @Component
 // public class LogAspect {
 
-//     @Pointcut("execution(* com.product_management.product_management.product.ProductController.*(..))")
+//     @Pointcut("execution(* com.user_management.user_management.user.UserController.*(..))")
 //     public void api() {}
 
 //     @Before("api()")

@@ -112,6 +112,7 @@ public class UserService {
     }
 
     ResponseEntity<String> editBlacklist(String username, String action) {
+        // System.out.println("HELLO\n\n\n");
         // Find username
         UserEntity userEntity = userRepository.findByUsername(username);
         if(userEntity == null)
