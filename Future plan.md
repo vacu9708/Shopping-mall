@@ -1,7 +1,4 @@
 # Future plan
-## Integration test code
-Write integration test code
-
 ## Load balancing
 Use EC2 load balancer or Kubernetes
 ### Kubernetes
