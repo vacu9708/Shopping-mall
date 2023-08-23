@@ -28,7 +28,7 @@ Sends notifications to users regarding orders, promotions, verification email
 This schema is normalized but denormalizing "productㄴ" table and "ordered_items" table seems good for better distributed JOINs.
 
 ## Class relationship
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/b9ae82d9-d33d-44f2-82f5-01f0434f5e58)
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/c30b0cf9-301d-46c3-b76f-280fec9dcf5b)
 
 ## CI/CD diagram
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/86c8824c-7680-458f-8e43-0ab68f6d4651)
