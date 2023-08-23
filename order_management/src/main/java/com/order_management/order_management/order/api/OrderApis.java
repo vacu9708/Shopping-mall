@@ -22,8 +22,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Component
 public class OrderApis {
-    @Value("${user_management.url}") String userManagementAddress;
-    @Value("${product_management.url}") String productManagementAddress;
+    @Value("${user_management.address}") String userManagementAddress;
+    @Value("${product_management.address}") String productManagementAddress;
     final KafkaTemplate<String, String> kafkaTemplate;
 
     public ResponseEntity<?> getUserInfo(String accessToken){
