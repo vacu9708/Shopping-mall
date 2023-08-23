@@ -52,7 +52,7 @@ public class OrderApis {
         // }
     }
 
-    public ResponseEntity<?> getProductInfo(UUID productId){
+    public ResponseEntity<?> getProduct(UUID productId){
         try{
             return WebClient.create()
                 .get().uri(productManagementAddress+"/getProduct/"+productId)
