@@ -48,7 +48,7 @@ This schema is normalized but denormalizing "productㄴ" table and "ordered_item
 
 ---
 # What was used
-## Backend
+## Base
 Spring boot
 
 ## Database
