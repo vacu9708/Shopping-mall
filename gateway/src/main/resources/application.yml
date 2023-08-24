@@ -50,20 +50,37 @@ spring:
         - RewritePath=/notification/(?<path>.*), /$\{path}
         - name: CircuitBreaker
           args:
+            name: myCircuitBreaker
             fallbackUri: forward:/fallback
         - name: RequestRateLimiter
           args:
             redis-rate-limiter.replenishRate: 1
             redis-rate-limiter.burstCapacity: 2
 
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      slidingWindowSize: 8
+      slidingWindowType: COUNT_BASED
+      failureRateThreshold: 50
+      waitDurationInOpenState: 5s # Wait 5 seconds before transitioning from OPEN to HALF_OPEN
+      permittedNumberOfCallsInHalfOpenState: 5
+      registerHealthIndicator: true
+      allowHealthIndicatorToFail: true
+
 # resilience4j.circuitbreaker:
-#     configs:
-#         default:
-#             registerHealthIndicator: true
-#             slidingWindowSize: 50
+#   instances:
+#     myCircuitBreaker:
+#       slidingWindowSize: 8
+#       slidingWindowType: COUNT_BASED
+#       failureRateThreshold: 50
+#       waitDurationInOpenState: 5s # Wait 5 seconds before transitioning from OPEN to HALF_OPEN
+#       permittedNumberOfCallsInHalfOpenState: 4
+#       registerHealthIndicator: true
+#       allowHealthIndicatorToFail: true
 
 # resilience4j.timelimiter:
-#     configs:
-#         default:
-#             timeoutDuration: 10s
-#             cancelRunningFuture: true
+#   configs:
+#       default:
+#           timeoutDuration: 7s
+#           cancelRunningFuture: true

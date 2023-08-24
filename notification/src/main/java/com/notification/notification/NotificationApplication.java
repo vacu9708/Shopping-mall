@@ -17,14 +17,15 @@ public class NotificationApplication {
         return ResponseEntity.ok("test");
     }
 
-	@GetMapping("/timeoutTest")
-	ResponseEntity<String> timeoutTest(){
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		return ResponseEntity.ok("timeoutTest");
+	@GetMapping("/errorTest")
+	ResponseEntity<String> errorTest(){
+		return ResponseEntity.internalServerError().body("error test");
+		// try {
+		// 	Thread.sleep(3000);
+		// } catch (InterruptedException e) {
+		// 	e.printStackTrace();
+		// }
+		// return ResponseEntity.ok("timeoutTest");
 	}
 
 	public static void main(String[] args) {

@@ -30,7 +30,7 @@ public class Gateway {
 	}
 	@GetMapping("/fallback")
 	public String fallback() {
-		return "fallback";
+		return "Circuit open";
 	}
 
 	@Bean
@@ -39,7 +39,7 @@ public class Gateway {
 				// .route(p -> p
 				// .host("*.circuitbreaker.com")
 				// .filters(f -> f.circuitBreaker(config -> config
-				// 	.setName("mycmd")
+				// 	.setName("myCircuitBreaker")
 				// 	.setFallbackUri("forward:/fallback")))
 				// .uri("http://httpbin.org:80"))
 			// .route("order_management", r -> r.path("/order_management/**")
