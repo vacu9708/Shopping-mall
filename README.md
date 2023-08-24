@@ -65,7 +65,8 @@ For non-blocking communication across services
 - For request rate limit
 
 ## Spring cloud gateway
-Spring cloud gateway acts as a router and forwards incoming requests to the appropriate downstream microservices based on the defined routes.
+- Spring cloud gateway acts as a router that forwards incoming requests to the appropriate downstream microservices based on the defined routes.
+- The circuit breaker is applied.
 
 ## Spring AOP
 Used to permit only authenticated requests to specific APIs
