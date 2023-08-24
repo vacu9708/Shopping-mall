@@ -79,8 +79,8 @@ resilience4j.circuitbreaker:
 #       registerHealthIndicator: true
 #       allowHealthIndicatorToFail: true
 
-# resilience4j.timelimiter:
-#   configs:
-#       default:
-#           timeoutDuration: 7s
-#           cancelRunningFuture: true
+resilience4j.timelimiter:
+  configs:
+      default:
+          timeoutDuration: 10s
+          cancelRunningFuture: true
