@@ -55,7 +55,7 @@ Spring boot
 MySQL
 
 ## JWT
-For decoupled authentication, authrization facilitating easier load balancing
+For decoupled authentication, authorization facilitating easier load balancing
 
 ## Webflux, CompletableFuture
 For non-blocking communication across services
