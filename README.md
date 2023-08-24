@@ -1,6 +1,7 @@
 # The shopping mall consists of these microservices
 ### API gateway
-Acts as a single entry point for clients, routing requests to the appropriate microservices 
+Acts as a single entry point for clients, routing requests to the appropriate microservices.
+It also controls the incoming reequests with Request rate limiting and Circuit breaker.
 
 ### Order management
 Handles order processing
@@ -62,7 +63,7 @@ For non-blocking communication across services
 
 ## Redis
 - For storing data good to cache such as refresh tokens, (wishlist, shopping cart)
-- For request rate limit
+- For limiting the rate of requests coming into the gateway using the Request rate limiter
 
 ## Spring cloud gateway
 - Spring cloud gateway acts as a router that forwards incoming requests to the appropriate downstream microservices based on the defined routes.
