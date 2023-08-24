@@ -38,7 +38,7 @@ This schema is normalized but denormalizing "productㄴ" table and "ordered_item
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/61eb5213-2f03-4012-958e-04a462c07658)
 
 ## Login flow
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/9db51f76-12eb-460b-a431-062f00bc773f)
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/ac5a8cc1-30c5-45a6-a2e1-c93a0d9711b8)
 
 ## Making order flow (Distributed transaction)
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/6634f67a-84a7-4adb-9e08-2adf6640c65d)
