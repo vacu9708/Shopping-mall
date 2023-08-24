@@ -17,6 +17,15 @@ public class NotificationApplication {
         return ResponseEntity.ok("test");
     }
 
+	@GetMapping("/timeoutTest")
+	ResponseEntity<String> timeoutTest(){
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		return ResponseEntity.ok("timeoutTest");
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(NotificationApplication.class, args);

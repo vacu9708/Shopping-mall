@@ -8,6 +8,9 @@ spring:
         - Path=/orderManagement/**
         filters:
         - RewritePath=/orderManagement/(?<path>.*), /$\{path}
+        - name: CircuitBreaker
+          args:
+            fallbackUri: forward:/fallback
         - name: RequestRateLimiter
           args:
             redis-rate-limiter.replenishRate: 1
@@ -18,6 +21,9 @@ spring:
         - Path=/userManagement/**
         filters:
         - RewritePath=/userManagement/(?<path>.*), /$\{path}
+        - name: CircuitBreaker
+          args:
+            fallbackUri: forward:/fallback
         - name: RequestRateLimiter
           args:
             redis-rate-limiter.replenishRate: 1
@@ -28,17 +34,36 @@ spring:
         - Path=/productManagement/**
         filters:
         - RewritePath=/productManagement/(?<path>.*), /$\{path}
+        - name: CircuitBreaker
+          args:
+            fallbackUri: forward:/fallback
         - name: RequestRateLimiter
           args:
             redis-rate-limiter.replenishRate: 1
             redis-rate-limiter.burstCapacity: 2
+      # notification service with circuit breaker
       - id: notification
         uri: http://${notification:localhost}:8084
         predicates:
         - Path=/notification/**
         filters:
         - RewritePath=/notification/(?<path>.*), /$\{path}
+        - name: CircuitBreaker
+          args:
+            fallbackUri: forward:/fallback
         - name: RequestRateLimiter
           args:
             redis-rate-limiter.replenishRate: 1
             redis-rate-limiter.burstCapacity: 2
+
+# resilience4j.circuitbreaker:
+#     configs:
+#         default:
+#             registerHealthIndicator: true
+#             slidingWindowSize: 50
+
+# resilience4j.timelimiter:
+#     configs:
+#         default:
+#             timeoutDuration: 10s
+#             cancelRunningFuture: true
