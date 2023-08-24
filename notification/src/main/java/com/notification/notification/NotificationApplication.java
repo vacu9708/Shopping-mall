@@ -18,14 +18,10 @@ public class NotificationApplication {
     }
 
 	@GetMapping("/errorTest")
-	ResponseEntity<String> errorTest(){
+	ResponseEntity<String> errorTest() throws InterruptedException{
+		Thread.sleep(1000);
 		return ResponseEntity.internalServerError().body("error test");
-		// try {
-		// 	Thread.sleep(3000);
-		// } catch (InterruptedException e) {
-		// 	e.printStackTrace();
-		// }
-		// return ResponseEntity.ok("timeoutTest");
+		// return ResponseEntity.ok("error test");
 	}
 
 	public static void main(String[] args) {
