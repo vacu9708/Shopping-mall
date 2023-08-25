@@ -1,5 +1,7 @@
 spring:
   cloud:
+    circuitbreaker:
+      enabled: true
     gateway:
       routes:
       - id: order_management
@@ -10,7 +12,7 @@ spring:
         - RewritePath=/orderManagement/(?<path>.*), /$\{path}
         - name: CircuitBreaker
           args:
-            fallbackUri: forward:/fallback
+            name: myCircuitBreaker
         - name: RequestRateLimiter
           args:
             redis-rate-limiter.replenishRate: 1
@@ -23,7 +25,7 @@ spring:
         - RewritePath=/userManagement/(?<path>.*), /$\{path}
         - name: CircuitBreaker
           args:
-            fallbackUri: forward:/fallback
+            name: myCircuitBreaker
         - name: RequestRateLimiter
           args:
             redis-rate-limiter.replenishRate: 1
@@ -36,7 +38,7 @@ spring:
         - RewritePath=/productManagement/(?<path>.*), /$\{path}
         - name: CircuitBreaker
           args:
-            fallbackUri: forward:/fallback
+            name: myCircuitBreaker
         - name: RequestRateLimiter
           args:
             redis-rate-limiter.replenishRate: 1
@@ -45,28 +47,36 @@ spring:
       - id: notification
         uri: http://${notification:localhost}:8084
         predicates:
-        - Path=/notification/**
+          - Path=/notification/**
         filters:
         - RewritePath=/notification/(?<path>.*), /$\{path}
+        # - CircuitBreaker=myCircuitBreaker
         - name: CircuitBreaker
           args:
             name: myCircuitBreaker
-            fallbackUri: forward:/fallback
+            # fallbackUri: forward:/fallback
         - name: RequestRateLimiter
           args:
             redis-rate-limiter.replenishRate: 1
             redis-rate-limiter.burstCapacity: 2
 
-resilience4j.circuitbreaker:
-  configs:
-    default:
-      slidingWindowSize: 8
-      slidingWindowType: COUNT_BASED
-      failureRateThreshold: 50
-      waitDurationInOpenState: 5s # Wait 5 seconds before transitioning from OPEN to HALF_OPEN
-      permittedNumberOfCallsInHalfOpenState: 5
-      registerHealthIndicator: true
-      allowHealthIndicatorToFail: true
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        minimumNumberOfCalls: 4
+        slidingWindowSize: 8
+        slidingWindowType: COUNT_BASED
+        failureRateThreshold: 50
+        waitDurationInOpenState: 5s # Wait 5 seconds before transitioning from OPEN to HALF_OPEN
+        permittedNumberOfCallsInHalfOpenState: 5
+        registerHealthIndicator: true
+        # allowHealthIndicatorToFail: true
+  timelimiter:
+    configs:
+      default:
+        timeoutDuration: 10s
+        cancelRunningFuture: true
 
 # resilience4j.circuitbreaker:
 #   instances:
@@ -79,8 +89,14 @@ resilience4j.circuitbreaker:
 #       registerHealthIndicator: true
 #       allowHealthIndicatorToFail: true
 
-resilience4j.timelimiter:
-  configs:
-      default:
-          timeoutDuration: 10s
-          cancelRunningFuture: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+  health:
+    circuitbreakers:
+      enabled: true

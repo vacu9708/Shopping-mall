@@ -12,10 +12,29 @@
 resilience4j.circuitbreaker:
   configs:
     default:
+      minimumNumberOfCalls: 4
       slidingWindowSize: 8
       slidingWindowType: COUNT_BASED
       failureRateThreshold: 50
       waitDurationInOpenState: 5s # Wait 5 seconds before transitioning from OPEN to HALF_OPEN
       permittedNumberOfCallsInHalfOpenState: 5
       registerHealthIndicator: true
-      allowHealthIndicatorToFail: true
+      # allowHealthIndicatorToFail: true
+
+resilience4j.timelimiter:
+  configs:
+      default:
+          timeoutDuration: 10s
+          cancelRunningFuture: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+  health:
+    circuitbreakers:
+      enabled: true
