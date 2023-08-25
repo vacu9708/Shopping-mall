@@ -19,8 +19,9 @@ public class NotificationApplication {
 
 	@GetMapping("/errorTest")
 	ResponseEntity<String> errorTest() throws InterruptedException{
-		Thread.sleep(1000);
-		return ResponseEntity.internalServerError().body("error test");
+		// Thread.sleep(1000);
+		throw new RuntimeException("error test");
+		// return ResponseEntity.internalServerError().body("error test");
 		// return ResponseEntity.ok("error test");
 	}
 
