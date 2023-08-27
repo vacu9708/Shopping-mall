@@ -15,9 +15,13 @@ public interface ProductRepository extends JpaRepository<ProductEntity, UUID>{
     @Query(value = "INSERT INTO products (name, description, price, stock, img_location) VALUES (?1, ?2, ?3, ?4, ?5)", nativeQuery = true)
     void addProduct(String name, String description, int price, int stock, String imgLocation);
 
-    Boolean existsByName(String name);
+    @Query(value = "SELECT EXISTS(SELECT * FROM products WHERE name = ?1);", nativeQuery = true)
+    Object existsByName(String name);
 
-    @Query(value = "SELECT * FROM products WHERE product_id = ?1", nativeQuery = true)
+    @Query(value = "SELECT EXISTS(SELECT * FROM products WHERE product_id = ?1);", nativeQuery = true)
+    Object existsByProductId(UUID productId);
+
+    @Query(value = "SELECT * FROM products WHERE product_id = ?1 LIMIT 1", nativeQuery = true)
     ProductEntity findByProductId(UUID productId);
 
     @Query(value = "SELECT * FROM products LIMIT ?1 OFFSET ?2", nativeQuery = true)

@@ -50,6 +50,7 @@ public class IntegrationTest {
     @Test
     void authIntegrationTest() throws Exception {
         registerUser_successful();
+        registerUser_duplicate();
         login_successful();
         login_wrongPassword();
         addInBlacklist_successful();
@@ -70,6 +71,19 @@ public class IntegrationTest {
         mockMvc.perform(get("/registerUser/"+signUpToken)
                         )
                 .andExpect(status().isOk());
+    }
+
+    void registerUser_duplicate() throws Exception {
+        UserRegisterDto userRegisterDto = new UserRegisterDto("testUser", "testPassword", "testEmail");
+        Map<String, Object> signupTokenClaims = new HashMap<>();
+        signupTokenClaims.put("username", userRegisterDto.getUsername());
+        signupTokenClaims.put("password", userRegisterDto.getPassword());
+        signupTokenClaims.put("email", userRegisterDto.getEmail());
+        String signUpToken = JwtUtils.generateToken(signupTokenClaims, 900000);
+        mockMvc.perform(get("/registerUser/"+signUpToken)
+                        )
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("USERNAME_EXISTS"));
     }
 
     void login_successful() throws Exception {
