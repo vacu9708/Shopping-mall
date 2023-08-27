@@ -14,7 +14,7 @@ Handles user-related features such as user registration, auth, etc.
 2. Manages the catalog of products available in the shopping mall
 
 ### Notification
-Sends notifications to users regarding orders, promotions, verification email
+Sends emails to users regarding orders, sign-in verification, etc(promotions)
 
 ---
 # Architecture
@@ -71,6 +71,9 @@ For non-blocking communication across services
 
 ## Spring AOP
 Used to permit only authenticated requests to specific APIs
+
+## Spring mail
+Used to send emails to users
 
 ## Kafka
 For decoupled communication between microservices for scenarios such as order notifications.
