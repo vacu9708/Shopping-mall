@@ -26,7 +26,7 @@ Sends notifications to users regarding orders, promotions, verification email
 
 ## ER diagram ([Schema](https://github.com/vacu9708/Shopping-mall/blob/main/DB/schema.sql))
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/51fd3bb9-5adb-4986-a3fb-a7f2529e3126)<br>
-This schema is normalized but denormalizing "productㄴ" table and "ordered_items" table seems good for better distributed JOINs.
+This schema is normalized but denormalizing "products" table and "ordered_items" table seems good for better distributed JOINs.
 
 ## Class relationship
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/f96a837a-85c6-431b-bd2c-9185e4104c1e)
@@ -38,7 +38,7 @@ This schema is normalized but denormalizing "productㄴ" table and "ordered_item
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/61eb5213-2f03-4012-958e-04a462c07658)
 
 ## Login flow
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/ac5a8cc1-30c5-45a6-a2e1-c93a0d9711b8)
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/c747c749-a509-4eac-a2a0-e897bcc0441f)
 
 ## Making order flow (Distributed transaction)
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/6634f67a-84a7-4adb-9e08-2adf6640c65d)
