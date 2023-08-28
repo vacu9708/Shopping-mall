@@ -62,7 +62,7 @@ For decoupled authentication, authorization facilitating easier load balancing
 For non-blocking communication across services
 
 ## Redis
-- For storing data good to cache such as token revocation
+- For storing data good to cache such as token revocation info
 - For limiting the rate of requests coming into the gateway using the Request rate limiter
 
 ## Spring cloud gateway
