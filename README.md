@@ -14,7 +14,7 @@ Handles user-related features such as user registration, auth, etc.
 2. Manages the catalog of products available in the shopping mall
 
 ### Notification
-Sends emails to users regarding orders, sign-in verification, etc(promotions)
+Sends emails to users regarding orders, sign-in verification, etc
 
 ---
 # Architecture
@@ -38,7 +38,7 @@ This schema is normalized but denormalizing "products" table and "ordered_items"
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/61eb5213-2f03-4012-958e-04a462c07658)
 
 ## Login flow
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/c747c749-a509-4eac-a2a0-e897bcc0441f)
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/6ca9ac2c-3deb-47d5-9c1f-a7b7027a3cab)
 
 ## Making order flow (Distributed transaction)
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/6634f67a-84a7-4adb-9e08-2adf6640c65d)
@@ -62,7 +62,7 @@ For decoupled authentication, authorization facilitating easier load balancing
 For non-blocking communication across services
 
 ## Redis
-- For storing data good to cache such as token revocation, (wishlist, shopping cart)
+- For storing data good to cache such as token revocation
 - For limiting the rate of requests coming into the gateway using the Request rate limiter
 
 ## Spring cloud gateway
@@ -76,7 +76,7 @@ Used to permit only authenticated requests to specific APIs
 Used to send emails to users
 
 ## Kafka
-For decoupled communication between microservices for scenarios such as order notifications.
+For decoupled communication between microservices for scenarios such as order notifications, sign-in verification.
 
 ## Docker
 For containerizing individual microservices so that they can work without the environment setting
