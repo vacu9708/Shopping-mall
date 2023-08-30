@@ -14,12 +14,12 @@ import java.util.Map;
 
 @Configuration
 public class KafkaProducerConfig {
-    @Value("${kafka_host}") String kafka_host;
+    @Value("${kafka.host}") String kafkaHost;
     @Bean
     public ProducerFactory<String, String> producerFactoryString() {
         Map<String, Object> config = new HashMap<>();
 
-        config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafka_host+":9092");
+        config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaHost+":9092");
         config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
 

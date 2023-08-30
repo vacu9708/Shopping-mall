@@ -1,6 +1,9 @@
 package com.notification.notification.email;
 
 import java.io.File;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
@@ -8,6 +11,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -22,18 +26,36 @@ import jakarta.mail.internet.MimeMessage;
 public class EmailService {
     @Autowired
     private JavaMailSender emailSender;
+    Executor threadPool = Executors.newFixedThreadPool(10);
 
-   @KafkaListener(topics = {"email"}, containerFactory = "ListenerContainerFactoryString", groupId = "group1")
-    void sendTextMessage(String emailJson) throws JsonMappingException, JsonProcessingException {
-        System.out.println("Sending email!");
+   @KafkaListener(topics = {"email"}, containerFactory = "ListenerContainerFactoryString")
+    void prepareEmail(String emailJson) throws JsonMappingException, JsonProcessingException {
         SimpleMailMessage email = new SimpleMailMessage();
-        EmailDto emailDto = new ObjectMapper().readValue(emailJson, EmailDto.class);
+        EmailDto emailDto=null;
+        emailDto = new ObjectMapper().readValue(emailJson, EmailDto.class);
+        System.out.println("Sending email! to "+ emailDto.getTo());
 
         email.setTo(emailDto.getTo()); 
         email.setSubject(emailDto.getSubject());
         email.setText(emailDto.getText());
-
-        emailSender.send(email);
+        // emailSender.send(email); // Slow without threads!
+        CompletableFuture.runAsync(() -> {
+            try{
+                emailSender.send(email);
+            } catch(Exception e){
+                System.out.println("Error sending email!");
+                e.printStackTrace();
+            }
+        }, threadPool);
+        // doesn't work!
+        // CompletableFuture.runAsync(() -> {
+        //     try{
+        //         emailSender.send(email);
+        //     } catch(Exception e){
+        //         System.out.println("Error sending email!");
+        //         e.printStackTrace();
+        //     }
+        // });
     }
 
     // void sendMessageWithAttachment() throws MessagingException {

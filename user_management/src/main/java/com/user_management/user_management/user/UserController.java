@@ -13,7 +13,12 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 public class UserController {
-    final UserService authService;
+    final UserService userService;
+
+    @GetMapping("/kafkaTest/{num}")
+    String kafkaTest(@PathVariable int num) throws JsonProcessingException{
+        return userService.kafkaTest(num);
+    }
 
     @GetMapping("/managerTest")
     ResponseEntity<String> managerTest(HttpServletRequest request) {
@@ -23,14 +28,14 @@ public class UserController {
 
     @PostMapping("/signUpEmail")
     ResponseEntity<String> signUpEmail(@RequestBody UserRegisterDto userRegisterDto) throws JsonProcessingException {
-        return authService.signUpEmail(userRegisterDto);
+        return userService.signUpEmail(userRegisterDto);
     }
 
     @GetMapping("/registerUser/{signUpToken}")
     ResponseEntity<String> registerUser(@PathVariable String signUpToken) {
-        return authService.registerUser(signUpToken);
+        return userService.registerUser(signUpToken);
         // try {
-        //     return authService.registerUser(userRegisterDto);
+        //     return userService.registerUser(userRegisterDto);
         // } catch (Exception e) {
         //     return ResponseEntity.badRequest().body("Error adding user");
         // }
@@ -38,37 +43,37 @@ public class UserController {
 
     @PostMapping("/login")
     ResponseEntity<?> login(@RequestBody UserCredentialsDto userCredentialsDto) {
-        return authService.login(userCredentialsDto);
+        return userService.login(userCredentialsDto);
     }
 
     @PostMapping("/manager/addInBlacklist/{username}")
     ResponseEntity<String> managerEditBlacklist(HttpServletRequest request, @PathVariable String username) {
-        return authService.editBlacklist(username, "add");
+        return userService.editBlacklist(username, "add");
     }
 
     @GetMapping("/verifyAccessToken")
     ResponseEntity<?> verifyToken(@RequestHeader("accessToken") String accessToken) {
-        return authService.verifyAccessToken(accessToken);
+        return userService.verifyAccessToken(accessToken);
     }
 
     @GetMapping("/getUserInfo")
     ResponseEntity<?> getUserInfo(@RequestHeader("accessToken") String accessToken) {
-        return authService.getUserInfo(accessToken);
+        return userService.getUserInfo(accessToken);
     }
 
     @GetMapping("/reissueTokens")
     ResponseEntity<?> reissueToken(@RequestHeader("accessToken") String accessToken,
                                     @RequestHeader("refreshToken") String refreshToken) {
-        return authService.reissueToken(accessToken, refreshToken);
+        return userService.reissueToken(accessToken, refreshToken);
     }
 
     @DeleteMapping("/manager/removeFromBlacklist/{username}")
     ResponseEntity<String> managerRemoveFromBlacklist(HttpServletRequest request, @PathVariable String username) {
-        return authService.editBlacklist(username, "remove");
+        return userService.editBlacklist(username, "remove");
     }
 
     @DeleteMapping("/deleteUser")
     ResponseEntity<String> deleteUser(@RequestHeader("accessToken") String accessToken) {
-        return authService.deleteUser(accessToken);
+        return userService.deleteUser(accessToken);
     }
 }
