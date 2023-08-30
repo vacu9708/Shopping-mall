@@ -31,7 +31,7 @@ public class ProductService {
 
     ResponseEntity<String> addProduct(NewProductDto newProductDto) {
         // Check if the same product name already exists
-        if(productRepository.existsByName(newProductDto.getName()) != false)
+        if(productRepository.existsByName(newProductDto.getName()) != null)
             return ResponseEntity.badRequest().body("PRODUCT_NAME_EXISTS");
 
         String imgLocation = "shopping_mall/products/"+newProductDto.getName()+"-"+UUID.randomUUID().toString()+".jpg";
@@ -99,7 +99,7 @@ public class ProductService {
     @Transactional
     ResponseEntity<String> deleteProduct(UUID productId) {
         // Check if the product exists
-        if (productRepository.existsById(productId) == false) {
+        if (productRepository.existsByProductId(productId) == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("PRODUCT_NOT_FOUND");
         }
 

@@ -20,7 +20,6 @@ import com.user_management.user_management.user.Utils.JwtUtils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Component
@@ -31,12 +30,28 @@ public class UserService {
     final KafkaTemplate<String, String> kafkaTemplate;
     @Value("${host.address}") String hostAddress;
 
+    String kafkaTest(int num) throws JsonProcessingException{
+        EmailDto emailDto = EmailDto.builder()
+            .to("vacu9708@daum.net")
+            .subject("Sign up email")
+            .text("Dear")
+            .build();
+        String emailJson = new ObjectMapper().writeValueAsString(emailDto);
+        for(int i=0; i<num; i++)
+            try{
+                kafkaTemplate.send("email", emailJson);
+            } catch(Exception e){
+                e.printStackTrace();
+            }
+        return "OK";
+    }
+
     ResponseEntity<String> signUpEmail(UserRegisterDto userRegisterDto) throws JsonProcessingException {
         // Check if the username already exists
         if(userRepository.findByUsername(userRegisterDto.getUsername()) != null)
             return ResponseEntity.badRequest().body("USERNAME_EXISTS");
         // Validate the dto
-        if(userRegisterDto.getUsername().length() < 4 || userRegisterDto.getUsername().length() > 20
+        if(userRegisterDto.getUsername().length() < 3 || userRegisterDto.getUsername().length() > 20
         || userRegisterDto.getPassword().length() < 3 || userRegisterDto.getPassword().length() > 20
         || userRegisterDto.getEmail().length() < 8 || userRegisterDto.getEmail().length() > 50
         || !userRegisterDto.getEmail().matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")
@@ -79,6 +94,10 @@ public class UserService {
         String username = signUpTokenClaims.get("username", String.class);
         String hashedPassword = new BCryptPasswordEncoder().encode(signUpTokenClaims.get("password", String.class));
         String email = signUpTokenClaims.get("email", String.class);
+        // Check if the username already exists
+        // if(userRepository.findByUsername(username) != null)
+        //     return ResponseEntity.badRequest().body("USERNAME_EXISTS");
+        
         try{
             userRepository.addUser(username, hashedPassword, email);
         } catch(Exception e){
@@ -100,7 +119,7 @@ public class UserService {
         // Generate tokens
         Map<String, Object> accessTokenClaims = new HashMap<>();
         accessTokenClaims.put("userId", userEntity.getUserId());
-        accessTokenClaims.put("username", userEntity.getUsername());
+        // accessTokenClaims.put("username", userEntity.getUsername());
         String accessToken = JwtUtils.generateToken(accessTokenClaims, 1800000);
 
         Map<String, Object> refreshTokenClaims = new HashMap<>();
@@ -207,7 +226,6 @@ public class UserService {
         return ResponseEntity.ok(new TokenPairDto(newAccessToken, newRefreshToken));
     }
 
-    @Transactional
     ResponseEntity<String> deleteUser(String accessToken) {
         // Decrypt the token
         Claims accessTokenClaims;
@@ -223,7 +241,7 @@ public class UserService {
         if(userId == null)
             return ResponseEntity.badRequest().body("REFRESH_TOKEN_NOT_ALLOWED");
         // Check if the user exists
-        if(userRepository.existsByUserId(userId) == false)
+        if(userRepository.existsByUserId(userId) == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("USER_NOT_FOUND");
         // Delete the user
         userRepository.deleteByUserId(userId);

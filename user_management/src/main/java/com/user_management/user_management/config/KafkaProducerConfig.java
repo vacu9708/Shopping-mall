@@ -1,4 +1,4 @@
-package com.user_management.user_management;
+package com.user_management.user_management.config;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -14,12 +14,12 @@ import java.util.Map;
 
 @Configuration
 public class KafkaProducerConfig {
-    @Value("${kafka_host}") String kafka_host;
+    @Value("${kafka.host}") String kafkaHost;
     @Bean
     public ProducerFactory<String, String> producerFactoryString() {
         Map<String, Object> config = new HashMap<>();
 
-        config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafka_host+":9092");
+        config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaHost+":9092");
         config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
 

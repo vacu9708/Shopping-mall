@@ -31,7 +31,8 @@ public class OrderController {
     @CircuitBreaker(name = "myCircuitBreaker", fallbackMethod = "fallback")
     ResponseEntity<String> errorTest(){
         // return new RestTemplate().getForEntity("http://localhost:8084/errorTest", String.class);
-        return WebClient.create().get().uri("http://localhost:8084/errorTest").retrieve().toEntity(String.class).block();
+        WebClient.create().get().uri("http://localhost:8084/errorTest").retrieve().toEntity(String.class).block();
+        return ResponseEntity.ok("test");
         // CircuitBreaker circuitBreaker = circuitBreakerFactory.create("myCircuitBreaker");
         // return circuitBreaker.run(()-> WebClient.create().get().uri("http://localhost:8084/errorTest").retrieve().toEntity(String.class).block(),
         //     throwable ->ResponseEntity.internalServerError().body("Circuit closed"));

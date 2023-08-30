@@ -13,6 +13,7 @@ services:
       productManagement: productManagement
       notification: notification
       REDIS_HOST: redis
+      kafka_broker: broker:9092
     ports:
       - 8080:8080
     networks:
@@ -26,7 +27,7 @@ services:
       context: ../../order_management
       dockerfile: Dockerfile
     image: order_management:order_management
-    container_name: order_management
+    container_name: orderManagement
     environment:
       DB_HOST: mySql
       KAFKA_HOST: broker
@@ -45,7 +46,7 @@ services:
       context: ../../user_management
       dockerfile: Dockerfile
     image: user_management:user_management
-    container_name: user_management
+    container_name: userManagement
     environment:
       DB_HOST: mySql
       host_address: http://15.165.91.196:8080
@@ -64,7 +65,7 @@ services:
       context: ../../product_management
       dockerfile: Dockerfile
     image: product_management:product_management
-    container_name: product_management
+    container_name: productManagement
     environment:
       DB_HOST: mySql
     ports:
@@ -84,8 +85,27 @@ services:
     environment:
       DB_HOST: mySql
       KAFKA_HOST: broker
+      PORT: 8084
     ports:
       - 8084:8084
+    networks:
+      - myNetwork
+    # network_mode: "host"
+    # extra_hosts:
+    #   - "localhost:host-gateway"
+
+  notification2:
+    build:
+      context: ../../notification
+      dockerfile: Dockerfile
+    image: notification:notification
+    container_name: notification2
+    environment:
+      DB_HOST: mySql
+      KAFKA_HOST: broker
+      PORT: 8085
+    ports:
+      - 8085:8085
     networks:
       - myNetwork
     # network_mode: "host"

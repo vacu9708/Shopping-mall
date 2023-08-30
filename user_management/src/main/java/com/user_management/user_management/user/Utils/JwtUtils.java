@@ -4,16 +4,16 @@ import java.security.Key;
 import java.util.Date;
 import java.util.Map;
 
-import org.springframework.stereotype.Component;
+// import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import lombok.NoArgsConstructor;
+// import lombok.NoArgsConstructor;
 
-@Component
-@NoArgsConstructor
+// @Component
+// @NoArgsConstructor
 public class JwtUtils {
     static Key jwtKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode("aerkjfsdanfjsd9865agcdvhtdf265494651kdnfhfaljkasfdj"));
     
