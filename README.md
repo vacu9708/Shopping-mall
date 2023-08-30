@@ -73,7 +73,7 @@ For non-blocking communication across services
 Used to permit only authenticated requests to specific APIs
 
 ## Spring mail
-Used to send emails to users
+Used to send emails to users. Load balancing is applied for sending emails using Kafka
 
 ## Kafka
 For decoupled communication between microservices for scenarios such as order notifications, sign-in verification.
