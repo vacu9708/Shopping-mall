@@ -43,6 +43,9 @@ This schema is normalized but denormalizing "products" table and "ordered_items"
 ## Making order flow (Distributed transaction)
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/6634f67a-84a7-4adb-9e08-2adf6640c65d)
 
+## Load balancing to handle sending a large number of emails
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/3d504802-b644-4c06-afe6-69c82b73b503)
+
 ---
 ### [API documentation link](https://youngsiks-organization.gitbook.io/shopping_mall/)
 ### [Future plan link](https://github.com/vacu9708/Shopping-mall/blob/main/Future%20plan.md)
