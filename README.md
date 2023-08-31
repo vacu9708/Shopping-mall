@@ -40,11 +40,11 @@ This schema is normalized but denormalizing "products" table and "ordered_items"
 ## Login flow
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/6ca9ac2c-3deb-47d5-9c1f-a7b7027a3cab)
 
-## Making order flow (Distributed transaction)
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/6634f67a-84a7-4adb-9e08-2adf6640c65d)
+## Sequence diagram of makeOrder() (Distributed transaction)
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/668a4eb7-854f-4ebb-9e4a-70dd97a6b44a)
 
 ## Load balancing to handle sending a large number of emails
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/d9b51b1b-df22-4614-bc46-e4902b7621e9)
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/a9e1fa32-0843-43a6-99d9-b891a2d7038b)
 
 ---
 ### [API documentation link](https://youngsiks-organization.gitbook.io/shopping_mall/)
