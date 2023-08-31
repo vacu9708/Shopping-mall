@@ -44,7 +44,7 @@ This schema is normalized but denormalizing "products" table and "ordered_items"
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/668a4eb7-854f-4ebb-9e4a-70dd97a6b44a)
 
 ## Load balancing to handle sending a large number of emails
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/a9e1fa32-0843-43a6-99d9-b891a2d7038b)
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/04527a93-32c8-451a-8614-a9f7f459b45a)
 
 ---
 ### [API documentation link](https://youngsiks-organization.gitbook.io/shopping_mall/)
