@@ -41,7 +41,7 @@ This schema is normalized but denormalizing "products" table and "ordered_items"
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/6ca9ac2c-3deb-47d5-9c1f-a7b7027a3cab)
 
 ## Sequence diagram of makeOrder() (Distributed transaction)
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/668a4eb7-854f-4ebb-9e4a-70dd97a6b44a)
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/9c90d20e-783f-4eb2-a35c-0bada6402f83)
 
 ## Load balancing to handle sending a large number of emails
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/04527a93-32c8-451a-8614-a9f7f459b45a)
