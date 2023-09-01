@@ -28,8 +28,11 @@ Sends emails to users regarding orders, sign-in verification, etc
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/51fd3bb9-5adb-4986-a3fb-a7f2529e3126)<br>
 This schema is normalized but denormalizing "products" table and "ordered_items" table seems good for better distributed JOINs.
 
-## Class relationship
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/f96a837a-85c6-431b-bd2c-9185e4104c1e)
+## Sequence diagram of makeOrder() (Distributed transaction)
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/0485da5a-82a5-4670-8525-374ded1bfdb1)
+
+## Load balancing to handle sending a large number of emails
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/04527a93-32c8-451a-8614-a9f7f459b45a)
 
 ## CI/CD diagram
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/86c8824c-7680-458f-8e43-0ab68f6d4651)
@@ -40,11 +43,8 @@ This schema is normalized but denormalizing "products" table and "ordered_items"
 ## Login flow
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/6ca9ac2c-3deb-47d5-9c1f-a7b7027a3cab)
 
-## Sequence diagram of makeOrder() (Distributed transaction)
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/0485da5a-82a5-4670-8525-374ded1bfdb1)
-
-## Load balancing to handle sending a large number of emails
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/04527a93-32c8-451a-8614-a9f7f459b45a)
+## Class relationship
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/f96a837a-85c6-431b-bd2c-9185e4104c1e)
 
 ---
 ### [API documentation link](https://youngsiks-organization.gitbook.io/shopping_mall/)
