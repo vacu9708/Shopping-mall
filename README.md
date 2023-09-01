@@ -32,7 +32,7 @@ This schema is normalized but denormalizing "products" table and "ordered_items"
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/0485da5a-82a5-4670-8525-374ded1bfdb1)
 
 ## Load balancing to handle sending a large number of emails
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/04527a93-32c8-451a-8614-a9f7f459b45a)
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/831269c0-87eb-423f-83b0-9f6c035e1e17)
 
 ## CI/CD diagram
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/86c8824c-7680-458f-8e43-0ab68f6d4651)
