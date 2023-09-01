@@ -41,7 +41,7 @@ This schema is normalized but denormalizing "products" table and "ordered_items"
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/61eb5213-2f03-4012-958e-04a462c07658)
 
 ## Login flow
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/6ca9ac2c-3deb-47d5-9c1f-a7b7027a3cab)
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/2990c13e-c6a0-4d0c-8e9d-ef1198e5906e)
 
 ## Class relationship
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/f96a837a-85c6-431b-bd2c-9185e4104c1e)
