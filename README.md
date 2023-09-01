@@ -47,7 +47,8 @@ This schema is normalized but denormalizing "products" table and "ordered_items"
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/f96a837a-85c6-431b-bd2c-9185e4104c1e)
 
 ---
-### [API documentation link](https://youngsiks-organization.gitbook.io/shopping_mall/)
+### [API documentation](https://youngsiks-organization.gitbook.io/shopping_mall/)
+#### [Incomplete features](https://github.com/vacu9708/Shopping-mall/blob/main/Future%20plan.md)
 
 ---
 # What was used
