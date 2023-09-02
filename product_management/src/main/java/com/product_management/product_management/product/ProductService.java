@@ -29,6 +29,7 @@ public class ProductService {
     final AmazonS3 amazonS3;
     final SagaOrchestrator sagaOrchestrator;
 
+    @Transactional
     ResponseEntity<String> addProduct(NewProductDto newProductDto) {
         // Check if the same product name already exists
         if(productRepository.existsByName(newProductDto.getName()) != null)
@@ -68,6 +69,7 @@ public class ProductService {
         return ResponseEntity.ok(productEntity);
     }
 
+    @Transactional
     ResponseEntity<String> setStock(UUID productId, int stockChange) {
         // Get accessToken claims
         // CompletableFuture<AccessTokenClaimsDto> promise1 = WebClient.create()
