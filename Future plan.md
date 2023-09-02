@@ -24,7 +24,7 @@ Logstash can parse, filter, and transform log data before sending it to Elastics
 - `Kibana`: Visualization and Dashboards
 
 ## Compensation after distributed transactions failed because of system failures (like unexpected shutdowns)
-- Keep logging of the start and end of each local transaction and automate the compensation of local transactions that did not end after system failures.
+- Keep logging of the start and end of each local transaction and automate the compensation of local transactions that did not end due to system failures.
 
 ## Frontend
 Next.js, (redux?)
