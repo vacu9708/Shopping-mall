@@ -16,8 +16,8 @@ import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.product_management.product_management.product.dto.*;
-import com.product_management.product_management.product.saga.SagaOrchestrator;
+import com.product_management.product_management.product.dto_.*;
+import com.product_management.product_management.product.saga_.SagaOrchestrator;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
