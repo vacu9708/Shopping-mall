@@ -11,7 +11,6 @@ import com.order_management.order_management.order.entity.OrderEntity;
 
 import jakarta.transaction.Transactional;
 
-@Transactional
 public interface OrderRepository extends JpaRepository<OrderEntity, UUID>{
     @Modifying
     @Query(value = "INSERT INTO orders (order_id, user_id) VALUES (?1, ?2)", nativeQuery = true)

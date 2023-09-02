@@ -1,4 +1,4 @@
-package com.product_management.product_management.product.saga;
+package com.product_management.product_management.product.saga_;
 
 import java.util.Deque;
 import java.util.LinkedList;
@@ -11,7 +11,7 @@ import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.product_management.product_management.product.ProductRepository;
-import com.product_management.product_management.product.dto.NewProductDto;
+import com.product_management.product_management.product.dto_.NewProductDto;
 
 import lombok.RequiredArgsConstructor;
 

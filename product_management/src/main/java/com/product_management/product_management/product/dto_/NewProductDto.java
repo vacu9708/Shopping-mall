@@ -1,4 +1,4 @@
-package com.product_management.product_management.product.dto;
+package com.product_management.product_management.product.dto_;
 
 import lombok.Builder;
 import lombok.Getter;

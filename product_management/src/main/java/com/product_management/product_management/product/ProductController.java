@@ -6,7 +6,7 @@ import java.util.UUID;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.product_management.product_management.product.dto.*;
+import com.product_management.product_management.product.dto_.*;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
