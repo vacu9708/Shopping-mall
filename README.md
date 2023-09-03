@@ -53,7 +53,7 @@ This schema is normalized but denormalizing "products" table and "ordered_items"
 ---
 # What was used
 ## Base
-Spring boot
+Spring boot, (junit)
 
 ## Database
 MySQL
