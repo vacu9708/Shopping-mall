@@ -61,7 +61,7 @@ public class ProductService {
     }
 
     ResponseEntity<?> getProduct(UUID productId) {
-        ProductEntity productEntity = productRepository.findById(productId).get();
+        ProductEntity productEntity = productRepository.findByProductId(productId);
         if (productEntity == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("PRODUCT_NOT_FOUND");
         }
@@ -86,7 +86,7 @@ public class ProductService {
         //     return ResponseEntity.status(403).body("NOT_ADMIN");
         // }
         // Check if the product exists
-        if (productRepository.existsById(productId) == false) {
+        if (productRepository.existsByProductId(productId) == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("PRODUCT_NOT_FOUND");
     
         }
@@ -100,14 +100,15 @@ public class ProductService {
 
     @Transactional
     ResponseEntity<String> deleteProduct(UUID productId) {
+        ProductEntity productEntity = productRepository.findByProductId(productId);
         // Check if the product exists
-        if (productRepository.existsByProductId(productId) == null) {
+        if (productEntity == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("PRODUCT_NOT_FOUND");
         }
 
         // Delete the product image from S3
         try {
-            amazonS3.deleteObject("yasvacu", productRepository.findByProductId(productId).getImgLocation());
+            amazonS3.deleteObject("yasvacu", productEntity.getImgLocation());
         } catch (AmazonServiceException e) {
             // System.out.println(e.getErrorMessage());
             return ResponseEntity.internalServerError().body("S3_ERROR");
