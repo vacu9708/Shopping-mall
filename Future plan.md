@@ -1,9 +1,8 @@
-# Future plan
-## Essential but incomplete features
+# Essential but incomplete features
 - Payment
 - cancelOrder()
 
-## Load balancing
+# Load balancing
 Use EC2 load balancer or Kubernetes
 ### Kubernetes
 - `Scalibility`: Kubernetes allows services to be easily scaled horizontally across a cluster of machines by adding or removing instances based on demand.
@@ -12,7 +11,9 @@ Use EC2 load balancer or Kubernetes
 ### DB optimization
 Read replicas help handling large read-only traffic. (Use AWS RDS)
 
-## Performance monitoring
+# DB backup using Spring batch
+
+# Performance monitoring
 ### ELK stack
 - `Elasticsearch`: For log Aggregation, Analysis, and Alerting<br>
 Log data from microservices is sent to Elasticsearch which is a distributed search and analytics.<br>
@@ -23,8 +24,9 @@ Logstash can parse, filter, and transform log data before sending it to Elastics
 
 - `Kibana`: Visualization and Dashboards
 
-## Compensation after distributed transactions failed because of system failures (like unexpected shutdowns)
+# Compensation after distributed transactions failed because of system failures (like unexpected shutdowns)
 - Keep logging of the start and end of each local transaction and automate the compensation of local transactions that did not end due to system failures.
 
-## Frontend
+
+### Frontend(?)
 Next.js, (redux?)
