@@ -1,8 +1,10 @@
 package com.product_management.product_management.product.dto_;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+@AllArgsConstructor
 @Builder
 @Getter
 public class NewProductDto {
