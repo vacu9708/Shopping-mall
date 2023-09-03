@@ -35,7 +35,7 @@ This schema is normalized but denormalizing "products" table and "ordered_items"
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/831269c0-87eb-423f-83b0-9f6c035e1e17)
 
 ## CI/CD diagram
-![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/86c8824c-7680-458f-8e43-0ab68f6d4651)
+![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/09d0cb75-9a06-4f66-95a1-b6b5301aa8a1)
 
 ## AWS S3 diagram
 ![image](https://github.com/vacu9708/Shopping-mall/assets/67142421/61eb5213-2f03-4012-958e-04a462c07658)
