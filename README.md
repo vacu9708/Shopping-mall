@@ -100,6 +100,6 @@ The current docker-compose only works on Linux
 3. Go to "build_and_run" directory
 4. Execute the commands that are in build_all.txt to build the Spring apps
 5. Execute the commands that are in docker-compose_prerequisites.txt
-6. Execute the schema generation queries that are in schema.sql
+6. Enter the MySQL and execute the schema generation queries that are in schema.sql
 7. Execute the commands that are in docker-compose_services.txt
 8. Expose ports on which the containers run
